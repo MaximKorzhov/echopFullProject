@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\models\Xposition;
 
 /**
  * Site controller
@@ -211,5 +212,13 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+        
+    }
+    
+    public function actionXposition()
+    {
+        $dataProvider = Xposition::find()->all();
+        return $this->render('bindex',
+        ['bindex'=>$dataProvider]);
     }
 }
