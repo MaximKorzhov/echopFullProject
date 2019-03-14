@@ -98,7 +98,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Товары',
-                            'url' => ['#']
+                            'url' => ['/products/index']
                         ],
                     ],
                 ]);
