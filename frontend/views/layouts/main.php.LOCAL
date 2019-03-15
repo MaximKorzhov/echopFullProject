@@ -33,13 +33,13 @@ AppAsset::register($this);
 			min-height: 50px;
 		}
 		.middle {
-            height: 100vh;
+            min-height: 600px;
 		}
 		.leftsidebar {
             background-color: #222;
             padding: 20px;
             width: 20%;
-            height: 100%;
+            min-height: inherit;
             min-width: 150px;
             float: left;
 		}
@@ -59,8 +59,8 @@ AppAsset::register($this);
                 ],
             ]);
             $menuItems = [
-                ['label' => 'Contacts', 'url' => ['/user/index']],
-                ['label' => 'Settings', 'url' => ['/user/settings']],
+                ['label' => 'Contacts', 'url' => ['/site/contacts']],
+                ['label' => 'User', 'url' => ['/user/index']],
             ];
             if (Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -98,7 +98,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Товары',
-                            'url' => ['/products/index']
+                            'url' => ['#']
                         ],
                     ],
                 ]);
