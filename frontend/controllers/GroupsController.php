@@ -3,17 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Position;
-use frontend\models\Positions;
-use frontend\models\PositionsSearchModel;
+use frontend\models\Groups;
+use frontend\models\GroupsSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PositionsController implements the CRUD actions for Positions model.
+ * GroupsController implements the CRUD actions for Groups model.
  */
-class PositionsController extends Controller
+class GroupsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,22 +30,22 @@ class PositionsController extends Controller
     }
 
     /**
-     * Lists all Positions models.
+     * Lists all Groups models.
      * @return mixed
      */
     public function actionIndex()
-    {       
-        $searchModel = new PositionsSearchModel();
+    {
+        $searchModel = new GroupsSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-       ]);
+        ]);
     }
 
     /**
-     * Displays a single Positions model.
+     * Displays a single Groups model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,16 +58,16 @@ class PositionsController extends Controller
     }
 
     /**
-     * Creates a new Positions model.
+     * Creates a new Groups model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Positions();
+        $model = new Groups();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->gr_id]);
         }
 
         return $this->render('create', [
@@ -77,7 +76,7 @@ class PositionsController extends Controller
     }
 
     /**
-     * Updates an existing Positions model.
+     * Updates an existing Groups model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -88,7 +87,7 @@ class PositionsController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->gr_id]);
         }
 
         return $this->render('update', [
@@ -97,7 +96,7 @@ class PositionsController extends Controller
     }
 
     /**
-     * Deletes an existing Positions model.
+     * Deletes an existing Groups model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -109,17 +108,17 @@ class PositionsController extends Controller
 
         return $this->redirect(['index']);
     }
-    
+
     /**
-     * Finds the Positions model based on its primary key value.
+     * Finds the Groups model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Positions the loaded model
+     * @return Groups the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Positions::findOne($id)) !== null) {
+        if (($model = Groups::findOne($id)) !== null) {
             return $model;
         }
 

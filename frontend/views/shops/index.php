@@ -4,42 +4,37 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\PositionsSearchModel */
+/* @var $searchModel frontend\models\ShopsSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Positions');
+$this->title = Yii::t('app', 'Shops');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="positions-index">
+<div class="shops-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Positions'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Shops'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    
-   <?=GridView::widget([
+
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-//            'id',
-            'art',
-            'shtrih',
+            'id',
+            'unp',
+            'bank',
+            'contact_id',
             'name',
-            'price',
-            'date',
-            'group',
-            'podgroup',
-            'size',
-            'podrobno',
-            'add_pole',
-//            'from_id',
+            'schet',
+            'balans',
+            'status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
 </div>
