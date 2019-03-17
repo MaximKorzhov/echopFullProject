@@ -59,6 +59,36 @@ AppAsset::register($this);
                 ],
             ]);
             $menuItems = [
+                ['label' => 'Administrator', 'items'=>[                    
+                        [
+                            'label' => 'Группы',
+                            'url' => ['/groups/index']
+                        ],
+                        [
+                            'label' => 'Поставщики',
+                            'url' => ['/suppliers/index']
+                        ],
+                        [
+                            'label' => 'Магазины',
+                            'url' => ['/shops/index']
+                        ],
+                        [
+                            'label' => 'Заказы',
+                            'url' => ['/zakaz/index']
+                        ],
+                        [
+                            'label' => 'Сообщения',
+                            'url' => ['messages/index']
+                        ],
+                        [
+                            'label' => 'Товары',
+                            'url' => ['/products/index']
+                        ],
+                        [
+                            'label' => 'Контакты',
+                            'url' => ['/contacts/index']
+                        ],
+                ], 'url' => ['/user/index']],
                 ['label' => 'Contacts', 'url' => ['/user/index']],
                 ['label' => 'Settings', 'url' => ['/user/settings']],
             ];

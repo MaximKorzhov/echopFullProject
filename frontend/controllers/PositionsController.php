@@ -3,16 +3,17 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\User;
-use frontend\models\UserSearchModel;
+use frontend\models\Position;
+use frontend\models\Positions;
+use frontend\models\PositionsSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * PositionsController implements the CRUD actions for Positions model.
  */
-class UserController extends Controller
+class PositionsController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,22 +31,22 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all Positions models.
      * @return mixed
      */
     public function actionIndex()
-    {
-        $searchModel = new UserSearchModel();
+    {       
+        $searchModel = new PositionsSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+       ]);
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Positions model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,29 +59,25 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Positions model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new User();
-        
-        if ($model->load(Yii::$app->request->post())) 
-        {        
-            $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
-            if ($model->save()) 
-            {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        $model = new Positions();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Positions model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -100,7 +97,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Positions model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,17 +109,17 @@ class UserController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Positions model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Positions the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Positions::findOne($id)) !== null) {
             return $model;
         }
 
