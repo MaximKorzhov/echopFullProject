@@ -20,7 +20,7 @@ use Yii;
  * @property string $add_pole
  * @property string $from_id
  */
-class Products extends \yii\db\ActiveRecord
+class Positions extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

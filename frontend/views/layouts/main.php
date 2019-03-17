@@ -28,6 +28,9 @@ AppAsset::register($this);
 
 <div class="wrap">
 	<style>
+		.bgcolor {
+            background-color: #555;
+		}
 		.header {
 			position: relative;
 			min-height: 50px;
@@ -36,14 +39,13 @@ AppAsset::register($this);
             height: 100vh;
 		}
 		.leftsidebar {
-            background-color: #222;
             padding: 20px;
             width: 20%;
             height: 100%;
             min-width: 150px;
             float: left;
 		}
-		.container {
+		.content {
             min-height: inherit;
             width: 80%;
             float: left;
@@ -55,10 +57,40 @@ AppAsset::register($this);
                 'brandLabel' => Yii::$app->name,
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
+                    'class' => 'navbar-inverse navbar-fixed-top bgcolor',
                 ],
             ]);
             $menuItems = [
+                ['label' => 'Administrator', 'items'=>[                    
+                        [
+                            'label' => 'Группы',
+                            'url' => ['/groups/index']
+                        ],
+                        [
+                            'label' => 'Поставщики',
+                            'url' => ['/suppliers/index']
+                        ],
+                        [
+                            'label' => 'Магазины',
+                            'url' => ['/shops/index']
+                        ],
+                        [
+                            'label' => 'Заказы',
+                            'url' => ['/zakaz/index']
+                        ],
+                        [
+                            'label' => 'Сообщения',
+                            'url' => ['messages/index']
+                        ],
+                        [
+                            'label' => 'Товары',
+                            'url' => ['/products/index']
+                        ],
+                        [
+                            'label' => 'Контакты',
+                            'url' => ['/contacts/index']
+                        ],
+                ], 'url' => ['/user/index']],
                 ['label' => 'Contacts', 'url' => ['/user/index']],
                 ['label' => 'Settings', 'url' => ['/user/settings']],
             ];
@@ -83,10 +115,10 @@ AppAsset::register($this);
         ?>
 	</div>
     <div class="middle">
-        <div class="leftsidebar">
+        <div class="leftsidebar bgcolor">
             <?php
                 echo Nav::widget([
-                    'options' => ['class' => 'nav', 'style' => 'background-color: #222;'],
+                    'options' => ['class' => 'nav bgcolor',],
                     'items' => [
                         [
                             'label' => 'Заказы',
@@ -105,12 +137,12 @@ AppAsset::register($this);
             ?>
         </div>
 
-        <div class="container">
-            <?= Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-            <?= Alert::widget() ?>
-            <?= $content ?>
+       	<div class="content">
+           	<?= Breadcrumbs::widget([
+               	'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+           	]) ?>
+           	<?= Alert::widget() ?>
+           	<?= $content ?>
         </div>
 	</div>
 </div>
