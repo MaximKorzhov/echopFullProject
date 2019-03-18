@@ -27,7 +27,7 @@ class Products extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'fp_position';
+        return 'position';
     }
 
     /**
