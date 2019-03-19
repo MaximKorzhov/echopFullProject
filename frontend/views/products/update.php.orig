@@ -1,0 +1,42 @@
+<?php
+<<<<<<< HEAD
+
+use yii\helpers\Html;
+
+=======
+>>>>>>> eshop/dmkorolev
+/* @var $this yii\web\View */
+/* @var $item frontend\models\Products */
+/* @var $id */
+
+<<<<<<< HEAD
+$this->title = Yii::t('app', 'Update Products: {name}', [
+    'name' => $item->name,
+]);
+=======
+use yii\helpers\Html;
+
+//$this->title = Yii::t('app', 'Update Products: {name}', [
+//    'name' => $item->name,
+//]);
+>>>>>>> eshop/dmkorolev
+?>
+<style>
+    .products-update {
+        height: 100%;
+    }
+</style>
+<div class="products-update">
+
+<<<<<<< HEAD
+    <h1><?= Html::encode($this->title) ?></h1>
+=======
+<!--    <h1>--><?php //echo Html::encode($this->title) ?><!--</h1>-->
+>>>>>>> eshop/dmkorolev
+
+    <?= $this->render('_form', [
+        'model' => $item,
+        'id' => $id
+    ]) ?>
+
+</div>

@@ -15,9 +15,24 @@ class ProductsController extends \yii\web\Controller
     public function actionIndex($id = 0)
     {
         $items = ArrayHelper::index(Products::find()->all(), 'id');
+<<<<<<< HEAD
 
         if ($id == 0)
         {
+            $id = key($items);
+        }
+=======
+>>>>>>> eshop/dmkorolev
+
+        if ($id == 0)
+        {
+<<<<<<< HEAD
+            return $this->renderAjax('index', [
+                'items' => $items,
+                'id' => $id
+            ]);
+        }
+=======
             $id = key($items);
         }
 
@@ -28,6 +43,7 @@ class ProductsController extends \yii\web\Controller
 //                'id' => $id
 //            ]);
 //        }
+>>>>>>> eshop/dmkorolev
 
         return $this->render('index', [
             'items' => $items,
@@ -36,6 +52,8 @@ class ProductsController extends \yii\web\Controller
     }
 
     /**
+<<<<<<< HEAD
+=======
      * @param $id
      * @return \yii\web\Response
      * @throws NotFoundHttpException
@@ -68,12 +86,17 @@ class ProductsController extends \yii\web\Controller
     }
 
     /**
+>>>>>>> eshop/dmkorolev
      * @param int $id
      * @return string|\yii\web\Response
      */
     public function actionUpdate($id = 0)
     {
+<<<<<<< HEAD
+        /* @var \frontend\models\Products[] $items  */
+=======
         /* @var \frontend\models\Products[] $items */
+>>>>>>> eshop/dmkorolev
         $items = ArrayHelper::index(Products::find()->all(), 'id');
 
         if ($items[$id]->load(\Yii::$app->request->post()) && $items[$id]->save())
