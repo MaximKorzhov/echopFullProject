@@ -1,14 +1,13 @@
 <?php
-
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $item frontend\models\Products */
 /* @var $id */
 
-$this->title = Yii::t('app', 'Update Products: {name}', [
-    'name' => $item->name,
-]);
+use yii\helpers\Html;
+
+//$this->title = Yii::t('app', 'Update Products: {name}', [
+//    'name' => $item->name,
+//]);
 ?>
 <style>
     .products-update {
@@ -17,7 +16,7 @@ $this->title = Yii::t('app', 'Update Products: {name}', [
 </style>
 <div class="products-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<!--    <h1>--><?php //echo Html::encode($this->title) ?><!--</h1>-->
 
     <?= $this->render('_form', [
         'model' => $item,

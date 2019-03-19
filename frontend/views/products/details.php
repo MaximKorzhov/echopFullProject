@@ -1,3 +1,11 @@
+<style>
+    span.glyphicon-pencil {
+        color: #d58512;
+    }
+    span.glyphicon-pencil:hover {
+        color: #f5a532;
+    }
+</style>
 <?php
 /* @var $id */
 /* @var \frontend\models\Products $item  */
@@ -5,8 +13,7 @@
 use yii\helpers\Html;
 
 echo Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]), '/products/update?id=' . $item->id, [
-    'title' => 'Edit',
-    'aria-label' => 'Edit',
+    'title' => Yii::t('app', 'Edit'),
     'data-pjax' => '1',
 ]);
 ?>

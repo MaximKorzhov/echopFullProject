@@ -36,12 +36,44 @@ class ProductsController extends \yii\web\Controller
     }
 
     /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate()
+    {
+        $model = new Products();
+
+        if ($model->load(\Yii::$app->request->post()) && $model->save())
+        {
+            return $this->redirect(['index', 'id' => $model->id]);
+        }
+
+        return $this->render('index', [
+            'items' => $model,
+            'id' => $model->id
+        ]);
+    }
+
+    /**
      * @param int $id
      * @return string|\yii\web\Response
      */
     public function actionUpdate($id = 0)
     {
-        /* @var \frontend\models\Products[] $items  */
+        /* @var \frontend\models\Products[] $items */
         $items = ArrayHelper::index(Products::find()->all(), 'id');
 
         if ($items[$id]->load(\Yii::$app->request->post()) && $items[$id]->save())
