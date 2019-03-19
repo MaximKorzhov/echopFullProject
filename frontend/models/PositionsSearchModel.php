@@ -17,8 +17,8 @@ class PositionsSearchModel extends Positions
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['art', 'shtrih', 'name', 'date', 'group', 'podgroup', 'size', 'podrobno', 'add_pole', 'from_id'], 'safe'],
+            [['id', 'from_id'], 'integer'],
+            [['art', 'shtrih', 'name', 'date', 'group', 'podgroup', 'size', 'podrobno', 'add_pole'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -62,6 +62,7 @@ class PositionsSearchModel extends Positions
             'id' => $this->id,
             'price' => $this->price,
             'date' => $this->date,
+            'from_id' => $this->from_id,
         ]);
 
         $query->andFilterWhere(['like', 'art', $this->art])
@@ -71,8 +72,7 @@ class PositionsSearchModel extends Positions
             ->andFilterWhere(['like', 'podgroup', $this->podgroup])
             ->andFilterWhere(['like', 'size', $this->size])
             ->andFilterWhere(['like', 'podrobno', $this->podrobno])
-            ->andFilterWhere(['like', 'add_pole', $this->add_pole])
-            ->andFilterWhere(['like', 'from_id', $this->from_id]);
+            ->andFilterWhere(['like', 'add_pole', $this->add_pole]);
 
         return $dataProvider;
     }

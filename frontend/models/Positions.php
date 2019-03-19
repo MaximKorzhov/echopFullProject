@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "fp_position".
+ * This is the model class for table "position".
  *
  * @property int $id
  * @property string $art
@@ -18,7 +18,9 @@ use Yii;
  * @property string $size
  * @property resource $podrobno
  * @property string $add_pole
- * @property string $from_id
+ * @property int $from_id
+ *
+ * @property Suppliers $suppliers
  */
 class Positions extends \yii\db\ActiveRecord
 {
@@ -39,8 +41,10 @@ class Positions extends \yii\db\ActiveRecord
             [['price'], 'number'],
             [['date'], 'safe'],
             [['podrobno'], 'string'],
-            [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole', 'from_id'], 'string', 'max' => 45],
+            [['from_id'], 'integer'],
+            [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
+            [['from_id'], 'unique'],
         ];
     }
 
@@ -63,5 +67,13 @@ class Positions extends \yii\db\ActiveRecord
             'add_pole' => Yii::t('app', 'Add Pole'),
             'from_id' => Yii::t('app', 'From ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSuppliers()
+    {
+        return $this->hasOne(Suppliers::className(), ['id' => 'from_id']);
     }
 }

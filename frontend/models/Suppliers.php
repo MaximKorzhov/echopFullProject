@@ -15,6 +15,8 @@ use Yii;
  * @property string $schet
  * @property string $balans
  * @property string $status
+ *
+ * @property Position $id0
  */
 class Suppliers extends \yii\db\ActiveRecord
 {
@@ -35,6 +37,7 @@ class Suppliers extends \yii\db\ActiveRecord
             [['unp', 'contact_id', 'name', 'schet', 'balans', 'status'], 'string', 'max' => 45],
             [['bank'], 'string', 'max' => 100],
             [['unp'], 'unique'],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Positions::className(), 'targetAttribute' => ['id' => 'from_id']],
         ];
     }
 
@@ -53,5 +56,13 @@ class Suppliers extends \yii\db\ActiveRecord
             'balans' => Yii::t('app', 'Balans'),
             'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getId0()
+    {
+        return $this->hasOne(Position::className(), ['from_id' => 'id']);
     }
 }

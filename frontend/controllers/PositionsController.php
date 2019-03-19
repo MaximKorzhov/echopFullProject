@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Position;
 use frontend\models\Positions;
 use frontend\models\PositionsSearchModel;
 use yii\web\Controller;
@@ -35,14 +34,14 @@ class PositionsController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {       
+    {
         $searchModel = new PositionsSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-       ]);
+        ]);
     }
 
     /**
@@ -109,7 +108,7 @@ class PositionsController extends Controller
 
         return $this->redirect(['index']);
     }
-    
+
     /**
      * Finds the Positions model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

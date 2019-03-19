@@ -86,7 +86,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Контакты',
-                            'url' => ['/contacts/index']
+                            'url' => ['/user/index']
                         ],
                 ], 'url' => ['/user/index']],
                 ['label' => 'Contacts', 'url' => ['/user/index']],

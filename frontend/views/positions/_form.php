@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'add_pole')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'from_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'from_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
