@@ -1,13 +1,32 @@
 <?php
-
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Products */
 /* @var $form yii\widgets\ActiveForm */
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 ?>
 
+<script>
+    function submit()
+    {
+        $('form').submit();
+    }
+</script>
+<style>
+    span.glyphicon-floppy-saved {
+        color: #2aabd2;
+    }
+    span.glyphicon-floppy-saved:hover {
+        color: #4acbf2;
+    }
+</style>
+<?=
+    Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-saved', 'type' => 'submit']), 'javascript:submit()', [
+        'title' => Yii::t('app','Save'),
+        'data-pjax' => '1',
+    ]);
+?>
 <div class="products-form">
 
     <?php $form = ActiveForm::begin(); ?>
