@@ -26,32 +26,55 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
+<style>
+    .bgcolor {
+        background-color: #555;
+    }
+    .header {
+        position: relative;
+        min-height: 50px;
+    }
+    .middle {
+        height: 100vh;
+    }
+    .leftsidebar {
+        padding: 20px;
+        width: 20%;
+        height: 100%;
+        min-width: 150px;
+        float: left;
+    }
+    .content {
+        min-height: inherit;
+        width: 80%;
+        float: left;
+    }
+    .flash-alert {
+        position: absolute;
+        height: 50px;
+        width: 350px;
+        right: 5px;
+        bottom: -50px;
+        z-index: 2000;
+    }
+</style>
+
 <div class="wrap">
-	<style>
-		.bgcolor {
-            background-color: #555;
-		}
-		.header {
-			position: relative;
-			min-height: 50px;
-		}
-		.middle {
-            height: 100vh;
-		}
-		.leftsidebar {
-            padding: 20px;
-            width: 20%;
-            height: 100%;
-            min-width: 150px;
-            float: left;
-		}
-		.content {
-            min-height: inherit;
-            width: 80%;
-            float: left;
-		}
-	</style>
 	<div class="header">
+        <div class="flash-alert">
+            <?php if( Yii::$app->session->hasFlash('success') ): ?>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo Yii::$app->session->getFlash('success'); ?>
+                </div>
+            <?php endif; ?>
+            <?php if( Yii::$app->session->hasFlash('error') ): ?>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <?php echo Yii::$app->session->getFlash('error'); ?>
+                </div>
+            <?php endif; ?>
+        </div>
         <?php
             NavBar::begin([
                 'brandLabel' => Yii::$app->name,
@@ -141,7 +164,7 @@ AppAsset::register($this);
            	<?= Breadcrumbs::widget([
                	'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
            	]) ?>
-           	<?= Alert::widget() ?>
+<!--           	--><?php //echo Alert::widget(); ?>
            	<?= $content ?>
         </div>
 	</div>
