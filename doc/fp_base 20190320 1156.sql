@@ -1,8 +1,8 @@
 ﻿--
 -- Скрипт сгенерирован Devart dbForge Studio 2019 for MySQL, Версия 8.1.22.0
 -- Домашняя страница продукта: http://www.devart.com/ru/dbforge/mysql/studio
--- Дата скрипта: 19.03.2019 23:45:18
--- Версия сервера: 8.0.15
+-- Дата скрипта: 20.03.2019 11:56:30
+-- Версия сервера: 5.7.25-log
 -- Версия клиента: 4.1
 --
 
@@ -19,7 +19,7 @@
 -- 
 -- Установка кодировки, с использованием которой клиент будет посылать запросы на сервер
 --
-SET NAMES 'utf8mb4';
+SET NAMES 'utf8';
 
 --
 -- Установка базы данных по умолчанию
@@ -84,14 +84,13 @@ CREATE TABLE user (
   status smallint(6) NOT NULL DEFAULT 10,
   created_at int(11) NOT NULL,
   updated_at int(11) NOT NULL,
-  user_type_id int(11) NOT NULL DEFAULT 0,
   tel varchar(255) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
   last varchar(255) DEFAULT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 6,
+AUTO_INCREMENT = 11,
 AVG_ROW_LENGTH = 5461,
 CHARACTER SET utf8,
 COLLATE utf8_unicode_ci;
@@ -101,12 +100,6 @@ COLLATE utf8_unicode_ci;
 --
 ALTER TABLE user
 ADD UNIQUE INDEX email (email);
-
---
--- Создать индекс `FK_user_user_type_id` для объекта типа таблица `user`
---
-ALTER TABLE user
-ADD INDEX FK_user_user_type_id (user_type_id);
 
 --
 -- Создать индекс `password_reset_token` для объекта типа таблица `user`
@@ -155,7 +148,7 @@ CREATE TABLE organizations (
   UNIQUE INDEX id_UNIQUE (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 13,
+AUTO_INCREMENT = 15,
 AVG_ROW_LENGTH = 4096,
 CHARACTER SET utf8,
 COLLATE utf8_general_ci;
@@ -218,7 +211,6 @@ REFERENCES organizations (id) ON DELETE CASCADE ON UPDATE CASCADE;
 CREATE TABLE `order` (
   id int(11) NOT NULL AUTO_INCREMENT,
   zakaz_from int(11) NOT NULL,
-  zakaz_to int(11) NOT NULL,
   position_id int(11) NOT NULL,
   date_from datetime DEFAULT NULL,
   date_to datetime DEFAULT NULL,
@@ -229,7 +221,8 @@ CREATE TABLE `order` (
   UNIQUE INDEX idnew_table_UNIQUE (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 2,
+AUTO_INCREMENT = 3,
+AVG_ROW_LENGTH = 8192,
 CHARACTER SET utf8,
 COLLATE utf8_general_ci;
 
@@ -288,45 +281,51 @@ COLLATE utf8_general_ci;
 -- Вывод данных для таблицы user
 --
 INSERT INTO user VALUES
-(1, 'admin', 'admin', '$2y$13$fYXItsLXsudX1PjSP4Ez4OXyp3THYHv9tkA2kNC7V7aZsrFdr8b3q', NULL, 'ya.ru', 10, 1, 1, 0, NULL, NULL, NULL),
-(6, 'user', 'user', 'asdfwsd', NULL, 'y.ru', 10, 1, 1, 1, NULL, NULL, NULL),
-(7, 'user2', 'user2', 'sdvdw', NULL, 'tt.ru', 10, 1, 1, 0, NULL, NULL, NULL);
+(1, 'admin', 'admin', '$2y$13$fYXItsLXsudX1PjSP4Ez4OXyp3THYHv9tkA2kNC7V7aZsrFdr8b3q', NULL, 'ya.ru', 10, 1, 1, NULL, 'админ', NULL),
+(6, 'user', 'user', 'asdfwsd', NULL, 'y.ru', 10, 1, 1, NULL, 'юзверь1', NULL),
+(7, 'user2', 'user2', 'sdvdw', NULL, 'tt.ru', 10, 1, 1, NULL, 'юзверь2', NULL),
+(8, 'user3', 'user3', 'ascw', NULL, 'rr.ru', 10, 1, 1, NULL, 'юзверь3', NULL),
+(9, 'user4', 'user4', 'ergerg', NULL, 'yy.ru', 10, 1, 1, NULL, 'юзверь4', NULL),
+(10, 'user5', 'user5', 'erger', NULL, 'uuu.ru', 10, 1, 1, NULL, 'юзверь5', NULL);
 
 -- 
 -- Вывод данных для таблицы org_type
 --
 INSERT INTO org_type VALUES
-(1, 'suppliers'),
-(0, 'shops');
+(1, 'supplier'),
+(0, 'shop');
 
 -- 
 -- Вывод данных для таблицы organizations
 --
 INSERT INTO organizations VALUES
-(2, '741236', NULL, 7, 'ООО Фабрика', NULL, NULL, NULL, NULL),
-(9, '54352', NULL, 6, 'Zаумыу', NULL, NULL, NULL, NULL),
-(11, 'fvds', NULL, 1, 'ООО Завод', NULL, NULL, NULL, NULL),
-(12, 'п54ц4', NULL, NULL, 'п5кы', NULL, NULL, NULL, NULL);
+(2, '741236', NULL, 7, 'магазин1', NULL, NULL, NULL, 0),
+(9, '54352', NULL, 6, 'поставщик1', NULL, NULL, NULL, 1),
+(11, 'fvds', NULL, 1, 'поставщик2', NULL, NULL, NULL, 1),
+(12, 'п54ц4', NULL, 8, 'магазин2', NULL, NULL, NULL, 0),
+(13, 'afa', NULL, 9, 'поставщик3', NULL, NULL, NULL, 1),
+(14, 'wfr', NULL, 10, 'магазин3', NULL, NULL, NULL, 0);
 
 -- 
 -- Вывод данных для таблицы `position`
 --
 INSERT INTO `position` VALUES
-(2, '5898', '286868486687', 'товар 3', 1.24, '2019-02-04 22:55:33', 'rdtrп', 'yufyj', '444x776x888', x'6B6A6664736864206B682064696775656877726C696768777269756C67686577726C67726567772C726520686A756C726B6575206768777265752069676975726520676869756577726C206768696C7565727720676869756577722067756972657772207767206466676264666720617265672065726720657220676572206720', '9', 9),
-(6, 'cxvx', '45354', 'gdgd', 3.10, '2019-02-19 13:38:53', 'efwe', NULL, 'gerge', x'3234', '9', NULL),
-(7, 'cxvx', '45354', 'gdgd', 3.00, '2019-02-18 12:39:31', 'efwe', NULL, 'gerge', x'', '9', NULL),
-(13, '65465', '345435345', 'jhjh', 2.13, '2019-02-19 20:56:01', 'bnfg bs rbr', NULL, 'проба', x'343335343366676466736266206262736662737272736E72677420207220', '9', NULL),
-(14, '543tr3', '4333', 'grtb tr brtb  tr', 4.00, '2019-02-19 21:37:23', 'regerg', NULL, 'rtgh454gw 4 g4 ', x'206777746874206274206877367435206835347468623435', '9', NULL),
-(15, '35325', '453453453', 'gsdfgdfg', 6.00, '2019-02-19 21:52:20', 'gdhhn', NULL, 'gfdb', x'6668786668', '9', NULL),
-(20, '45', '5353', 'reger', 4.00, '2019-02-20 14:14:09', 'greger', NULL, 'reger', x'7265676572', '10', NULL),
-(21, 'rte', '34534534', 'ert434', 5.00, '2019-02-20 14:20:30', 'regerge', NULL, '43534', x'746572746572', '10', NULL),
-(22, '54343', '45345345345', 'ergerg', 5.00, '2019-02-20 18:56:14', 'retgretgre', NULL, '5343', x'726567726567', '10', NULL);
+(3, '5898', '286868486687', 'товар 1', 1.24, '2019-02-04 22:55:33', 'rdtrп', 'yufyj', '444x776x888', x'6B6A6664736864206B682064696775656877726C696768777269756C67686577726C67726567772C726520686A756C726B6575206768777265752069676975726520676869756577726C206768696C7565727720676869756577722067756972657772207767206466676264666720617265672065726720657220676572206720', '9', 9),
+(6, 'cxvx', '45354', 'товар 2', 3.10, '2019-02-19 13:38:53', 'efwe', NULL, 'gerge', x'3234', '9', 11),
+(7, 'cxvx', '45354', 'товар 3', 3.00, '2019-02-18 12:39:31', 'efwe', NULL, 'gerge', x'', '9', 9),
+(13, '65465', '345435345', 'товар 4', 2.13, '2019-02-19 20:56:01', 'bnfg bs rbr', NULL, 'проба', x'343335343366676466736266206262736662737272736E72677420207220', '9', 11),
+(14, '543tr3', '4333', 'товар 5', 4.00, '2019-02-19 21:37:23', 'regerg', NULL, 'rtgh454gw 4 g4 ', x'206777746874206274206877367435206835347468623435', '9', 13),
+(15, '35325', '453453453', 'товар 6', 6.00, '2019-02-19 21:52:20', 'gdhhn', NULL, 'gfdb', x'6668786668', '9', 9),
+(20, '45', '5353', 'товар 7', 4.00, '2019-02-20 14:14:09', 'greger', NULL, 'reger', x'7265676572', '10', 9),
+(21, 'rte', '34534534', 'товар 8', 5.00, '2019-02-20 14:20:30', 'regerge', NULL, '43534', x'746572746572', '10', 13),
+(22, '54343', '45345345345', 'товар 9', 5.00, '2019-02-20 18:56:14', 'retgretgre', NULL, '5343', x'726567726567', '10', 13);
 
 -- 
 -- Вывод данных для таблицы `order`
 --
 INSERT INTO `order` VALUES
-(1, 2, 11, 2, '2021-02-20 19:00:00', '2024-02-20 19:00:00', 'open', NULL, '100');
+(2, 14, 22, '2019-03-19 00:00:00', '2019-03-29 00:00:00', NULL, NULL, NULL),
+(11, 2, 3, '2021-02-20 19:00:00', '2024-02-20 19:00:00', 'open', NULL, '100');
 
 -- 
 -- Вывод данных для таблицы migration
