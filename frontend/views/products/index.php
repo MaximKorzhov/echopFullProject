@@ -5,6 +5,12 @@
 
 use yii\widgets\Pjax;
 use yii\helpers\Html;
+
+$this->registerJs('
+    $(".delete-prod").on("click", function() {
+        return confirm("Вы действительно хотите удалить товар?"); 
+    });
+');
 ?>
 
 <style>
@@ -119,6 +125,7 @@ use yii\helpers\Html;
                         Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/products/delete?id=' . $items[$id]->id, [
                             'title' => Yii::t('app', 'Delete'),
                             'data-pjax' => '1',
+                            'class' => 'delete-prod'
                         ])
                     ?>
                 </div>
@@ -145,28 +152,28 @@ use yii\helpers\Html;
     	</div>
     </div>
     <div class="product-details">
-    	<div class="product-details-inner bgcolor">
-        	<?php
-            	Pjax::begin();
+        <div class="product-details-inner bgcolor">
+            <?php
+                Pjax::begin();
 
-            	if (Yii::$app->controller->action->id == 'update')
-            	{
-                	echo $this->render('/products/update', [
-                    	'id' => $id,
-	                    'item' => $items[$id]
-    	            ]);
-        	    }
+                if (Yii::$app->controller->action->id == 'update')
+                {
+                    echo $this->render('/products/update', [
+                        'id' => $id,
+                        'item' => $items[$id]
+                    ]);
+                }
 
-            	if (Yii::$app->controller->action->id == 'index')
-            	{
-                	echo $this->render('details', [
-                    	'id' => $id,
-	                    'item' => $items[$id]
-     	           ]);
-        	    }
+                if (Yii::$app->controller->action->id == 'index')
+                {
+                    echo $this->render('details', [
+                        'id' => $id,
+                        'item' => $items[$id]
+                   ]);
+                }
 
-            	Pjax::end();
-        	?>
-    	</div>
+                Pjax::end();
+            ?>
+        </div>
     </div>
 </div>

@@ -5,20 +5,21 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
+$this->registerJs('
+    function submit() {
+        $("form").submit();
+    }
+', $this::POS_HEAD);
+
 ?>
 
-<script>
-    function submit()
-    {
-        $('form').submit();
-    }
-</script>
 <style>
     span.glyphicon-floppy-saved {
         color: #2aabd2;
     }
     span.glyphicon-floppy-saved:hover {
-        color: #4acbf2;
+        color: #6aebff;
     }
 </style>
 <?=
