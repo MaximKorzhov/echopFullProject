@@ -78,6 +78,7 @@ class ProductsController extends \yii\web\Controller
 
         if ($items[$id]->load(\Yii::$app->request->post()) && $items[$id]->save())
         {
+            \Yii::$app->session->setFlash('success', "Изменения сохранены");
             return $this->redirect(['index', 'id' => $id]);
         }
 
