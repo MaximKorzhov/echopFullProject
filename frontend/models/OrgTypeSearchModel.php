@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Messages;
+use frontend\models\OrgType;
 
 /**
- * MessagesSearchModel represents the model behind the search form of `frontend\models\Messages`.
+ * OrgTypeSearchModel represents the model behind the search form of `frontend\models\OrgType`.
  */
-class MessagesSearchModel extends Messages
+class OrgTypeSearchModel extends OrgType
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class MessagesSearchModel extends Messages
     {
         return [
             [['id'], 'integer'],
-            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class MessagesSearchModel extends Messages
      */
     public function search($params)
     {
-        $query = Messages::find();
+        $query = OrgType::find();
 
         // add conditions that should always apply here
 
@@ -61,11 +61,7 @@ class MessagesSearchModel extends Messages
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'from_id', $this->from_id])
-            ->andFilterWhere(['like', 'to_id', $this->to_id])
-            ->andFilterWhere(['like', 'zakaz_id', $this->zakaz_id])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

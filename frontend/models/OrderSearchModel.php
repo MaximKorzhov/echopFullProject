@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Messages;
+use frontend\models\Order;
 
 /**
- * MessagesSearchModel represents the model behind the search form of `frontend\models\Messages`.
+ * OrderSearchModel represents the model behind the search form of `frontend\models\Order`.
  */
-class MessagesSearchModel extends Messages
+class OrderSearchModel extends Order
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class MessagesSearchModel extends Messages
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'safe'],
+            [['id', 'zakaz_from', 'position_id'], 'integer'],
+            [['date_from', 'date_to', 'state', 'soob_id', 'summ', 'column1'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class MessagesSearchModel extends Messages
      */
     public function search($params)
     {
-        $query = Messages::find();
+        $query = Order::find();
 
         // add conditions that should always apply here
 
@@ -59,13 +59,16 @@ class MessagesSearchModel extends Messages
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'zakaz_from' => $this->zakaz_from,
+            'position_id' => $this->position_id,
+            'date_from' => $this->date_from,
+            'date_to' => $this->date_to,
         ]);
 
-        $query->andFilterWhere(['like', 'from_id', $this->from_id])
-            ->andFilterWhere(['like', 'to_id', $this->to_id])
-            ->andFilterWhere(['like', 'zakaz_id', $this->zakaz_id])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'state', $this->state])
+            ->andFilterWhere(['like', 'soob_id', $this->soob_id])
+            ->andFilterWhere(['like', 'summ', $this->summ])
+            ->andFilterWhere(['like', 'column1', $this->column1]);
 
         return $dataProvider;
     }
