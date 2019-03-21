@@ -63,19 +63,24 @@ AppAsset::register($this);
 	<div class="header">
         <div class="flash-alert">
             <?php if( Yii::$app->session->hasFlash('success') ): ?>
-                <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="alert alert-success alert-dismissible info" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <?php echo Yii::$app->session->getFlash('success'); ?>
                 </div>
             <?php endif; ?>
             <?php if( Yii::$app->session->hasFlash('error') ): ?>
-                <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="alert alert-danger alert-dismissible info" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <?php echo Yii::$app->session->getFlash('error'); ?>
                 </div>
             <?php endif; ?>
         </div>
         <?php
+            $this->registerJs(
+            '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+                $this::POS_READY
+            );
+
             NavBar::begin([
                 'brandLabel' => Yii::$app->name,
                 'brandUrl' => Yii::$app->homeUrl,
@@ -111,7 +116,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Контакты',
-                            'url' => ['/user/index']
+                            'url' => ['/contacts/index']
                         ],
                 ], 'url' => ['/user/index']],
                 ['label' => 'Contacts', 'url' => ['/user/index']],
