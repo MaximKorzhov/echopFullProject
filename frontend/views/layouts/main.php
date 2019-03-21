@@ -93,18 +93,14 @@ AppAsset::register($this);
                         [
                             'label' => 'Группы',
                             'url' => ['/groups/index']
-                        ],
+                        ],                       
                         [
-                            'label' => 'Поставщики',
-                            'url' => ['/suppliers/index']
-                        ],
-                        [
-                            'label' => 'Магазины',
-                            'url' => ['/shops/index']
+                            'label' => 'Организации',
+                            'url' => ['/organizations/index']
                         ],
                         [
                             'label' => 'Заказы',
-                            'url' => ['/zakaz/index']
+                            'url' => ['/order/index']
                         ],
                         [
                             'label' => 'Сообщения',
