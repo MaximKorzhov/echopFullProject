@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\UserSearchModel */
+/* @var $model frontend\models\User2SearchModel */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-search">
+<div class="user2-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -31,13 +31,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'created_at') ?>
 
+    <?php // echo $form->field($model, 'column1') ?>
+
     <?php // echo $form->field($model, 'updated_at') ?>
 
-    <?php // echo $form->field($model, 'tel') ?>
-
-    <?php // echo $form->field($model, 'name') ?>
-
-    <?php // echo $form->field($model, 'last') ?>
+    <?php // echo $form->field($model, 'user_type_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

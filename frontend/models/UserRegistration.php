@@ -22,7 +22,7 @@ use Yii;
  *
  * @property Organizations[] $organizations
  */
-class User extends \yii\db\ActiveRecord
+class UserRegistration extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

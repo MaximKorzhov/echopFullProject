@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "fp_soob".
+ * This is the model class for table "messages".
  *
  * @property int $id
  * @property string $from_id

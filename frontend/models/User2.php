@@ -15,14 +15,13 @@ use Yii;
  * @property string $email
  * @property int $status
  * @property int $created_at
+ * @property string $column1
  * @property int $updated_at
- * @property string $tel
- * @property string $name
- * @property string $last
+ * @property int $user_type_id
  *
- * @property Organizations[] $organizations
+ * @property UserType $userType
  */
-class User extends \yii\db\ActiveRecord
+class User2 extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -39,13 +38,13 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email', 'tel', 'last'], 'string', 'max' => 255],
+            [['status', 'created_at', 'updated_at', 'user_type_id'], 'integer'],
+            [['username', 'password_hash', 'password_reset_token', 'email', 'column1'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['name'], 'string', 'max' => 50],
-            [['email'], 'unique'],
             [['username'], 'unique'],
+            [['email'], 'unique'],
             [['password_reset_token'], 'unique'],
+            [['user_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserType::className(), 'targetAttribute' => ['user_type_id' => 'id']],
         ];
     }
 
@@ -63,18 +62,17 @@ class User extends \yii\db\ActiveRecord
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
+            'column1' => Yii::t('app', 'Column1'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'tel' => Yii::t('app', 'Tel'),
-            'name' => Yii::t('app', 'Name'),
-            'last' => Yii::t('app', 'Last'),
+            'user_type_id' => Yii::t('app', 'User Type ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOrganizations()
+    public function getUserType()
     {
-        return $this->hasMany(Organizations::className(), ['user_id' => 'id']);
+        return $this->hasOne(UserType::className(), ['id' => 'user_type_id']);
     }
 }

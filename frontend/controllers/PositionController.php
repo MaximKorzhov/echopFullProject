@@ -3,16 +3,16 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Messages;
-use frontend\models\MessagesSearchModel;
+use frontend\models\Position;
+use frontend\models\PositionSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MessagesController implements the CRUD actions for Messages model.
+ * PositionController implements the CRUD actions for Position model.
  */
-class MessagesController extends Controller
+class PositionController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class MessagesController extends Controller
     }
 
     /**
-     * Lists all Messages models.
+     * Lists all Position models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MessagesSearchModel();
+        $searchModel = new PositionSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Displays a single Messages model.
+     * Displays a single Position model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class MessagesController extends Controller
     }
 
     /**
-     * Creates a new Messages model.
+     * Creates a new Position model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Messages();
+        $model = new Position();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Updates an existing Messages model.
+     * Updates an existing Position model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * Deletes an existing Messages model.
+     * Deletes an existing Position model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class MessagesController extends Controller
     }
 
     /**
-     * Finds the Messages model based on its primary key value.
+     * Finds the Position model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Messages the loaded model
+     * @return Position the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Messages::findOne($id)) !== null) {
+        if (($model = Position::findOne($id)) !== null) {
             return $model;
         }
 

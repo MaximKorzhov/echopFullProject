@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\User */
+/* @var $model frontend\models\UserRegistration */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-form">
+<div class="user-registration-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Messages */
+/* @var $model frontend\models\User2 */
 
-$this->title = Yii::t('app', 'Create Messages');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Messages'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create User2');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User2s'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="messages-create">
+<div class="user2-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

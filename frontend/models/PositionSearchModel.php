@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Messages;
+use frontend\models\Position;
 
 /**
- * MessagesSearchModel represents the model behind the search form of `frontend\models\Messages`.
+ * PositionSearchModel represents the model behind the search form of `frontend\models\Position`.
  */
-class MessagesSearchModel extends Messages
+class PositionSearchModel extends Position
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class MessagesSearchModel extends Messages
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'safe'],
+            [['id', 'org_id'], 'integer'],
+            [['art', 'shtrih', 'name', 'date', 'group', 'podgroup', 'size', 'podrobno', 'add_pole'], 'safe'],
+            [['price'], 'number'],
         ];
     }
 
@@ -40,7 +41,7 @@ class MessagesSearchModel extends Messages
      */
     public function search($params)
     {
-        $query = Messages::find();
+        $query = Position::find();
 
         // add conditions that should always apply here
 
@@ -59,13 +60,19 @@ class MessagesSearchModel extends Messages
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'price' => $this->price,
+            'date' => $this->date,
+            'org_id' => $this->org_id,
         ]);
 
-        $query->andFilterWhere(['like', 'from_id', $this->from_id])
-            ->andFilterWhere(['like', 'to_id', $this->to_id])
-            ->andFilterWhere(['like', 'zakaz_id', $this->zakaz_id])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'art', $this->art])
+            ->andFilterWhere(['like', 'shtrih', $this->shtrih])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'group', $this->group])
+            ->andFilterWhere(['like', 'podgroup', $this->podgroup])
+            ->andFilterWhere(['like', 'size', $this->size])
+            ->andFilterWhere(['like', 'podrobno', $this->podrobno])
+            ->andFilterWhere(['like', 'add_pole', $this->add_pole]);
 
         return $dataProvider;
     }

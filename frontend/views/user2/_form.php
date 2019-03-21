@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\User */
+/* @var $model frontend\models\User2 */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-form">
+<div class="user2-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -26,13 +26,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_at')->textInput() ?>
 
+    <?= $form->field($model, 'column1')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
-    <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'last')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'user_type_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
