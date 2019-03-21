@@ -64,4 +64,9 @@ class Products extends \yii\db\ActiveRecord
             'from_id' => Yii::t('app', 'From ID'),
         ];
     }
+
+    public function getOrganization()
+    {
+        return $this->hasOne(Country::className(), ['country_id' => 'country_id']);
+    }
 }
