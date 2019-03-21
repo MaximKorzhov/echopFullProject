@@ -36,10 +36,10 @@ class Products extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price'], 'number'],
+            [['price', 'org_id'], 'number'],
             [['date'], 'safe'],
             [['podrobno'], 'string'],
-            [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole', 'from_id'], 'string', 'max' => 45],
+            [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
         ];
     }
