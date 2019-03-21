@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Order;
+use frontend\models\Orders;
 
 /**
  * OrderSearchModel represents the model behind the search form of `frontend\models\Order`.
  */
-class OrderSearchModel extends Order
+class OrdersSearchModel extends Orders
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class OrderSearchModel extends Order
     public function rules()
     {
         return [
-            [['id', 'zakaz_from', 'position_id'], 'integer'],
-            [['date_from', 'date_to', 'state', 'soob_id', 'summ', 'column1'], 'safe'],
+            [['id', 'org_id', 'position_id'], 'integer'],
+            [['date_from', 'date_to', 'state', 'soob_id', 'summ'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class OrderSearchModel extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = Orders::find();
 
         // add conditions that should always apply here
 
@@ -59,7 +59,7 @@ class OrderSearchModel extends Order
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'zakaz_from' => $this->zakaz_from,
+            'org_id' => $this->org_id,
             'position_id' => $this->position_id,
             'date_from' => $this->date_from,
             'date_to' => $this->date_to,
@@ -67,8 +67,7 @@ class OrderSearchModel extends Order
 
         $query->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'soob_id', $this->soob_id])
-            ->andFilterWhere(['like', 'summ', $this->summ])
-            ->andFilterWhere(['like', 'column1', $this->column1]);
+            ->andFilterWhere(['like', 'summ', $this->summ]);
 
         return $dataProvider;
     }

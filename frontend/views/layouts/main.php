@@ -100,7 +100,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Заказы',
-                            'url' => ['/order/index']
+                            'url' => ['/orders/index']
                         ],
                         [
                             'label' => 'Сообщения',

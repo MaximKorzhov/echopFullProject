@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "org_type".
@@ -51,5 +52,10 @@ class OrgType extends \yii\db\ActiveRecord
     public function getOrganizations()
     {
         return $this->hasMany(Organizations::className(), ['org_type_id' => 'id']);
+    }
+
+    public static function getOrgTypes()
+    {
+        return ArrayHelper::map(OrgType::find()->all(), 'id', 'name');
     }
 }

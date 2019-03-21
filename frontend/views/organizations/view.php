@@ -32,12 +32,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'unp',
             'bank',
-            'user_id',
+//            'user_id',
+            [
+                'attribute' => 'user_id',
+                'value' => function($data) {
+                    return $data->user->name;
+                },
+            ],
             'name',
             'schet',
             'balans',
             'status',
-            'org_type_id',
+//            'org_type_id',
+            [
+                'attribute' => 'org_type_id',
+                'value' => function($data) {
+                    return $data->orgType->name;
+                },
+            ],
         ],
     ]) ?>
 

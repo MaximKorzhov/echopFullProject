@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 /* @var $item frontend\models\Products */
 /* @var $id */
+/* @var $org frontend\models\Organizations[] */
 
 use yii\helpers\Html;
 
@@ -20,7 +21,8 @@ use yii\helpers\Html;
 
     <?= $this->render('_form', [
         'model' => $item,
-        'id' => $id
+        'id' => $id,
+        'org' => $org
     ]) ?>
 
 </div>
