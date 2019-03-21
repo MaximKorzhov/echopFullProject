@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "user".
  *
  * @property int $id
- * @property string $username
+ * @property string $org_name
  * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
@@ -22,7 +22,7 @@ use Yii;
  *
  * @property Organizations[] $organizations
  */
-class UserRegistration extends \yii\db\ActiveRecord
+class Registration extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -38,13 +38,13 @@ class UserRegistration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['org_name', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token', 'email', 'tel', 'last'], 'string', 'max' => 255],
+            [['org_name', 'password_hash', 'password_reset_token', 'email', 'tel', 'last'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['name'], 'string', 'max' => 50],
             [['email'], 'unique'],
-            [['username'], 'unique'],
+            [['org_name'], 'unique'],
             [['password_reset_token'], 'unique'],
         ];
     }
@@ -56,7 +56,7 @@ class UserRegistration extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
+            'org_name' => Yii::t('app', 'Org Name'),
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),

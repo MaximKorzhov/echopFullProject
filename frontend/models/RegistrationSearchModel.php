@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\UserRegistration;
+use frontend\models\Registration;
 
 /**
- * UserRegistrationSearchModel represents the model behind the search form of `frontend\models\UserRegistration`.
+ * RegistrationSearchModel represents the model behind the search form of `frontend\models\Registration`.
  */
-class UserRegistrationSearchModel extends UserRegistration
+class RegistrationSearchModel extends Registration
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class UserRegistrationSearchModel extends UserRegistration
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'tel', 'name', 'last'], 'safe'],
+            [['org_name', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'tel', 'name', 'last'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class UserRegistrationSearchModel extends UserRegistration
      */
     public function search($params)
     {
-        $query = UserRegistration::find();
+        $query = Registration::find();
 
         // add conditions that should always apply here
 
@@ -64,7 +64,7 @@ class UserRegistrationSearchModel extends UserRegistration
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
+        $query->andFilterWhere(['like', 'org_name', $this->org_name])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
