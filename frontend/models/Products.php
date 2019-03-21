@@ -67,6 +67,6 @@ class Products extends \yii\db\ActiveRecord
 
     public function getOrganization()
     {
-        return $this->hasOne(Country::className(), ['country_id' => 'country_id']);
+        return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
     }
 }

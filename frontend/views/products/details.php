@@ -11,6 +11,7 @@
 /* @var \frontend\models\Products $item  */
 
 use yii\helpers\Html;
+use \frontend\models\Products;
 
 echo Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]), '/products/update?id=' . $item->id, [
     'title' => Yii::t('app', 'Edit'),
@@ -24,3 +25,4 @@ echo Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]), '
 <p>Единица измерения: <?= $item->size ?></p>
 <p>Цена: <?= $item->price ?></p>
 <p>Дата поступления: <?= $item->date ?></p>
+<p>Поставщик: </p>
