@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Organizations;
+use frontend\models\OrgType;
 use frontend\models\Products;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
@@ -31,7 +33,8 @@ class ProductsController extends \yii\web\Controller
 
         return $this->render('index', [
             'items' => $items,
-            'id' => $id
+            'id' => $id,
+            'org' => Organizations::getOrgList()
         ]);
     }
 
@@ -63,7 +66,8 @@ class ProductsController extends \yii\web\Controller
 
         return $this->render('index', [
             'items' => $model,
-            'id' => $model->id
+            'id' => $model->id,
+            'org' => Organizations::getOrgList()
         ]);
     }
 
@@ -85,6 +89,7 @@ class ProductsController extends \yii\web\Controller
         return $this->render('index', [
             'items' => $items,
             'id' => $id,
+            'org' => Organizations::getOrgList()
         ]);
     }
 

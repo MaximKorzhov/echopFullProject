@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "organizations".
@@ -86,5 +87,10 @@ class Organizations extends \yii\db\ActiveRecord
     public function getPositions()
     {
         return $this->hasMany(Position::className(), ['org_id' => 'id']);
+    }
+
+    public static function getOrgList()
+    {
+        return ArrayHelper::map(Organizations::find()->all(), 'id', 'name');
     }
 }

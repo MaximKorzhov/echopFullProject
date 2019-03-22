@@ -65,7 +65,10 @@ class Products extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getOrganization()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrg()
     {
         return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
     }

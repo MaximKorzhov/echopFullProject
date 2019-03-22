@@ -28,13 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'unp',
             'bank',
-            'user_id',
+//            'user_id',
+            [
+                'attribute' => 'user_id',
+                'value' => 'user.name',
+            ],
             'name',
             //'schet',
             //'balans',
             //'status',
-            //'org_type_id',
-
+//            'org_type_id',
+            [
+                'attribute' => 'org_type_id',
+                'value' => 'orgType.name',
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

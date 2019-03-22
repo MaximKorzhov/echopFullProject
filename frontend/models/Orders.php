@@ -19,7 +19,7 @@ use Yii;
  *
  * @property Position $position
  */
-class Order extends \yii\db\ActiveRecord
+class Orders extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -35,11 +35,10 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['zakaz_from', 'position_id'], 'required'],
-            [['zakaz_from', 'position_id'], 'integer'],
+            [['org_id', 'position_id'], 'required'],
+            [['org_id', 'position_id'], 'integer'],
             [['date_from', 'date_to'], 'safe'],
             [['state', 'soob_id', 'summ'], 'string', 'max' => 45],
-            [['column1'], 'string', 'max' => 255],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['position_id' => 'id']],
         ];
     }
@@ -51,22 +50,29 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'zakaz_from' => Yii::t('app', 'Zakaz From'),
+            'org_id' => Yii::t('app', 'Order From'),
             'position_id' => Yii::t('app', 'Position ID'),
             'date_from' => Yii::t('app', 'Date From'),
             'date_to' => Yii::t('app', 'Date To'),
             'state' => Yii::t('app', 'State'),
             'soob_id' => Yii::t('app', 'Soob ID'),
             'summ' => Yii::t('app', 'Summ'),
-            'column1' => Yii::t('app', 'Column1'),
         ];
     }
-
+    
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getPosition()
     {
         return $this->hasOne(Position::className(), ['id' => 'position_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrg()
+    {
+        return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
     }
 }

@@ -30,14 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'zakaz_from',
-            'position_id',
+//            'org_id',
+            [
+                'attribute' => 'org_id',
+                'value' => function($data) {
+                    return $data->org->name;
+                },
+            ],
+//            'position_id',
+            [
+                'attribute' => 'position_id',
+                'value' => function($data) {
+                    return $data->position->name;
+                },
+            ],
             'date_from',
             'date_to',
             'state',
             'soob_id',
             'summ',
-            'column1',
         ],
     ]) ?>
 

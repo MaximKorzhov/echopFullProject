@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $items frontend\models\Products */
+/* @var $org frontend\models\Organizations[] */
 
 //$this->title = Yii::t('app', 'Create Products');
 ?>
@@ -18,6 +19,7 @@ use yii\helpers\Html;
 
     <?= $this->render('_form', [
         'model' => $items,
+        'org' => $org
     ]) ?>
 
 </div>

@@ -25,4 +25,4 @@ echo Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]), '
 <p>Единица измерения: <?= $item->size ?></p>
 <p>Цена: <?= $item->price ?></p>
 <p>Дата поступления: <?= $item->date ?></p>
-<p>Поставщик: </p>
+<p>Поставщик: <?= $item->org->name ?></p>

@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 /* @var \frontend\models\Products[] $items  */
 /* @var $id */
+/* @var $org frontend\models\Organizations[] */
 
 use yii\widgets\Pjax;
 use yii\helpers\Html;
@@ -137,7 +138,8 @@ $this->registerJs('
                 {
                     echo $this->render('/products/create', [
                         'id' => $id,
-                        'items' => $items
+                        'items' => $items,
+                        'org' => $org
                     ]);
                 }
         	?>
@@ -160,7 +162,8 @@ $this->registerJs('
                 {
                     echo $this->render('/products/update', [
                         'id' => $id,
-                        'item' => $items[$id]
+                        'item' => $items[$id],
+                        'org' => $org
                     ]);
                 }
 

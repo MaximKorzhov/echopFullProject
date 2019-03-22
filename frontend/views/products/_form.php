@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Products */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $org frontend\models\Organizations[] */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -54,7 +55,7 @@ $this->registerJs('
 
     <?= $form->field($model, 'add_pole')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'org_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'org_id')->label(Yii::t('app', 'Person'))->dropDownList($org, ['prompt' => Yii::t('app', 'Select Organization')]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
