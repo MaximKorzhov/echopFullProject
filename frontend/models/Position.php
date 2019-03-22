@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "position".
@@ -20,7 +21,7 @@ use Yii;
  * @property string $add_pole
  * @property int $org_id
  *
- * @property Order[] $orders
+ * @property Orders[] $orders
  * @property Organizations $org
  */
 class Position extends \yii\db\ActiveRecord
@@ -75,7 +76,7 @@ class Position extends \yii\db\ActiveRecord
      */
     public function getOrders()
     {
-        return $this->hasMany(Order::className(), ['position_id' => 'id']);
+        return $this->hasMany(Orders::className(), ['position_id' => 'id']);
     }
 
     /**
@@ -84,5 +85,10 @@ class Position extends \yii\db\ActiveRecord
     public function getOrg()
     {
         return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
+    }
+
+    public static function getPositions()
+    {
+        return ArrayHelper::map(Position::find()->all(), 'id', 'name');
     }
 }

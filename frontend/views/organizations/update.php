@@ -4,6 +4,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Organizations */
+/* @var $type frontend\models\OrgType[] */
+/* @var $users frontend\models\User[] */
 
 $this->title = Yii::t('app', 'Update Organizations: {name}', [
     'name' => $model->name,
@@ -18,6 +20,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'type' => $type,
+        'users' => $users,
     ]) ?>
 
 </div>

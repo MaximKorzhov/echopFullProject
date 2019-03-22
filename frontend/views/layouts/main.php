@@ -48,6 +48,8 @@ AppAsset::register($this);
         min-height: inherit;
         width: 80%;
         float: left;
+        padding-left: 5px;
+        padding-right: 5px;
     }
     .flash-alert {
         position: absolute;
@@ -77,7 +79,7 @@ AppAsset::register($this);
         </div>
         <?php
             $this->registerJs(
-            '$(".info").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+            '$(".info").animate({opacity: 1.0}, 7000).fadeOut("slow");',
                 $this::POS_READY
             );
 
@@ -112,7 +114,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Контакты',
-                            'url' => ['/contacts/index']
+                            'url' => ['/user/index']
                         ],
                 ], 'url' => ['/user/index']],
                 ['label' => 'Contacts', 'url' => ['/user/index']],
@@ -146,7 +148,7 @@ AppAsset::register($this);
                     'items' => [
                         [
                             'label' => 'Заказы',
-                            'url' => ['#']
+                            'url' => ['/orders/index']
                         ],
                         [
                             'label' => 'Сообщения',
