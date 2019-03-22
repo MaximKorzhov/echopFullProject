@@ -4,6 +4,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Organizations */
+/* @var $type frontend\models\OrgType[] */
+/* @var $users frontend\models\User[] */
 
 $this->title = Yii::t('app', 'Create Organizations');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organizations'), 'url' => ['index']];
@@ -15,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'type' => $type,
+        'users' => $users,
     ]) ?>
 
 </div>

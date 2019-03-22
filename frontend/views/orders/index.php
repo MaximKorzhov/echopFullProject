@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\OrderSearchModel */
+/* @var $searchModel frontend\models\OrdersSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Orders');
@@ -25,9 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'id',
-//            'zakaz_from',
+//            'org_id',
             [
-                'attribute' => 'zakaz_from',
+                'attribute' => 'org_id',
                 'value' => 'org.name',
             ],
 //            'position_id',
