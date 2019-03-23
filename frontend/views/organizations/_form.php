@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model frontend\models\Organizations */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $type frontend\models\OrgType[] */
-/* @var $users frontend\models\User[] */
+/* @var $users frontend\models\Users[] */
 ?>
 
 <div class="organizations-form">

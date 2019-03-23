@@ -210,7 +210,7 @@ REFERENCES organizations (id) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 CREATE TABLE `order` (
   id int(11) NOT NULL AUTO_INCREMENT,
-  zakaz_from int(11) NOT NULL,
+  org_id int(11) NOT NULL,
   position_id int(11) NOT NULL,
   date_from datetime DEFAULT NULL,
   date_to datetime DEFAULT NULL,

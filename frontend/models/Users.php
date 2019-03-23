@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use common\models\User;
 
 /**
  * This is the model class for table "user".
@@ -23,15 +24,15 @@ use yii\helpers\ArrayHelper;
  *
  * @property Organizations[] $organizations
  */
-class User extends \yii\db\ActiveRecord
+class Users extends User
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
-        return 'user';
-    }
+//    public static function tableName()
+//    {
+//        return 'user';
+//    }
 
     /**
      * {@inheritdoc}
@@ -39,14 +40,17 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['username', 'password_hash', 'email'], 'required'],
+            [['status'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'tel', 'last'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['name'], 'string', 'max' => 50],
             [['email'], 'unique'],
             [['username'], 'unique'],
             [['password_reset_token'], 'unique'],
+            ['email', 'email'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -58,13 +62,10 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'username' => Yii::t('app', 'Username'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
-            'password_hash' => Yii::t('app', 'Password Hash'),
-            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+//            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'Password'),
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
             'tel' => Yii::t('app', 'Tel'),
             'name' => Yii::t('app', 'Name'),
             'last' => Yii::t('app', 'Last'),
@@ -81,6 +82,8 @@ class User extends \yii\db\ActiveRecord
 
     public static function getUsers()
     {
-        return ArrayHelper::map(User::find()->all(), 'id', 'name');
+        return ArrayHelper::map(Users::find()->all(), 'id', function($item) {
+            return "{$item->name} ({$item->username})";
+        });
     }
 }
