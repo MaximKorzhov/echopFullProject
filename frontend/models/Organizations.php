@@ -19,7 +19,7 @@ use yii\helpers\ArrayHelper;
  * @property int $org_type_id
  *
  * @property OrgType $orgType
- * @property User $user
+ * @property Users $user
  * @property Position[] $positions
  */
 class Organizations extends \yii\db\ActiveRecord
@@ -43,7 +43,7 @@ class Organizations extends \yii\db\ActiveRecord
             [['bank'], 'string', 'max' => 100],
             [['unp'], 'unique'],
             [['org_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrgType::className(), 'targetAttribute' => ['org_type_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -78,7 +78,7 @@ class Organizations extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(Users::className(), ['id' => 'user_id']);
     }
 
     /**

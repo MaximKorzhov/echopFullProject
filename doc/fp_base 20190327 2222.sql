@@ -1,8 +1,8 @@
 ﻿--
 -- Скрипт сгенерирован Devart dbForge Studio 2019 for MySQL, Версия 8.1.22.0
 -- Домашняя страница продукта: http://www.devart.com/ru/dbforge/mysql/studio
--- Дата скрипта: 20.03.2019 11:56:30
--- Версия сервера: 5.7.25-log
+-- Дата скрипта: 27.03.2019 22:22:08
+-- Версия сервера: 8.0.15
 -- Версия клиента: 4.1
 --
 
@@ -19,7 +19,7 @@
 -- 
 -- Установка кодировки, с использованием которой клиент будет посылать запросы на сервер
 --
-SET NAMES 'utf8';
+SET NAMES 'utf8mb4';
 
 --
 -- Установка базы данных по умолчанию
@@ -30,6 +30,11 @@ USE fp_base;
 -- Удалить таблицу `country`
 --
 DROP TABLE IF EXISTS country;
+
+--
+-- Удалить таблицу `groups`
+--
+DROP TABLE IF EXISTS groups;
 
 --
 -- Удалить таблицу `messages`
@@ -81,16 +86,16 @@ CREATE TABLE user (
   password_hash varchar(255) NOT NULL,
   password_reset_token varchar(255) DEFAULT NULL,
   email varchar(255) NOT NULL,
-  status smallint(6) NOT NULL DEFAULT 10,
+  status smallint(6) NOT NULL,
   created_at int(11) NOT NULL,
   updated_at int(11) NOT NULL,
   tel varchar(255) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
-  last varchar(255) DEFAULT NULL,
+  last int(11) DEFAULT NULL,
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 11,
+AUTO_INCREMENT = 20,
 AVG_ROW_LENGTH = 5461,
 CHARACTER SET utf8,
 COLLATE utf8_unicode_ci;
@@ -148,7 +153,7 @@ CREATE TABLE organizations (
   UNIQUE INDEX id_UNIQUE (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 15,
+AUTO_INCREMENT = 16,
 AVG_ROW_LENGTH = 4096,
 CHARACTER SET utf8,
 COLLATE utf8_general_ci;
@@ -181,7 +186,7 @@ CREATE TABLE `position` (
   art varchar(45) DEFAULT NULL,
   shtrih varchar(45) DEFAULT NULL,
   name varchar(90) DEFAULT NULL,
-  price decimal(10, 2) DEFAULT NULL,
+  price decimal(10, 2) NOT NULL DEFAULT 0.00,
   date datetime DEFAULT NULL,
   `group` varchar(45) DEFAULT NULL,
   podgroup varchar(45) DEFAULT NULL,
@@ -193,7 +198,7 @@ CREATE TABLE `position` (
   UNIQUE INDEX id_UNIQUE (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 23,
+AUTO_INCREMENT = 26,
 AVG_ROW_LENGTH = 1820,
 CHARACTER SET utf8,
 COLLATE utf8_general_ci;
@@ -210,7 +215,7 @@ REFERENCES organizations (id) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 CREATE TABLE `order` (
   id int(11) NOT NULL AUTO_INCREMENT,
-  zakaz_from int(11) NOT NULL,
+  org_id int(11) NOT NULL,
   position_id int(11) NOT NULL,
   date_from datetime DEFAULT NULL,
   date_to datetime DEFAULT NULL,
@@ -221,7 +226,7 @@ CREATE TABLE `order` (
   UNIQUE INDEX idnew_table_UNIQUE (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 3,
+AUTO_INCREMENT = 12,
 AVG_ROW_LENGTH = 8192,
 CHARACTER SET utf8,
 COLLATE utf8_general_ci;
@@ -264,6 +269,19 @@ CHARACTER SET utf8,
 COLLATE utf8_general_ci;
 
 --
+-- Создать таблицу `groups`
+--
+CREATE TABLE groups (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL,
+  parent_id int(11) DEFAULT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE = INNODB,
+CHARACTER SET utf8,
+COLLATE utf8_general_ci;
+
+--
 -- Создать таблицу `country`
 --
 CREATE TABLE country (
@@ -272,7 +290,7 @@ CREATE TABLE country (
   PRIMARY KEY (id)
 )
 ENGINE = INNODB,
-AUTO_INCREMENT = 4,
+AUTO_INCREMENT = 3,
 AVG_ROW_LENGTH = 5461,
 CHARACTER SET utf8,
 COLLATE utf8_general_ci;
@@ -283,10 +301,11 @@ COLLATE utf8_general_ci;
 INSERT INTO user VALUES
 (1, 'admin', 'admin', '$2y$13$fYXItsLXsudX1PjSP4Ez4OXyp3THYHv9tkA2kNC7V7aZsrFdr8b3q', NULL, 'ya.ru', 10, 1, 1, NULL, 'админ', NULL),
 (6, 'user', 'user', 'asdfwsd', NULL, 'y.ru', 10, 1, 1, NULL, 'юзверь1', NULL),
-(7, 'user2', 'user2', 'sdvdw', NULL, 'tt.ru', 10, 1, 1, NULL, 'юзверь2', NULL),
+(7, 'user2', 'user2', 'sdvdw', NULL, 'tt.ru', 0, 1, 1, NULL, 'юзверь2', NULL),
 (8, 'user3', 'user3', 'ascw', NULL, 'rr.ru', 10, 1, 1, NULL, 'юзверь3', NULL),
-(9, 'user4', 'user4', 'ergerg', NULL, 'yy.ru', 10, 1, 1, NULL, 'юзверь4', NULL),
-(10, 'user5', 'user5', 'erger', NULL, 'uuu.ru', 10, 1, 1, NULL, 'юзверь5', NULL);
+(9, 'user4', 'user4', 'ergerg', NULL, 'yy.ru', 0, 1, 1, NULL, 'юзверь4', NULL),
+(10, 'user5', 'user5', 'erger', NULL, 'uuu.ru', 10, 1, 1, NULL, 'юзверь5', NULL),
+(19, 'user8', 'CTKfCv9hOOlFtxljONNm1HHbq4qe7AeN', '$2y$13$XaYEInh0KkIVPO7423uVfOkus5hYj6jw8VgQikYRRNhtAX/VKlK5q', NULL, 'dmkorolev@yan.ru', 10, 1553409498, 1553409498, '89663029815', 'DMITRIY KOROLEV', NULL);
 
 -- 
 -- Вывод данных для таблицы org_type
@@ -304,17 +323,18 @@ INSERT INTO organizations VALUES
 (11, 'fvds', NULL, 1, 'поставщик2', NULL, NULL, NULL, 1),
 (12, 'п54ц4', NULL, 8, 'магазин2', NULL, NULL, NULL, 0),
 (13, 'afa', NULL, 9, 'поставщик3', NULL, NULL, NULL, 1),
-(14, 'wfr', NULL, 10, 'магазин3', NULL, NULL, NULL, 0);
+(14, 'wfr', NULL, 10, 'магазин3', NULL, NULL, NULL, 0),
+(15, '2222222', 'fghfdrrhrthrthrthrthrthrthrthrth', 10, 'organization1', '111111', '44444444', '2', NULL);
 
 -- 
 -- Вывод данных для таблицы `position`
 --
 INSERT INTO `position` VALUES
-(3, '5898', '286868486687', 'товар 1', 1.24, '2019-02-04 22:55:33', 'rdtrп', 'yufyj', '444x776x888', x'6B6A6664736864206B682064696775656877726C696768777269756C67686577726C67726567772C726520686A756C726B6575206768777265752069676975726520676869756577726C206768696C7565727720676869756577722067756972657772207767206466676264666720617265672065726720657220676572206720', '9', 9),
-(6, 'cxvx', '45354', 'товар 2', 3.10, '2019-02-19 13:38:53', 'efwe', NULL, 'gerge', x'3234', '9', 11),
-(7, 'cxvx', '45354', 'товар 3', 3.00, '2019-02-18 12:39:31', 'efwe', NULL, 'gerge', x'', '9', 9),
+(3, '5891', '286868486687', 'товар 1', 1.24, '2019-02-04 22:55:33', 'rdtrп', 'yufyj', '444x776x888', x'6B6A6664736864206B682064696775656877726C696768777269756C67686577726C67726567772C726520686A756C726B6575206768777265752069676975726520676869756577726C206768696C7565727720676869756577722067756972657772207767206466676264666720617265672065726720657220676572206720', '9', 11),
+(6, 'cxvff', '45354', 'товар 2', 3.10, '2019-02-19 13:38:53', 'efwe', '', 'gerge', x'3234', '9', 11),
+(7, 'cxvxt', '45354', 'товар 3', 3.00, '2019-02-18 12:39:31', 'efwe', '', 'gerge', x'', '9', 9),
 (13, '65465', '345435345', 'товар 4', 2.13, '2019-02-19 20:56:01', 'bnfg bs rbr', NULL, 'проба', x'343335343366676466736266206262736662737272736E72677420207220', '9', 11),
-(14, '543tr3', '4333', 'товар 5', 4.00, '2019-02-19 21:37:23', 'regerg', NULL, 'rtgh454gw 4 g4 ', x'206777746874206274206877367435206835347468623435', '9', 13),
+(14, '543re', '4333', 'товар 5', 4.00, '2019-02-19 21:37:23', 'regerg', '', 'rtgh454gw 4 g4 ', x'206777746874206274206877367435206835347468623435', '9', 13),
 (15, '35325', '453453453', 'товар 6', 6.00, '2019-02-19 21:52:20', 'gdhhn', NULL, 'gfdb', x'6668786668', '9', 9),
 (20, '45', '5353', 'товар 7', 4.00, '2019-02-20 14:14:09', 'greger', NULL, 'reger', x'7265676572', '10', 9),
 (21, 'rte', '34534534', 'товар 8', 5.00, '2019-02-20 14:20:30', 'regerge', NULL, '43534', x'746572746572', '10', 13),
@@ -338,6 +358,19 @@ INSERT INTO migration VALUES
 -- Вывод данных для таблицы messages
 --
 -- Таблица fp_base.messages не содержит данных
+
+-- 
+-- Вывод данных для таблицы groups
+--
+INSERT INTO groups VALUES
+(1, 'текстиль', NULL),
+(2, 'носки', 1),
+(3, 'наволочки', 1),
+(4, 'майки', 1),
+(5, 'посуда', NULL),
+(6, 'чашки', 5),
+(7, 'кастрюли', 5),
+(8, 'чайник', 5);
 
 -- 
 -- Вывод данных для таблицы country
