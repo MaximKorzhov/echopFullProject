@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use frontend\models\OrgType;
+use frontend\models\User;
 use Yii;
 use frontend\models\Organizations;
 use frontend\models\OrganizationsSearchModel;
@@ -72,6 +74,8 @@ class OrganizationsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'type' => OrgType::getOrgTypes(),
+            'users' => User::getUsers(),
         ]);
     }
 
@@ -92,15 +96,17 @@ class OrganizationsController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'type' => OrgType::getOrgTypes(),
+            'users' => User::getUsers(),
         ]);
     }
 
     /**
-     * Deletes an existing Organizations model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

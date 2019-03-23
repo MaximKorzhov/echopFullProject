@@ -55,11 +55,7 @@ $this->registerJs('
 
     <?= $form->field($model, 'add_pole')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'org_id')->label(Yii::t('app', 'Person'))->dropDownList($org, ['prompt' => Yii::t('app', 'Select Organization')]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-    </div>
+    <?= $form->field($model, 'org_id')->label(Yii::t('app', 'Person'))->dropDownList($org, ['prompt' => Yii::t('app', 'Select Organization...')]) ?>
 
     <?php ActiveForm::end(); ?>
 

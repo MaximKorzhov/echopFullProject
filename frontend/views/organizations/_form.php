@@ -6,6 +6,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Organizations */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $type frontend\models\OrgType[] */
+/* @var $users frontend\models\User[] */
 ?>
 
 <div class="organizations-form">
@@ -16,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'bank')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model->user, 'name')->label(Yii::t('app', 'User Name'))->textInput() ?>
+    <?= $form->field($model, 'user_id')->label(Yii::t('app', 'User Name'))->dropDownList($users, ['prompt' => Yii::t('app', 'Select User...')]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -26,7 +28,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model->orgType, 'name')->label(Yii::t('app', 'Person Type'))->textInput() ?>
+    <?= $form->field($model, 'org_type_id')->label(Yii::t('app', 'Org Type'))->dropDownList($type, ['prompt' => Yii::t('app', 'Select Organization Type...')]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

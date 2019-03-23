@@ -4,17 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Order */
+/* @var $model frontend\models\Orders */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $org frontend\models\Organizations[] */
+/* @var $pos frontend\models\Position[] */
 ?>
 
 <div class="order-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model->org, 'name')->textInput() ?>
+    <?= $form->field($model, 'org_id')->label(Yii::t('app', 'Person'))->dropDownList($org, ['prompt' => Yii::t('app', 'Select Organization...')]) ?>
 
-    <?= $form->field($model->position, 'name')->textInput() ?>
+    <?= $form->field($model, 'position_id')->label(Yii::t('app', 'Position'))->dropDownList($pos, ['prompt' => Yii::t('app', 'Select Position...')]) ?>
 
     <?= $form->field($model, 'date_from')->textInput() ?>
 

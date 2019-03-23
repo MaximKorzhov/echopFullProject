@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "user".
@@ -76,5 +77,10 @@ class User extends \yii\db\ActiveRecord
     public function getOrganizations()
     {
         return $this->hasMany(Organizations::className(), ['user_id' => 'id']);
+    }
+
+    public static function getUsers()
+    {
+        return ArrayHelper::map(User::find()->all(), 'id', 'name');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Organizations;
+use frontend\models\Position;
 use Yii;
 use frontend\models\Orders;
 use frontend\models\OrdersSearchModel;
@@ -72,6 +74,8 @@ class OrdersController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'org' => Organizations::getOrgList(),
+            'pos' => Position::getPositions()
         ]);
     }
 
@@ -92,15 +96,17 @@ class OrdersController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'org' => Organizations::getOrgList(),
+            'pos' => Position::getPositions()
         ]);
     }
 
     /**
-     * Deletes an existing Order model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -110,11 +116,9 @@ class OrdersController extends Controller
     }
 
     /**
-     * Finds the Order model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Order the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return Orders|null
+     * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
