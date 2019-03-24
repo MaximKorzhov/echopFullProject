@@ -3,8 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\User;
-use frontend\models\UserSearchModel;
+use frontend\models\Users;
+use frontend\models\UsersSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearchModel();
+        $searchModel = new UsersSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -60,15 +60,17 @@ class UserController extends Controller
     /**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new Users();
 
         if ($model->load(Yii::$app->request->post()))
         {
-            $model->password_hash = Yii::$app->getSecurity()->generatePasswordHash($model->password_hash);
+            $model->setPassword($model->password_hash);
+            $model->generateAuthKey();
 
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -83,16 +85,22 @@ class UserController extends Controller
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->setPassword($model->password_hash);
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -118,12 +126,12 @@ class UserController extends Controller
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Users the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Users::findOne($id)) !== null) {
             return $model;
         }
 
