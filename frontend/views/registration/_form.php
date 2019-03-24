@@ -9,26 +9,30 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="registration-form">
-
+$org_name;
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'org_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($organizations, 'name')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($organizations, 'unp')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'tel')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'name')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($registration, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'last')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'last')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'password_hash')->textInput(['maxlength' => true]) ?>
 
-    <!--<?= $form->field($model, 'status')->textInput() ?>
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'created_at')->textInput() ?>
-    <?= $form->field($model, 'updated_at')->textInput() ?>-->
+    <?= $form->field($registration, 'status')->textInput() ?>
+    <?= $form->field($registration, 'auth_key')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'password_reset_token')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($registration, 'created_at')->textInput() ?>
+    <?= $form->field($registration, 'updated_at')->textInput() ?>
     
     <div style="color:#999;margin:1em 0">
         If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
