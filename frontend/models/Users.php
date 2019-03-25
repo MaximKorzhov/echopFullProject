@@ -82,6 +82,8 @@ class Users extends User
 
     public static function getUsers()
     {
-        return ArrayHelper::map(Users::find()->all(), 'id', 'name');
+        return ArrayHelper::map(Users::find()->all(), 'id', function($item) {
+            return "{$item->name} ({$item->username})";
+        });
     }
 }

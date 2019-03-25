@@ -19,7 +19,7 @@ use yii\helpers\ArrayHelper;
  * @property int $org_type_id
  *
  * @property OrgType $orgType
- * @property User $user
+ * @property Users $user
  * @property Position[] $positions
  */
 class Organizations extends \yii\db\ActiveRecord

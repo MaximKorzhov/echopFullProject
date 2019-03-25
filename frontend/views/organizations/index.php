@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => ''],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -31,7 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'user_id',
             [
                 'attribute' => 'user_id',
-                'value' => 'user.name',
+                'value' => function($data) {
+                    return "{$data->user->name} ({$data->user->username})";
+                },
             ],
             'name',
             //'schet',
