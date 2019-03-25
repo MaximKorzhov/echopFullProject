@@ -3,16 +3,18 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\UserRegistration;
-use frontend\models\UserRegistrationSearchModel;
+use frontend\models\Registration;
+use frontend\models\RegistrationSearchModel;
+use frontend\models\Organizations;
+use frontend\models\OrganizationsSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserRegistrationController implements the CRUD actions for UserRegistration model.
+ * RegistrationController implements the CRUD actions for Registration model.
  */
-class UserRegistrationController extends Controller
+class RegistrationController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +32,12 @@ class UserRegistrationController extends Controller
     }
 
     /**
-     * Lists all UserRegistration models.
+     * Lists all Registration models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserRegistrationSearchModel();
+        $searchModel = new RegistrationSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +47,7 @@ class UserRegistrationController extends Controller
     }
 
     /**
-     * Displays a single UserRegistration model.
+     * Displays a single Registration model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,25 +60,30 @@ class UserRegistrationController extends Controller
     }
 
     /**
-     * Creates a new UserRegistration model.
+     * Creates a new Registration model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new UserRegistration();
+        $registration = new Registration();
+        $organizations = new Organizations();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($registration->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {
+            $registration->save();
+            $organizations->save();            
+                                                            
+            return $this->redirect(['view', 'id' => $registration->id]);
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'registration' => $registration,
+            'organizations' => $organizations,
         ]);
     }
 
     /**
-     * Updates an existing UserRegistration model.
+     * Updates an existing Registration model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +103,7 @@ class UserRegistrationController extends Controller
     }
 
     /**
-     * Deletes an existing UserRegistration model.
+     * Deletes an existing Registration model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +117,15 @@ class UserRegistrationController extends Controller
     }
 
     /**
-     * Finds the UserRegistration model based on its primary key value.
+     * Finds the Registration model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return UserRegistration the loaded model
+     * @return Registration the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = UserRegistration::findOne($id)) !== null) {
+        if (($model = Registration::findOne($id)) !== null) {
             return $model;
         }
 
