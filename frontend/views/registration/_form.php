@@ -9,7 +9,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="registration-form">
-$org_name;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($organizations, 'name')->textInput(['maxlength' => true]) ?>

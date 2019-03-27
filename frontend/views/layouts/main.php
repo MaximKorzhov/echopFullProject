@@ -110,7 +110,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Товары',
-                            'url' => ['/products/index']
+                            'url' => ['/position/index']
                         ],
                         [
                             'label' => 'Контакты',
