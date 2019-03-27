@@ -22,7 +22,7 @@ use Yii;
  *
  * @property Organizations[] $organizations
  */
-class UserRegistration extends \yii\db\ActiveRecord
+class Registration extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -56,7 +56,7 @@ class UserRegistration extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
+            'username' => Yii::t('app', 'User Name'),
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),

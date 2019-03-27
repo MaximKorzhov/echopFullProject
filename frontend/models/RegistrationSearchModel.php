@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\UserRegistration;
+use frontend\models\Registration;
 
 /**
- * UserRegistrationSearchModel represents the model behind the search form of `frontend\models\UserRegistration`.
+ * RegistrationSearchModel represents the model behind the search form of `frontend\models\Registration`.
  */
-class UserRegistrationSearchModel extends UserRegistration
+class RegistrationSearchModel extends Registration
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class UserRegistrationSearchModel extends UserRegistration
      */
     public function search($params)
     {
-        $query = UserRegistration::find();
+        $query = Registration::find();
 
         // add conditions that should always apply here
 

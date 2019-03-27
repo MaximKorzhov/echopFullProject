@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\UserRegistration */
+/* @var $model frontend\models\Registration */
 
-$this->title = Yii::t('app', 'Update User Registration: {name}', [
+$this->title = Yii::t('app', 'Update Registration: {name}', [
     'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Registrations'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Registrations'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="user-registration-update">
+<div class="registration-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

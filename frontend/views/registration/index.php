@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\UserRegistrationSearchModel */
+/* @var $searchModel frontend\models\RegistrationSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'User Registrations');
+$this->title = Yii::t('app', 'Registrations');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-registration-index">
+<div class="registration-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create User Registration'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Registration'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -30,12 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'auth_key',
             'password_hash',
             'password_reset_token',
-            'email:email',
+            //'email:email',
             //'status',
             //'created_at',
             //'updated_at',
-            'tel',
-            //'org_name',
+            //'tel',
+            //'name',
             //'last',
 
             ['class' => 'yii\grid\ActionColumn'],
