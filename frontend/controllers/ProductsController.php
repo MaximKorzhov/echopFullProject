@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 use frontend\models\Organizations;
-use frontend\models\OrgType;
 use frontend\models\Products;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;

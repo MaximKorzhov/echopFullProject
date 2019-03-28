@@ -17,15 +17,28 @@ $this->registerJs('
 
 <style>
     span.glyphicon-floppy-saved {
-        color: #2aabd2;
+        color: #3e3;
     }
     span.glyphicon-floppy-saved:hover {
-        color: #6aebff;
+        color: #0f0;
+    }
+    span.glyphicon-floppy-remove {
+        padding-left: 25px;
+        color: #e33;
+    }
+    span.glyphicon-floppy-remove:hover {
+        color: #f00;
     }
 </style>
 <?=
     Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-saved', 'type' => 'submit']), 'javascript:submit()', [
         'title' => Yii::t('app','Save'),
+        'data-pjax' => '1',
+    ]);
+?>
+<?=
+    Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-remove', 'type' => 'submit']), 'javascript:submit()', [
+        'title' => Yii::t('app','Cancel'),
         'data-pjax' => '1',
     ]);
 ?>
