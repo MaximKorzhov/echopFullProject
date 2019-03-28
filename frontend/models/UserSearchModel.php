@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * UsersSearchModel represents the model behind the search form of `frontend\models\User`.
+ * UserSearchModel represents the model behind the search form of `frontend\models\User`.
  */
-class UsersSearchModel extends Users
+class UserSearchModel extends User
 {
     /**
      * {@inheritdoc}
@@ -39,7 +39,7 @@ class UsersSearchModel extends Users
      */
     public function search($params)
     {
-        $query = Users::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 

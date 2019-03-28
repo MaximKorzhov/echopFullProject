@@ -1,8 +1,8 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Products */
+/* @var $model frontend\models\Product */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $org frontend\models\Organizations[] */
+/* @var $org frontend\models\Organization[] */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -16,14 +16,14 @@ $this->registerJs('
 
 <style>
     span.glyphicon-floppy-saved {
-        color: #3e3;
+        color: #3d3;
     }
     span.glyphicon-floppy-saved:hover {
         color: #0f0;
     }
     span.glyphicon-floppy-remove {
         padding-left: 25px;
-        color: #e33;
+        color: #d33;
     }
     span.glyphicon-floppy-remove:hover {
         color: #f00;
@@ -36,7 +36,7 @@ $this->registerJs('
     ]);
 ?>
 <?=
-    Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-remove', 'type' => 'submit']), 'javascript:submit()', [
+    Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-remove']), '/products/index?id=' . $model->id, [
         'title' => Yii::t('app','Cancel'),
         'data-pjax' => '1',
     ]);

@@ -21,8 +21,8 @@ use yii\helpers\ArrayHelper;
  * @property string $add_pole
  * @property int $org_id
  *
- * @property Orders[] $orders
- * @property Organizations $org
+ * @property Order[] $orders
+ * @property Organization $org
  */
 class Position extends \yii\db\ActiveRecord
 {
@@ -46,7 +46,7 @@ class Position extends \yii\db\ActiveRecord
             [['org_id'], 'integer'],
             [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
-            [['org_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organizations::className(), 'targetAttribute' => ['org_id' => 'id']],
+            [['org_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organization::className(), 'targetAttribute' => ['org_id' => 'id']],
         ];
     }
 
@@ -76,7 +76,7 @@ class Position extends \yii\db\ActiveRecord
      */
     public function getOrders()
     {
-        return $this->hasMany(Orders::className(), ['position_id' => 'id']);
+        return $this->hasMany(Order::className(), ['position_id' => 'id']);
     }
 
     /**
@@ -84,7 +84,7 @@ class Position extends \yii\db\ActiveRecord
      */
     public function getOrg()
     {
-        return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
+        return $this->hasOne(Organization::className(), ['id' => 'org_id']);
     }
 
     public static function getPositions()

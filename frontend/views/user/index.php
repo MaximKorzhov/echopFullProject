@@ -5,10 +5,10 @@ use yii\grid\GridView;
 use common\models\User;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\UsersSearchModel */
+/* @var $searchModel frontend\models\UserSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Users');
+$this->title = Yii::t('app', 'User');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">

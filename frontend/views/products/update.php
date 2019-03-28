@@ -1,12 +1,12 @@
 <?php
 /* @var $this yii\web\View */
-/* @var $item frontend\models\Products */
+/* @var $item frontend\models\Product */
 /* @var $id */
-/* @var $org frontend\models\Organizations[] */
+/* @var $org frontend\models\Organization[] */
 
 use yii\helpers\Html;
 
-//$this->title = Yii::t('app', 'Update Products: {name}', [
+//$this->title = Yii::t('app', 'Update Product: {name}', [
 //    'name' => $item->name,
 //]);
 ?>

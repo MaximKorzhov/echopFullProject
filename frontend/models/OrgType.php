@@ -11,7 +11,7 @@ use yii\helpers\ArrayHelper;
  * @property int $id
  * @property string $name
  *
- * @property Organizations[] $organizations
+ * @property Organization[] $organizations
  */
 class OrgType extends \yii\db\ActiveRecord
 {
@@ -51,7 +51,7 @@ class OrgType extends \yii\db\ActiveRecord
      */
     public function getOrganizations()
     {
-        return $this->hasMany(Organizations::className(), ['org_type_id' => 'id']);
+        return $this->hasMany(Organization::className(), ['org_type_id' => 'id']);
     }
 
     public static function getOrgTypes()

@@ -20,7 +20,7 @@ use Yii;
  * @property string $add_pole
  * @property string $from_id
  */
-class Products extends \yii\db\ActiveRecord
+class Product extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -70,6 +70,6 @@ class Products extends \yii\db\ActiveRecord
      */
     public function getOrg()
     {
-        return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
+        return $this->hasOne(Organization::className(), ['id' => 'org_id']);
     }
 }

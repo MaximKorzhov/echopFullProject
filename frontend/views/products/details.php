@@ -8,7 +8,7 @@
 </style>
 <?php
 /* @var $id */
-/* @var \frontend\models\Products $item  */
+/* @var \frontend\models\Product $item  */
 
 use yii\helpers\Html;
 

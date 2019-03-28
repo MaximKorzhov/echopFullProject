@@ -1,8 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $items frontend\models\Products */
-/* @var $org frontend\models\Organizations[] */
+/* @var $items frontend\models\Product */
+/* @var $org frontend\models\Organization[] */
 
 ?>
 <style>

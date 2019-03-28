@@ -2,11 +2,11 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Organizations;
+use frontend\models\Organization;
 use frontend\models\Position;
 use Yii;
-use frontend\models\Orders;
-use frontend\models\OrdersSearchModel;
+use frontend\models\Order;
+use frontend\models\OrderSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,7 +37,7 @@ class OrdersController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new OrdersSearchModel();
+        $searchModel = new OrderSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -66,7 +66,7 @@ class OrdersController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Orders();
+        $model = new Order();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -74,7 +74,7 @@ class OrdersController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'org' => Organizations::getOrgList(),
+            'org' => Organization::getOrgList(),
             'pos' => Position::getPositions()
         ]);
     }
@@ -96,7 +96,7 @@ class OrdersController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'org' => Organizations::getOrgList(),
+            'org' => Organization::getOrgList(),
             'pos' => Position::getPositions()
         ]);
     }
@@ -117,12 +117,12 @@ class OrdersController extends Controller
 
     /**
      * @param $id
-     * @return Orders|null
+     * @return Order|null
      * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
-        if (($model = Orders::findOne($id)) !== null) {
+        if (($model = Order::findOne($id)) !== null) {
             return $model;
         }
 

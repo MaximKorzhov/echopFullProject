@@ -19,7 +19,7 @@ use Yii;
  *
  * @property Position $position
  */
-class Orders extends \yii\db\ActiveRecord
+class Order extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -73,6 +73,6 @@ class Orders extends \yii\db\ActiveRecord
      */
     public function getOrg()
     {
-        return $this->hasOne(Organizations::className(), ['id' => 'org_id']);
+        return $this->hasOne(Organization::className(), ['id' => 'org_id']);
     }
 }

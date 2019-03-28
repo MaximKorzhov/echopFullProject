@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Orders */
+/* @var $model frontend\models\Order */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $org frontend\models\Organizations[] */
+/* @var $org frontend\models\Organization[] */
 /* @var $pos frontend\models\Position[] */
 ?>
 

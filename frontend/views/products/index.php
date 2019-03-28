@@ -1,8 +1,8 @@
 <?php
 /* @var $this yii\web\View */
-/* @var \frontend\models\Products[] $items  */
+/* @var \frontend\models\Product[] $items  */
 /* @var $id */
-/* @var $org frontend\models\Organizations[] */
+/* @var $org frontend\models\Organization[] */
 
 use yii\widgets\Pjax;
 use yii\helpers\Html;
@@ -97,13 +97,13 @@ $this->registerJs('
         float: left;
     }
     .product-toolbox-inner span.glyphicon-remove {
-        color: #e33;
+        color: #d33;
     }
     .product-toolbox-inner span.glyphicon-remove:hover {
         color: #f00;
     }
     .product-toolbox-inner span.glyphicon-plus {
-        color: #3e3;
+        color: #3d3;
     }
     .product-toolbox-inner span.glyphicon-plus:hover {
         color: #0f0;
