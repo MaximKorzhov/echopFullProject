@@ -12,7 +12,6 @@ $this->registerJs('
         $("form").submit();
     }
 ', $this::POS_HEAD);
-
 ?>
 
 <style>
@@ -43,33 +42,18 @@ $this->registerJs('
     ]);
 ?>
 <div class="products-form">
-
     <?php $form = ActiveForm::begin(); ?>
-
     <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
-
     <?= $form->field($model, 'art')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'shtrih')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'date')->textInput() ?>
-
     <?= $form->field($model, 'group')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'podgroup')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'size')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'podrobno')->textInput() ?>
-
     <?= $form->field($model, 'add_pole')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'org_id')->label(Yii::t('app', 'Person'))->dropDownList($org, ['prompt' => Yii::t('app', 'Select Organization...')]) ?>
-
     <?php ActiveForm::end(); ?>
-
 </div>

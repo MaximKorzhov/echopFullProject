@@ -11,7 +11,6 @@
 /* @var \frontend\models\Products $item  */
 
 use yii\helpers\Html;
-use \frontend\models\Products;
 
 echo Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]), '/products/update?id=' . $item->id, [
     'title' => Yii::t('app', 'Edit'),
