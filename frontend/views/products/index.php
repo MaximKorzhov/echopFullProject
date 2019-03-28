@@ -97,16 +97,16 @@ $this->registerJs('
         float: left;
     }
     .product-toolbox-inner span.glyphicon-remove {
-        color: #761c19;
+        color: #e33;
     }
     .product-toolbox-inner span.glyphicon-remove:hover {
-        color: #d43f3a;
+        color: #f00;
     }
     .product-toolbox-inner span.glyphicon-plus {
-        color: #040;
+        color: #3e3;
     }
     .product-toolbox-inner span.glyphicon-plus:hover {
-        color: #4cae4c;
+        color: #0f0;
     }
 </style>
 
