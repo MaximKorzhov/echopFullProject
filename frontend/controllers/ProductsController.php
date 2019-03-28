@@ -2,8 +2,9 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Organizations;
-use frontend\models\Products;
+use frontend\Helpers\OrganizationHelper;
+use frontend\models\Organization;
+use frontend\models\Product;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
@@ -15,9 +16,7 @@ class ProductsController extends \yii\web\Controller
      */
     public function actionIndex($id = 0)
     {
-        $org = Organizations::findOne(['user_id' => \Yii::$app->user->id]);
-
-        $items = ArrayHelper::index(Products::findAll(['org_id' => $org->id]), 'id');
+        $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getOrg()->id]), 'id');
 
         if ($id == 0)
         {
@@ -35,7 +34,7 @@ class ProductsController extends \yii\web\Controller
         return $this->render('index', [
             'items' => $items,
             'id' => $id,
-            'org' => Organizations::getOrgList()
+            'org' => Organization::getOrgListByUserId(\Yii::$app->user->id)
         ]);
     }
 
@@ -49,6 +48,7 @@ class ProductsController extends \yii\web\Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        \Yii::$app->session->setFlash('success', "Продукт удален");
 
         return $this->redirect(['index']);
     }
@@ -58,7 +58,7 @@ class ProductsController extends \yii\web\Controller
      */
     public function actionCreate()
     {
-        $model = new Products();
+        $model = new Product();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save())
         {
@@ -68,7 +68,7 @@ class ProductsController extends \yii\web\Controller
         return $this->render('index', [
             'items' => $model,
             'id' => $model->id,
-            'org' => Organizations::getOrgListByUserId(\Yii::$app->user->id)
+            'org' => Organization::getOrgListByUserId(\Yii::$app->user->id)
         ]);
     }
 
@@ -78,8 +78,8 @@ class ProductsController extends \yii\web\Controller
      */
     public function actionUpdate($id = 0)
     {
-        /* @var \frontend\models\Products[] $items */
-        $items = ArrayHelper::index(Products::find()->all(), 'id');
+        /* @var \frontend\models\Product[] $items */
+        $items = ArrayHelper::index(Product::find()->all(), 'id');
 
         if ($items[$id]->load(\Yii::$app->request->post()) && $items[$id]->save())
         {
@@ -90,18 +90,18 @@ class ProductsController extends \yii\web\Controller
         return $this->render('index', [
             'items' => $items,
             'id' => $id,
-            'org' => Organizations::getOrgListByUserId(\Yii::$app->user->id)
+            'org' => Organization::getOrgListByUserId(\Yii::$app->user->id)
         ]);
     }
 
     /**
      * @param $id
-     * @return Products|null
+     * @return Product|null
      * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
-        if (($model = Products::findOne($id)) !== null) {
+        if (($model = Product::findOne($id)) !== null) {
             return $model;
         }
 

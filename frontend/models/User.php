@@ -22,9 +22,9 @@ use common\models\User;
  * @property string $name
  * @property string $last
  *
- * @property Organizations[] $organizations
+ * @property Organization[] $organizations
  */
-class Users extends User
+class User extends User
 {
     /**
      * {@inheritdoc}
@@ -77,12 +77,12 @@ class Users extends User
      */
     public function getOrganizations()
     {
-        return $this->hasMany(Organizations::className(), ['user_id' => 'id']);
+        return $this->hasMany(Organization::className(), ['user_id' => 'id']);
     }
 
     public static function getUsers()
     {
-        return ArrayHelper::map(Users::find()->all(), 'id', function($item) {
+        return ArrayHelper::map(User::find()->all(), 'id', function($item) {
             return "{$item->name} ({$item->username})";
         });
     }

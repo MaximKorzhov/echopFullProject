@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * OrderSearchModel represents the model behind the search form of `frontend\models\Order`.
+ * OrganizationSearchModel represents the model behind the search form of `frontend\models\Organization`.
  */
-class OrdersSearchModel extends Orders
+class OrganizationSearchModel extends Organization
 {
     /**
      * {@inheritdoc}
@@ -16,8 +16,8 @@ class OrdersSearchModel extends Orders
     public function rules()
     {
         return [
-            [['id', 'org_id', 'position_id'], 'integer'],
-            [['date_from', 'date_to', 'state', 'soob_id', 'summ'], 'safe'],
+            [['id', 'user_id', 'org_type_id'], 'integer'],
+            [['unp', 'bank', 'name', 'schet', 'balans', 'status'], 'safe'],
         ];
     }
 
@@ -39,7 +39,7 @@ class OrdersSearchModel extends Orders
      */
     public function search($params)
     {
-        $query = Orders::find();
+        $query = Organization::find();
 
         // add conditions that should always apply here
 
@@ -58,15 +58,16 @@ class OrdersSearchModel extends Orders
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'org_id' => $this->org_id,
-            'position_id' => $this->position_id,
-            'date_from' => $this->date_from,
-            'date_to' => $this->date_to,
+            'user_id' => $this->user_id,
+            'org_type_id' => $this->org_type_id,
         ]);
 
-        $query->andFilterWhere(['like', 'state', $this->state])
-            ->andFilterWhere(['like', 'soob_id', $this->soob_id])
-            ->andFilterWhere(['like', 'summ', $this->summ]);
+        $query->andFilterWhere(['like', 'unp', $this->unp])
+            ->andFilterWhere(['like', 'bank', $this->bank])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'schet', $this->schet])
+            ->andFilterWhere(['like', 'balans', $this->balans])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

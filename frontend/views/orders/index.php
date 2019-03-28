@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\OrdersSearchModel */
+/* @var $searchModel frontend\models\OrderSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Orders');
+$this->title = Yii::t('app', 'Order');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">

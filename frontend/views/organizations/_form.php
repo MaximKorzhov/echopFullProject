@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Organizations */
+/* @var $model frontend\models\Organization */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $type frontend\models\OrgType[] */
-/* @var $users frontend\models\Users[] */
+/* @var $users frontend\models\User[] */
 ?>
 
 <div class="organizations-form">

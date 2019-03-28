@@ -3,12 +3,12 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Organizations */
+/* @var $model frontend\models\Organization */
 /* @var $type frontend\models\OrgType[] */
-/* @var $users frontend\models\Users[] */
+/* @var $users frontend\models\User[] */
 
-$this->title = Yii::t('app', 'Create Organizations');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organizations'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Organization');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organization'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="organizations-create">

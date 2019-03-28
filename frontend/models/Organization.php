@@ -19,10 +19,10 @@ use yii\helpers\ArrayHelper;
  * @property int $org_type_id
  *
  * @property OrgType $orgType
- * @property Users $user
+ * @property User $user
  * @property Position[] $positions
  */
-class Organizations extends \yii\db\ActiveRecord
+class Organization extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -43,7 +43,7 @@ class Organizations extends \yii\db\ActiveRecord
             [['bank'], 'string', 'max' => 100],
             [['unp'], 'unique'],
             [['org_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrgType::className(), 'targetAttribute' => ['org_type_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -78,7 +78,7 @@ class Organizations extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -91,11 +91,11 @@ class Organizations extends \yii\db\ActiveRecord
 
     public static function getOrgList()
     {
-        return ArrayHelper::map(Organizations::find()->all(), 'id', 'name');
+        return ArrayHelper::map(Organization::find()->all(), 'id', 'name');
     }
 
     public static function getOrgListByUserId($id = 0)
     {
-        return ArrayHelper::map(Organizations::findAll(['user_id' => $id]), 'id', 'name');
+        return ArrayHelper::map(Organization::findAll(['user_id' => $id]), 'id', 'name');
     }
 }

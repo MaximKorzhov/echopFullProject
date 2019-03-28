@@ -5,8 +5,8 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Registration;
 use frontend\models\RegistrationSearchModel;
-use frontend\models\Organizations;
-use frontend\models\OrganizationsSearchModel;
+use frontend\models\Organization;
+use frontend\models\OrganizationSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,7 +67,7 @@ class RegistrationController extends Controller
     public function actionCreate()
     {
         $registration = new Registration();
-        $organizations = new Organizations();
+        $organizations = new Organization();
 
         if ($registration->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {
             $registration->save();

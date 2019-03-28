@@ -3,8 +3,8 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\models\Users;
-use frontend\models\UsersSearchModel;
+use frontend\models\User;
+use frontend\models\UserSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UsersSearchModel();
+        $searchModel = new UserSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Users();
+        $model = new User();
 
         if ($model->load(Yii::$app->request->post()))
         {
@@ -126,12 +126,12 @@ class UserController extends Controller
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Users the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Users::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 

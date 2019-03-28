@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\Organizations */
+/* @var $model frontend\models\Organization */
 /* @var $type frontend\models\OrgType[] */
-/* @var $users frontend\models\Users[] */
+/* @var $users frontend\models\User[] */
 
-$this->title = Yii::t('app', 'Update Organizations: {name}', [
+$this->title = Yii::t('app', 'Update Organization: {name}', [
     'name' => $model->name,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organizations'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organization'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>

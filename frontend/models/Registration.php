@@ -20,7 +20,7 @@ use Yii;
  * @property string $name
  * @property string $last
  *
- * @property Organizations[] $organizations
+ * @property Organization[] $organizations
  */
 class Registration extends \yii\db\ActiveRecord
 {
@@ -75,6 +75,6 @@ class Registration extends \yii\db\ActiveRecord
      */
     public function getOrganizations()
     {
-        return $this->hasMany(Organizations::className(), ['user_id' => 'id']);
+        return $this->hasMany(Organization::className(), ['user_id' => 'id']);
     }
 }
