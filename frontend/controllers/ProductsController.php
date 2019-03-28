@@ -15,7 +15,9 @@ class ProductsController extends \yii\web\Controller
      */
     public function actionIndex($id = 0)
     {
-        $items = ArrayHelper::index(Products::find()->all(), 'id');
+        $org = Organizations::findOne(['user_id' => \Yii::$app->user->id]);
+
+        $items = ArrayHelper::index(Products::findAll(['org_id' => $org->id]), 'id');
 
         if ($id == 0)
         {
@@ -66,7 +68,7 @@ class ProductsController extends \yii\web\Controller
         return $this->render('index', [
             'items' => $model,
             'id' => $model->id,
-            'org' => Organizations::getOrgList()
+            'org' => Organizations::getOrgListByUserId(\Yii::$app->user->id)
         ]);
     }
 
@@ -88,7 +90,7 @@ class ProductsController extends \yii\web\Controller
         return $this->render('index', [
             'items' => $items,
             'id' => $id,
-            'org' => Organizations::getOrgList()
+            'org' => Organizations::getOrgListByUserId(\Yii::$app->user->id)
         ]);
     }
 

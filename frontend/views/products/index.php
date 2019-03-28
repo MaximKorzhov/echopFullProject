@@ -109,7 +109,6 @@ $this->registerJs('
         color: #0f0;
     }
 </style>
-
 <div class="content-products clearfix">
     <div class="products-list">
         <?php if (Yii::$app->controller->action->id == 'index'): ?>
@@ -144,7 +143,6 @@ $this->registerJs('
                     ]);
                 }
         	?>
-
             <?php if (Yii::$app->controller->action->id == 'index'): ?>
                 <?php foreach ($items as $product): ?>
                     <div class="product-item">

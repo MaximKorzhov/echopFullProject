@@ -93,4 +93,9 @@ class Organizations extends \yii\db\ActiveRecord
     {
         return ArrayHelper::map(Organizations::find()->all(), 'id', 'name');
     }
+
+    public static function getOrgListByUserId($id = 0)
+    {
+        return ArrayHelper::map(Organizations::findAll(['user_id' => $id]), 'id', 'name');
+    }
 }
