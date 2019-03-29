@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use common\models\User;
 
 /* @var $this yii\web\View */
-/* @var $searchModel frontend\models\UserSearchModel */
+/* @var $searchModel frontend\models\UsersSearchModel */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'User');

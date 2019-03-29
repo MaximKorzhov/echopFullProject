@@ -5,14 +5,13 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Position;
 use frontend\models\PositionSearchModel;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * PositionController implements the CRUD actions for Position model.
  */
-class PositionController extends Controller
+class PositionController extends AppController
 {
     /**
      * {@inheritdoc}

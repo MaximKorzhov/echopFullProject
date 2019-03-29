@@ -3,18 +3,17 @@
 namespace frontend\controllers;
 
 use frontend\models\OrgType;
-use frontend\models\User;
+use frontend\models\Users;
 use Yii;
 use frontend\models\Organization;
 use frontend\models\OrganizationSearchModel;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * OrganizationsController implements the CRUD actions for Organization model.
  */
-class OrganizationsController extends Controller
+class OrganizationsController extends AppController
 {
     /**
      * {@inheritdoc}
@@ -75,7 +74,7 @@ class OrganizationsController extends Controller
         return $this->render('create', [
             'model' => $model,
             'type' => OrgType::getOrgTypes(),
-            'users' => User::getUsers(),
+            'users' => Users::getUsers(),
         ]);
     }
 
@@ -97,7 +96,7 @@ class OrganizationsController extends Controller
         return $this->render('update', [
             'model' => $model,
             'type' => OrgType::getOrgTypes(),
-            'users' => User::getUsers(),
+            'users' => Users::getUsers(),
         ]);
     }
 

@@ -7,14 +7,13 @@ use frontend\models\Position;
 use Yii;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrdersController extends Controller
+class OrdersController extends AppController
 {
     /**
      * {@inheritdoc}

@@ -17,7 +17,7 @@ use frontend\models\Xposition;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends AppController
 {
     /**
      * {@inheritdoc}

@@ -8,7 +8,7 @@ use frontend\models\Product;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
-class ProductsController extends \yii\web\Controller
+class ProductsController extends AppController
 {
     /**
      * @param int $id

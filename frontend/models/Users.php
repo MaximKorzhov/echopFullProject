@@ -24,7 +24,7 @@ use common\models\User;
  *
  * @property Organization[] $organizations
  */
-class User extends User
+class Users extends User
 {
     /**
      * {@inheritdoc}
@@ -82,7 +82,7 @@ class User extends User
 
     public static function getUsers()
     {
-        return ArrayHelper::map(User::find()->all(), 'id', function($item) {
+        return ArrayHelper::map(Users::find()->all(), 'id', function($item) {
             return "{$item->name} ({$item->username})";
         });
     }
