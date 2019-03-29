@@ -5,14 +5,13 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Messages;
 use frontend\models\MessagesSearchModel;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * MessagesController implements the CRUD actions for Messages model.
  */
-class MessagesController extends Controller
+class MessagesController extends AppController
 {
     /**
      * {@inheritdoc}

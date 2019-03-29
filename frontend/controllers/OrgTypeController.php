@@ -5,14 +5,13 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\OrgType;
 use frontend\models\OrgTypeSearchModel;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * OrgTypeController implements the CRUD actions for OrgType model.
  */
-class OrgTypeController extends Controller
+class OrgTypeController extends AppController
 {
     /**
      * {@inheritdoc}
