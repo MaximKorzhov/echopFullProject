@@ -2,6 +2,7 @@
 namespace common\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -63,13 +64,13 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-//    public function rules()
-//    {
-//        return [
-//            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-//            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-//        ];
-//    }
+    public function rules()
+    {
+        return [
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -81,6 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * {@inheritdoc}
+     * @throws NotSupportedException
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -171,7 +173,7 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Generates password hash from password and sets it to the model
      * @param $password
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function setPassword($password)
     {
@@ -180,7 +182,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function generateAuthKey()
     {
@@ -189,7 +191,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function generatePasswordResetToken()
     {

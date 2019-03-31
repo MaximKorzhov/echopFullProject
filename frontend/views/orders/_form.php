@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'soob_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'summ')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'number')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

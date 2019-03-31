@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "fp_position".
@@ -20,7 +22,7 @@ use Yii;
  * @property string $add_pole
  * @property string $from_id
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -41,6 +43,7 @@ class Product extends \yii\db\ActiveRecord
             [['podrobno'], 'string'],
             [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
+            [['org_id', 'price'], 'required'],
         ];
     }
 
@@ -66,7 +69,7 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrg()
     {

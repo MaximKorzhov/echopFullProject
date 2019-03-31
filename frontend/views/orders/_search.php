@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'soob_id') ?>
 
-    <?php // echo $form->field($model, 'summ') ?>
+    <?php // echo $form->field($model, 'number') ?>
 
     <?php // echo $form->field($model, 'column1') ?>
 

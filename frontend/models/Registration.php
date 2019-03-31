@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user".
@@ -22,7 +23,7 @@ use Yii;
  *
  * @property Organization[] $organizations
  */
-class Registration extends \yii\db\ActiveRecord
+class Registration extends ActiveRecord
 {
     /**
      * {@inheritdoc}

@@ -14,21 +14,6 @@ use yii\filters\VerbFilter;
 class OrgTypeController extends AppController
 {
     /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    /**
      * Lists all OrgType models.
      * @return mixed
      */

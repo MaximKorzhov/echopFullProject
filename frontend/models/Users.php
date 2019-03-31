@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use common\models\User;
 
@@ -73,7 +74,7 @@ class Users extends User
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrganizations()
     {

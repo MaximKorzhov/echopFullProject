@@ -3,6 +3,7 @@
 namespace frontend\Helpers;
 
 use \frontend\models\Organization;
+use Yii;
 
 class OrganizationHelper
 {
@@ -11,10 +12,10 @@ class OrganizationHelper
      */
     public static function getOrg() : Organization
     {
-        if (!\Yii::$app->session->get('org'))
+        if (!Yii::$app->session->get('org'))
         {
-            \Yii::$app->session->set('org', Organization::findOne(['user_id' => \Yii::$app->user->id]));
+            Yii::$app->session->set('org', Organization::findOne(['user_id' => Yii::$app->user->id]));
         }
-        return \Yii::$app->session->get('org');
+        return Yii::$app->session->get('org');
     }
 }

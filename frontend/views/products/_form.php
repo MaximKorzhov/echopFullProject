@@ -42,7 +42,7 @@ $this->registerJs('
     ]);
 ?>
 <div class="products-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(/*['options' => ['method' => 'post']]*/); ?>
     <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
     <?= $form->field($model, 'art')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'shtrih')->textInput(['maxlength' => true]) ?>

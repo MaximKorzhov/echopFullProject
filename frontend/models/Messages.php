@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "messages".
@@ -14,7 +15,7 @@ use Yii;
  * @property string $type
  * @property string $status
  */
-class Messages extends \yii\db\ActiveRecord
+class Messages extends ActiveRecord
 {
     /**
      * {@inheritdoc}

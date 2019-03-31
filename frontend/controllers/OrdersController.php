@@ -7,29 +7,16 @@ use frontend\models\Position;
 use Yii;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
 class OrdersController extends AppController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Order models.
      * @return mixed
@@ -102,10 +89,10 @@ class OrdersController extends AppController
 
     /**
      * @param $id
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {

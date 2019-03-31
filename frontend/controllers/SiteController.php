@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -24,30 +25,7 @@ class SiteController extends AppController
      */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+        return parent::behaviors();
     }
 
     /**
@@ -148,6 +126,7 @@ class SiteController extends AppController
      * Signs user up.
      *
      * @return mixed
+     * @throws Exception
      */
     public function actionSignup()
     {
@@ -169,6 +148,7 @@ class SiteController extends AppController
      * Requests password reset.
      *
      * @return mixed
+     * @throws Exception
      */
     public function actionRequestPasswordReset()
     {
@@ -194,6 +174,7 @@ class SiteController extends AppController
      * @param string $token
      * @return mixed
      * @throws BadRequestHttpException
+     * @throws Exception
      */
     public function actionResetPassword($token)
     {
@@ -212,13 +193,5 @@ class SiteController extends AppController
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
-        
-    }
-    
-    public function actionXposition()
-    {
-        $dataProvider = Xposition::find()->all();
-        return $this->render('bindex',
-        ['bindex'=>$dataProvider]);
     }
 }

@@ -1,9 +1,10 @@
 <?php
 /* @var $this yii\web\View */
-/* @var \frontend\models\Product[] $items  */
+/* @var Product[] $items  */
 /* @var $id */
 /* @var $org frontend\models\Organization[] */
 
+use frontend\models\Product;
 use yii\widgets\Pjax;
 use yii\helpers\Html;
 
@@ -122,13 +123,19 @@ $this->registerJs('
                     ?>
                 </div>
                 <div class="product-toolbox-inner">
-                    <?=
-                        Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/products/delete?id=' . $items[$id]->id, [
-                            'title' => Yii::t('app', 'Delete'),
-                            'data-pjax' => '1',
-                            'class' => 'delete-prod'
-                        ])
-                    ?>
+                    <?php if (!empty($items)) : ?>
+                        <?=
+                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/products/delete?id=' . $items[$id]->id, [
+                                'title' => Yii::t('app', 'Delete'),
+                                'data-pjax' => '1',
+                                'class' => 'delete-prod',
+                                'data' => [
+                                    'method' => 'post',
+                                    'params' => ['id' => $items[$id]->id],
+                                ],
+                            ])
+                        ?>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>
@@ -168,10 +175,13 @@ $this->registerJs('
 
                 if (Yii::$app->controller->action->id == 'index')
                 {
-                    echo $this->render('details', [
-                        'id' => $id,
-                        'item' => $items[$id]
-                   ]);
+                    if (!empty($items))
+                    {
+                        echo $this->render('details', [
+                            'id' => $id,
+                            'item' => $items[$id]
+                        ]);
+                    }
                 }
 
                 Pjax::end();

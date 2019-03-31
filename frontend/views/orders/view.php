@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'date_to',
             'state',
             'soob_id',
-            'summ',
+            'number',
         ],
     ]) ?>
 

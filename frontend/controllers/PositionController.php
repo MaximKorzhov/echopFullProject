@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Position;
 use frontend\models\PositionSearchModel;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -13,21 +14,6 @@ use yii\filters\VerbFilter;
  */
 class PositionController extends AppController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Position models.
      * @return mixed
@@ -100,6 +86,8 @@ class PositionController extends AppController
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {

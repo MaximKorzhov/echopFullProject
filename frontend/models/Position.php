@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -24,7 +25,7 @@ use yii\helpers\ArrayHelper;
  * @property Order[] $orders
  * @property Organization $org
  */
-class Position extends \yii\db\ActiveRecord
+class Position extends ActiveRecord
 {
     /**
      * {@inheritdoc}

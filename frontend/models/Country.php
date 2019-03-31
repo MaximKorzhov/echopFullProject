@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "country".
@@ -10,7 +11,7 @@ use Yii;
  * @property int $id
  * @property string $name
  */
-class Country extends \yii\db\ActiveRecord
+class Country extends ActiveRecord
 {
     /**
      * {@inheritdoc}
