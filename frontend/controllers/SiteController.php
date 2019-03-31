@@ -13,6 +13,10 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Xposition;
+use frontend\models\Users;
+use frontend\models\UsersSearchModel;
+use frontend\models\Organization;
+use frontend\models\OrganizationSearchModel;
 
 /**
  * Site controller
@@ -151,17 +155,23 @@ class SiteController extends AppController
      */
     public function actionSignup()
     {
+        $users = new Users();
+        $organizations = new Organization();
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $users->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {
+            $users->save();
+            $organizations->save();   
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
-        }
-
+        }               
+        
         return $this->render('signup', [
             'model' => $model,
+            'users' => $users,
+            'organizations' => $organizations,
         ]);
     }
 

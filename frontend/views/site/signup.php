@@ -19,6 +19,28 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
+                <?= $form->field($organizations, 'name')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($organizations, 'unp')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'email')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'tel')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'name')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'username')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'last')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'password_hash')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($users, 'status')->textInput() ?>
+                <?= $form->field($users, 'auth_key')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($users, 'password_reset_token')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($users, 'created_at')->textInput() ?>
+                <?= $form->field($users, 'updated_at')->textInput() ?>
+            
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
                 <?= $form->field($model, 'email') ?>
