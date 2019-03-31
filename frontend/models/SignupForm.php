@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use yii\base\Exception;
 use yii\base\Model;
 use common\models\User;
 
@@ -39,7 +40,8 @@ class SignupForm extends Model
     /**
      * Signs user up.
      *
-     * @return Users|null the saved model or null if saving fails
+     * @return User
+     * @throws Exception
      */
     public function signup()
     {

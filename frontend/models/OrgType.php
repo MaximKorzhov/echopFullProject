@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -13,7 +14,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property Organization[] $organizations
  */
-class OrgType extends \yii\db\ActiveRecord
+class OrgType extends ActiveRecord
 {
     /**
      * {@inheritdoc}
