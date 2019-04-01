@@ -16,6 +16,6 @@ class OrganizationHelper
         {
             Yii::$app->session->set('org', Organization::findOne(['user_id' => Yii::$app->user->id]));
         }
-        return Yii::$app->session->get('org');
+        return Yii::$app->session->get('org') ?? new Organization();
     }
 }
