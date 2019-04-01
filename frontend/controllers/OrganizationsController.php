@@ -16,21 +16,6 @@ use yii\filters\VerbFilter;
 class OrganizationsController extends AppController
 {
     /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    /**
      * Lists all Organization models.
      * @return mixed
      */

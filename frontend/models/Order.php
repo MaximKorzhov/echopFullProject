@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order".
@@ -14,12 +16,12 @@ use Yii;
  * @property string $date_to
  * @property string $state
  * @property string $soob_id
- * @property string $summ
+ * @property string $number
  * @property string $column1
  *
  * @property Position $position
  */
-class Order extends \yii\db\ActiveRecord
+class Order extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -38,7 +40,7 @@ class Order extends \yii\db\ActiveRecord
             [['org_id', 'position_id'], 'required'],
             [['org_id', 'position_id'], 'integer'],
             [['date_from', 'date_to'], 'safe'],
-            [['state', 'soob_id', 'summ'], 'string', 'max' => 45],
+            [['state', 'soob_id', 'number'], 'string', 'max' => 45],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['position_id' => 'id']],
         ];
     }
@@ -56,12 +58,12 @@ class Order extends \yii\db\ActiveRecord
             'date_to' => Yii::t('app', 'Date To'),
             'state' => Yii::t('app', 'State'),
             'soob_id' => Yii::t('app', 'Soob ID'),
-            'summ' => Yii::t('app', 'Summ'),
+            'number' => Yii::t('app', 'Number'),
         ];
     }
     
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPosition()
     {
@@ -69,7 +71,7 @@ class Order extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrg()
     {

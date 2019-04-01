@@ -17,7 +17,7 @@ class OrderSearchModel extends Order
     {
         return [
             [['id', 'org_id', 'position_id'], 'integer'],
-            [['date_from', 'date_to', 'state', 'soob_id', 'summ'], 'safe'],
+            [['date_from', 'date_to', 'state', 'soob_id', 'number'], 'safe'],
         ];
     }
 
@@ -66,7 +66,7 @@ class OrderSearchModel extends Order
 
         $query->andFilterWhere(['like', 'state', $this->state])
             ->andFilterWhere(['like', 'soob_id', $this->soob_id])
-            ->andFilterWhere(['like', 'summ', $this->summ]);
+            ->andFilterWhere(['like', 'number', $this->number]);
 
         return $dataProvider;
     }
