@@ -14,10 +14,6 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Xposition;
-use frontend\models\Users;
-use frontend\models\UsersSearchModel;
-use frontend\models\Organization;
-use frontend\models\OrganizationSearchModel;
 
 /**
  * Site controller
@@ -30,30 +26,6 @@ class SiteController extends AppController
     public function behaviors()
     {
         return parent::behaviors();
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'only' => ['logout', 'signup', 'index'],
-//                'rules' => [
-//                    [
-//                        'actions' => ['signup'],
-//                        'allow' => true,
-//                        'roles' => ['?'],
-//                    ],
-//                    [
-//                        'actions' => ['logout', 'index'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'logout' => ['post'],
-//                ],
-//            ],
-//        ];
     }
 
     /**
@@ -158,23 +130,17 @@ class SiteController extends AppController
      */
     public function actionSignup()
     {
-        $users = new Users();
-        $organizations = new Organization();
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $users->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {
-            $users->save();
-            $organizations->save();   
+        if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
                 }
             }
-        }               
-        
+        }
+
         return $this->render('signup', [
             'model' => $model,
-            'users' => $users,
-            'organizations' => $organizations,
         ]);
     }
 
@@ -227,6 +193,5 @@ class SiteController extends AppController
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
-        
     }
 }

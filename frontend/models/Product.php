@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -42,6 +43,7 @@ class Product extends ActiveRecord
             [['podrobno'], 'string'],
             [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
+            [['org_id', 'price'], 'required'],
         ];
     }
 
@@ -67,7 +69,7 @@ class Product extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrg()
     {
