@@ -67,8 +67,8 @@ class Users extends User
             'password_hash' => Yii::t('app', 'Password'),
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
-            'tel' => Yii::t('app', 'Tel'),
-            'name' => Yii::t('app', 'Name'),
+            'tel' => Yii::t('app', 'Phone'),
+            'name' => Yii::t('app', 'Full Name'),
             'last' => Yii::t('app', 'Last'),
         ];
     }

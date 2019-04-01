@@ -58,7 +58,7 @@ class Organization extends ActiveRecord
             'unp' => Yii::t('app', 'Unp'),
             'bank' => Yii::t('app', 'Bank'),
             'user_id' => Yii::t('app', 'User ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Name of the organization'),
             'schet' => Yii::t('app', 'Schet'),
             'balans' => Yii::t('app', 'Balans'),
             'status' => Yii::t('app', 'Status'),
