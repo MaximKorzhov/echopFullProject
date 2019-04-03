@@ -8,9 +8,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->registerJs('
-    function submit() {
-        $("form").submit();
-    }
 ', $this::POS_HEAD);
 ?>
 
@@ -29,20 +26,25 @@ $this->registerJs('
         color: #f00;
     }
 </style>
-<?=
-    Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-saved', 'type' => 'submit']), 'javascript:submit()', [
-        'title' => Yii::t('app','Save'),
-        'data-pjax' => '1',
-    ]);
-?>
-<?=
-    Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-remove']), '/products/index?id=' . $model->id, [
-        'title' => Yii::t('app','Cancel'),
-        'data-pjax' => '1',
-    ]);
-?>
 <div class="products-form">
-    <?php $form = ActiveForm::begin(/*['options' => ['method' => 'post']]*/); ?>
+    <?php $form = ActiveForm::begin(); ?>
+    <?=
+        Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-saved', ]), '', [
+            'title' => Yii::t('app','Save'),
+            'data' => [
+                'method' => 'post',
+                'params' => [
+                    'action' => 'create'
+                ]
+            ],
+        ]);
+    ?>
+    <?=
+        Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-floppy-remove']), '/products/index?id=' . $model->id, [
+            'title' => Yii::t('app','Cancel'),
+            'data-pjax' => '1',
+        ]);
+    ?>
     <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
     <?= $form->field($model, 'art')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'shtrih')->textInput(['maxlength' => true]) ?>
