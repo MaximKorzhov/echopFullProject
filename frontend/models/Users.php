@@ -20,7 +20,7 @@ use common\models\User;
  * @property int $created_at
  * @property int $updated_at
  * @property string $tel
- * @property string $name
+ * @property string $fullname
  * @property string $last
  *
  * @property Organization[] $organizations
@@ -45,7 +45,7 @@ class Users extends User
             [['status'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'tel', 'last'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
-            [['name'], 'string', 'max' => 50],
+            [['fullname'], 'string', 'max' => 50],
             [['email'], 'unique'],
             [['username'], 'unique'],
             [['password_reset_token'], 'unique'],
@@ -68,7 +68,7 @@ class Users extends User
             'email' => Yii::t('app', 'Email'),
             'status' => Yii::t('app', 'Status'),
             'tel' => Yii::t('app', 'Phone'),
-            'name' => Yii::t('app', 'Full Name'),
+            'fullname' => Yii::t('app', 'Full Name'),
             'last' => Yii::t('app', 'Last'),
         ];
     }
@@ -84,7 +84,7 @@ class Users extends User
     public static function getUsers()
     {
         return ArrayHelper::map(Users::find()->all(), 'id', function($item) {
-            return "{$item->name} ({$item->username})";
+            return "{$item->fullname} ({$item->username})";
         });
     }
 }

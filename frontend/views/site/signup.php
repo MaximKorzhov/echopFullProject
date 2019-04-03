@@ -2,8 +2,10 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\SignupForm */
+/* @var $model SignupForm */
 
+use frontend\models\OrgType;
+use frontend\models\SignupForm;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -19,19 +21,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                <?= $form->field($organizations, 'name')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($organizations, 'unp')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'unp')->textInput(['maxlength' => true]) ?>
 
                 <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>             
+                <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
             
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
+
+                <?= $form->field($model, 'org_type_id')->label(Yii::t('app', 'Org Type'))->dropDownList(OrgType::getOrgTypes(), ['prompt' => Yii::t('app', 'Select Organization Type...')]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

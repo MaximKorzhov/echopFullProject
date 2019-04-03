@@ -14,8 +14,13 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
-    public $name;
+    public $fullname;
     public $tel;
+
+    public $name;
+    public $unp;
+    public $org_type_id;
+    public $user_id;
 
     /**
      * {@inheritdoc}
@@ -36,9 +41,14 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
-            
+
             [['tel',], 'string', 'max' => 255],
-            [['name'], 'string', 'max' => 50],
+
+            ['name', 'required'],
+            ['unp', 'string'],
+            ['org_type_id', 'required'],
+
+            [['fullname'], 'string', 'max' => 50],
         ];
     }
 
@@ -53,15 +63,31 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new Users();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->tel = $this->tel;
-        $user->name = $this->name;
+        $user->fullname = $this->fullname;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        
-        return $user->save() ? $user : null;
+
+        if (!$user->save())
+        {
+            return null;
+        }
+
+        $organizations = new Organization();
+        $organizations->name = $this->name;
+        $organizations->unp = $this->unp;
+        $organizations->user_id = $user->id;
+        $organizations->org_type_id = $this->org_type_id;
+
+        if ($organizations->save())
+        {
+            return $user;
+        }
+
+        return null;
     }
 }

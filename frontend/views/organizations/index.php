@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'user_id',
                 'value' => function($data) {
-                    return "{$data->user->name} ({$data->user->username})";
+                    return "{$data->user->fullname} ({$data->user->username})";
                 },
             ],
             'name',

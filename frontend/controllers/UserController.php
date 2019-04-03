@@ -5,8 +5,10 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Users;
 use frontend\models\UsersSearchModel;
+use yii\base\Exception;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -44,8 +46,8 @@ class UserController extends AppController
     /**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     * @throws \yii\base\Exception
+     * @return string|Response
+     * @throws Exception
      */
     public function actionCreate()
     {
@@ -70,9 +72,9 @@ class UserController extends AppController
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param $id
-     * @return string|\yii\web\Response
+     * @return string|Response
      * @throws NotFoundHttpException
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
     public function actionUpdate($id)
     {
@@ -94,10 +96,10 @@ class UserController extends AppController
 
     /**
      * @param $id
-     * @return \yii\web\Response
+     * @return Response
      * @throws NotFoundHttpException
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {

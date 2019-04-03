@@ -45,7 +45,7 @@ $this->registerJs('
             'data-pjax' => '1',
         ]);
     ?>
-    <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
+    <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'art')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'shtrih')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

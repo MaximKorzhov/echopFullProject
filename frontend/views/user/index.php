@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'tel',
-            'name',
+            'fullname',
             'last',
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -53,21 +54,21 @@ class Organization extends ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        return array(
             'id' => Yii::t('app', 'ID'),
             'unp' => Yii::t('app', 'Unp'),
             'bank' => Yii::t('app', 'Bank'),
             'user_id' => Yii::t('app', 'User ID'),
-            'name' => Yii::t('app', 'Name of the organization'),
+            'name' => Yii::t('app', 'Organization Name'),
             'schet' => Yii::t('app', 'Schet'),
             'balans' => Yii::t('app', 'Balans'),
             'status' => Yii::t('app', 'Status'),
             'org_type_id' => Yii::t('app', 'Org Type ID'),
-        ];
+        );
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrgType()
     {
@@ -75,7 +76,7 @@ class Organization extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -83,7 +84,7 @@ class Organization extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPositions()
     {

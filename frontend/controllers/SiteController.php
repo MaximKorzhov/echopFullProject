@@ -5,16 +5,12 @@ use Yii;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Organization;
-use frontend\models\OrganizationSearchModel;
 
 /**
  * Site controller
@@ -74,7 +70,6 @@ class SiteController extends AppController
 
             return $this->render('login', [
                 'model' => $model,
-                'model' => $model,
             ]);
         }
     }
@@ -132,10 +127,8 @@ class SiteController extends AppController
      */
     public function actionSignup()
     {        
-        $organizations = new Organization();
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {            
-            $organizations->save();   
+        if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
@@ -145,7 +138,6 @@ class SiteController extends AppController
 
         return $this->render('signup', [
             'model' => $model,
-            'organizations' => $organizations,            
         ]);
     }
 
