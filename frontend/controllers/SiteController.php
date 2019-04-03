@@ -15,8 +15,6 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Organization;
 use frontend\models\OrganizationSearchModel;
-use frontend\models\Users;
-use frontend\models\UsersSearchModel;
 
 /**
  * Site controller
@@ -76,6 +74,7 @@ class SiteController extends AppController
 
             return $this->render('login', [
                 'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -132,12 +131,10 @@ class SiteController extends AppController
      * @throws Exception
      */
     public function actionSignup()
-    {
-        $users = new Users();
+    {        
         $organizations = new Organization();
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())&& $users->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {
-            $users->save();
+        if ($model->load(Yii::$app->request->post()) && $organizations->load(Yii::$app->request->post())) {            
             $organizations->save();   
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -148,8 +145,7 @@ class SiteController extends AppController
 
         return $this->render('signup', [
             'model' => $model,
-            'organizations' => $organizations,
-            'users' => $users,
+            'organizations' => $organizations,            
         ]);
     }
 

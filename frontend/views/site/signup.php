@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($organizations, 'unp')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($users, 'tel')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($users, 'name')->textInput(['maxlength' => true]) ?>             
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>             
             
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
