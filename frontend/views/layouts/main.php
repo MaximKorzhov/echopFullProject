@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use frontend\Helpers\OrganizationHelper;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -144,23 +145,30 @@ AppAsset::register($this);
     <div class="middle">
         <div class="leftsidebar bgcolor">
             <?php
+                $menuItems = [
+                    [
+                        'label' => 'Заказы',
+                        'url' => ['/orders/index']
+                    ],
+                    [
+                        'label' => 'Сообщения',
+                        'url' => ['#']
+                    ]
+                ];
+
+                if (OrganizationHelper::getOrg()->org_type_id == 1)
+                {
+                    $menuItems[] = [
+                        'label' => 'Товары',
+                        'url' => ['/products/index']
+                    ];
+                }
+
                 echo Nav::widget([
                     'options' => ['class' => 'nav bgcolor',],
-                    'items' => [
-                        [
-                            'label' => 'Заказы',
-                            'url' => ['/orders/index']
-                        ],
-                        [
-                            'label' => 'Сообщения',
-                            'url' => ['#']
-                        ],
-                        [
-                            'label' => 'Товары',
-                            'url' => ['/products/index']
-                        ],
-                    ],
+                    'items' => $menuItems,
                 ]);
+
             ?>
         </div>
 
