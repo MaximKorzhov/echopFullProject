@@ -22,6 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showFooter'=> true,
+        'tableOptions' => [
+            'class' => 'table table-striped table-hover'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'id',
@@ -39,7 +43,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'date_to',
             //'state',
             //'soob_id',
-            //'number',
+            [
+                'attribute' => 'id',
+                'footer' => 'Total',
+            ],
+            'number',
+            [
+//                'attribute' => 'price',
+                'label' => 'NDS',
+//                'footer' => $total + $total * 0.18,
+//                'content' => function($data) {
+//                    return '<span style="color: red;">' . ($data->price + $data->price * 0.18) . '</span>';
+//                }
+            ],
+            [
+//                'attribute' => 'price',
+//                'footer' => $total,
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -2,12 +2,14 @@
 
 namespace frontend\controllers;
 
+use frontend\Helpers\OrganizationHelper;
 use frontend\models\Organization;
 use frontend\models\Position;
 use Yii;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
 use yii\db\StaleObjectException;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
@@ -26,9 +28,16 @@ class OrdersController extends AppController
         $searchModel = new OrderSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+//        $orders = Order::findAll([
+//            'org_id' => OrganizationHelper::getOrg()
+//        ]);
+
+//        $total = array_sum(ArrayHelper::getColumn($orders, 'price'));
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+//            'total' => $total,
         ]);
     }
 
