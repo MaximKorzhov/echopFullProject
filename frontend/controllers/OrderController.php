@@ -2,23 +2,37 @@
 
 namespace frontend\controllers;
 
-use frontend\Helpers\OrganizationHelper;
-use frontend\models\Organization;
-use frontend\models\Position;
 use Yii;
+use frontend\Helpers\OrganizationHelper;
+use yii\helpers\ArrayHelper;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
-use yii\db\StaleObjectException;
-use yii\helpers\ArrayHelper;
+use frontend\models\Position;
+use frontend\models\PositionSearchModel;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrdersController extends AppController
+class OrderController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Lists all Order models.
      * @return mixed
@@ -27,10 +41,18 @@ class OrdersController extends AppController
     {
         $searchModel = new OrderSearchModel();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+//        $searchModel = new PositionSearchModel();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $orders = Order::findAll([
+        'org_id' => OrganizationHelper::getOrg()
+        ]);
+        $pos = ArrayHelper::index(Position::find()->all(), 'id');       
+        $total = array_sum(ArrayHelper::getColumn($pos, 'price'));
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'total' => $total,
         ]);
     }
 
@@ -62,8 +84,6 @@ class OrdersController extends AppController
 
         return $this->render('create', [
             'model' => $model,
-            'org' => Organization::getOrgList(),
-            'pos' => Position::getPositions()
         ]);
     }
 
@@ -84,17 +104,15 @@ class OrdersController extends AppController
 
         return $this->render('update', [
             'model' => $model,
-            'org' => Organization::getOrgList(),
-            'pos' => Position::getPositions()
         ]);
     }
 
     /**
-     * @param $id
-     * @return Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws StaleObjectException
+     * Deletes an existing Order model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
@@ -104,9 +122,11 @@ class OrdersController extends AppController
     }
 
     /**
-     * @param $id
-     * @return Order|null
-     * @throws NotFoundHttpException
+     * Finds the Order model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Order the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {

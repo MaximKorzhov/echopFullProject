@@ -148,7 +148,7 @@ AppAsset::register($this);
                 $menuItems = [
                     [
                         'label' => 'Заказы',
-                        'url' => ['/orders/index']
+                        'url' => ['/order/index']
                     ],
                     [
                         'label' => 'Сообщения',
