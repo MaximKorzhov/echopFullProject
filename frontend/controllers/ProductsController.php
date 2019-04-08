@@ -82,7 +82,7 @@ class ProductsController extends AppController
     public function actionUpdate($id = 0)
     {
         /* @var Product[] $items */
-        $items = ArrayHelper::index(Product::find()->all(), 'id');
+        $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getOrg()->id]), 'id');
 
         if ($items[$id]->load(Yii::$app->request->post()) && $items[$id]->save())
         {
