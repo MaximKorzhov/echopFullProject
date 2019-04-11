@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\Helpers\OrganizationHelper;
+use frontend\models\Organization;
 use yii\helpers\ArrayHelper;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
@@ -37,22 +38,27 @@ class OrderController extends Controller
      * Lists all Order models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new OrderSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//        $searchModel = new PositionSearchModel();
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $orders = Order::findAll([
+    public function actionIndex($id = 0)
+    { 
+        $orders = Order::find()->all();
+        $positions = Position::findAll([
         'org_id' => OrganizationHelper::getOrg()
         ]);
-        $pos = ArrayHelper::index(Position::find()->all(), 'id');       
-        $total = array_sum(ArrayHelper::getColumn($pos, 'price'));
+        foreach ($positions as $position)
+        {
+            $item = $position->orders;                
+            if(key($item) === 0) $items[] = $item;
+        }
 
+        if ($id == 0)
+        {
+            $id = key($items);
+        }
+        
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'total' => $total,
+            'items' => $items,
+            'id' => $id,
+            'org' => Organization::getOrgListByUserId(Yii::$app->user->id)
         ]);
     }
 

@@ -77,4 +77,9 @@ class Order extends ActiveRecord
     {
         return $this->hasOne(Organization::className(), ['id' => 'org_id']);
     }
+    public function getOders()
+    {
+        return $this->hasOne(Position::className(), ['id' => 'position_id']);
+    }
+    
 }
