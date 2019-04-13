@@ -76,5 +76,5 @@ class Order extends ActiveRecord
     public function getOrg()
     {
         return $this->hasOne(Organization::className(), ['id' => 'org_id']);
-    }
+    }   
 }
