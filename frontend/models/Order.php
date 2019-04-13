@@ -76,10 +76,5 @@ class Order extends ActiveRecord
     public function getOrg()
     {
         return $this->hasOne(Organization::className(), ['id' => 'org_id']);
-    }
-    public function getOders()
-    {
-        return $this->hasOne(Position::className(), ['id' => 'position_id']);
-    }
-    
+    }   
 }

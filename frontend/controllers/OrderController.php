@@ -40,15 +40,19 @@ class OrderController extends Controller
      */
     public function actionIndex($id = 0)
     { 
-        $orders = Order::find()->all();
         $positions = Position::findAll([
         'org_id' => OrganizationHelper::getOrg()
         ]);
         foreach ($positions as $position)
         {
-            $item = $position->orders;                
-            if(key($item) === 0) $items[] = $item;
+            $order = Order::find()->where(['position_id' => $position])->one();
+            if(isset($order)) $orders[] = $order;
         }
+
+        foreach ($orders as $order)
+        {
+            $items[] = $order->position;                
+        }        
 
         if ($id == 0)
         {
