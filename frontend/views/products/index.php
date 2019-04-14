@@ -28,7 +28,7 @@ $this->registerJs('
         color: #fff;
     }
     .middle-panel {
-        padding-left: 10px;
+        padding-left: 5px;
         width: 40%;
         height: 100%;
         float: left;
@@ -38,7 +38,7 @@ $this->registerJs('
         width: 100%;
     }
     .right-panel {
-        padding-left: 10px;
+        padding-left: 5px;
         width: 40%;
         height: 100%;
         float: left;
@@ -50,7 +50,7 @@ $this->registerJs('
     .products-list {
         width: 100%;
         height: calc(100% - 45px);
-        padding-top: 10px;
+        padding-top: 5px;
     }
     .inner-products-list {
         overflow-y: auto;
@@ -116,15 +116,10 @@ $this->registerJs('
     	.right-panel {
         	width: 50%;
     	}
-    	.inner-right-panel {
-        	/*padding-top: 10px;*/
-        	/*padding-left: 20px;*/
-        	/*padding-right: 5px;*/
-    	}
     }
 </style>
 <div class="middle-panel">
-    <div class="inner-middle-panel">
+    <div class="inner-middle-panel bgcolor">
         <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
             <div class="product-toolbox">
                 <div class="inner-product-toolbox clearfix">
@@ -165,8 +160,8 @@ $this->registerJs('
                 }
             ?>
             <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
-                <div class="products-list">
-                    <div class="inner-products-list">
+                <div class="products-list bg">
+                    <div class="inner-products-list bgcolor">
                         <?php foreach ($items as $product): ?>
                             <div class="product-item">
                                 <?= Html::a(Html::tag('div', $product->name, ['class' => $product->id == $id ? 'product-item-active' : 'inner-product-item']), ['/products/index?id=' . $product->id]) ?>
@@ -178,7 +173,7 @@ $this->registerJs('
     </div>
 </div>
 <div class="right-panel">
-    <div class="inner-right-panel">
+    <div class="inner-right-panel bgcolor">
         <?php
 //            Pjax::begin();
 

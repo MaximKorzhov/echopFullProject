@@ -36,11 +36,12 @@ AppAsset::register($this);
         height: 100%;
         margin: 0;
     }
-    .color {
+    .bg {
+        background-color: #ccc;
         color: #000;
     }
     .bgcolor {
-        background-color: #bbb;
+        background-color: #fff;
         color: #000;
     }
     .header {
@@ -55,13 +56,12 @@ AppAsset::register($this);
     }
     .inner-left-sidebar {
         overflow: auto;
-        border: 1px solid #eee;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
         height: 100%;
     }
     .content {
         height: calc(100% - 110px); /* 50px header + 60px footer */
-        padding-top: 10px;
+        padding-top: 5px;
         padding-left: 5px;
         padding-right: 5px;
     }
@@ -198,9 +198,9 @@ AppAsset::register($this);
             NavBar::end();
         ?>
 	</div>
-    <div class="content clearfix">
+    <div class="content bg clearfix">
         <div class="left-sidebar">
-            <div class="inner-left-sidebar">
+            <div class="inner-left-sidebar bgcolor">
                 <?php
                     $menuItems = [
                         [
