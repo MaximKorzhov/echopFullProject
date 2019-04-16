@@ -2,9 +2,13 @@
 
 namespace frontend\controllers;
 
+use Throwable;
 use Yii;
 use frontend\Helpers\OrganizationHelper;
 use frontend\models\Organization;
+use yii\base\InvalidConfigException;
+use yii\data\ActiveDataProvider;
+use yii\db\StaleObjectException;
 use yii\helpers\ArrayHelper;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
@@ -36,33 +40,39 @@ class OrderController extends Controller
 
     /**
      * Lists all Order models.
+     * @param int $id
      * @return mixed
      */
     public function actionIndex($id = 0)
-    { 
-        $positions = Position::findAll([
-        'org_id' => OrganizationHelper::getOrg()
-        ]);
-        foreach ($positions as $position)
-        {
-            $order = Order::find()->where(['position_id' => $position])->one();
-            if(isset($order)) $orders[] = $order;
-        }
+    {
+        $customers = Order::find()
+                        ->select([Organization::tableName() . '.name', Order::tableName() . '.org_id'])
+                        ->joinWith('position')
+                        ->joinWith('org')
+                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                        ->distinct()
+                        ->all();
 
-        foreach ($orders as $order)
-        {
-            $items[] = $order->position;                
-        }        
+//        $r = array_unique(ArrayHelper::getColumn($customers, 'org.name'));
+//        $r2 = ArrayHelper::map($customers, 'position.price', 'number', 'org.name');
 
         if ($id == 0)
         {
-            $id = key($items);
+            $id = current(array_column($customers, 'org_id'));
         }
-        
+
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new OrderSearchModel();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Order::find()
+                                ->joinWith('position')
+                                ->where([Order::tableName() . '.org_id' => $id]),
+        ]);
+
         return $this->render('index', [
-            'items' => $items,
-            'id' => $id,
-            'org' => Organization::getOrgListByUserId(Yii::$app->user->id)
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'items' => $customers,
         ]);
     }
 
@@ -123,6 +133,8 @@ class OrderController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws Throwable
+     * @throws StaleObjectException
      */
     public function actionDelete($id)
     {
