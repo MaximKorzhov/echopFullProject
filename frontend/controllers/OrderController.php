@@ -10,6 +10,7 @@ use frontend\models\Order;
 use frontend\models\OrderSearchModel;
 use frontend\models\Position;
 use frontend\models\PositionSearchModel;
+use frontend\models\Users;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,6 +44,7 @@ class OrderController extends Controller
         $positions = Position::findAll([
         'org_id' => OrganizationHelper::getOrg()
         ]);
+
         foreach ($positions as $position)
         {
             $order = Order::find()->where(['position_id' => $position])->one();
@@ -51,16 +53,32 @@ class OrderController extends Controller
 
         foreach ($orders as $order)
         {
-            $items[] = $order->position;                
+            $items[] = $order->position;  
+            $organisations[] = $order->org;
         }        
-
+        
+        foreach ($organisations as $organisation)
+        {
+            $users[] = $organisation->user;
+        }
+//        foreach ($positions as $position)
+//        {
+//            $items[] = Order::find()->where(['position_id' => $position])->with([
+//            'position' => function ($query)
+//            {
+//                $query->andWhere(['org_id' => OrganizationHelper::getOrg()]);
+//            },
+//            'org',
+//            ])->one();
+//        }        
+    
         if ($id == 0)
         {
             $id = key($items);
         }
         
         return $this->render('index', [
-            'items' => $items,
+            'organisations' => $organisations,
             'id' => $id,
             'org' => Organization::getOrgListByUserId(Yii::$app->user->id)
         ]);

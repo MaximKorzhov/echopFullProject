@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 use frontend\models\Order;
+use frontend\models\Organization;
 use yii\widgets\Pjax;
 
 $this->registerJs('
@@ -20,7 +21,7 @@ $this->registerJs('
     a, a:link, a:visited, a:hover, a:active {
         text-decoration: none;
         cursor: pointer;
-        color: #fff;
+        color: #560319;
     }
     a:hover {
         color: #000;
@@ -86,7 +87,7 @@ $this->registerJs('
     .product-item {
         width: 100%;
         padding: 5px 0;
-        color: #fff;
+        color: #560319;
     }
     .product-toolbox {
         padding: 20px 0 40px 20px;
@@ -108,82 +109,14 @@ $this->registerJs('
         color: #0f0;
     }
 </style>
-<div class="content-products clearfix">
-    <div class="products-list">
-        <?php if (Yii::$app->controller->action->id == 'index'): ?>
-            <div class="product-toolbox bgcolor">
-                <div class="product-toolbox-inner">
-                    <?=
-                        Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-plus"]), '/order/create', [
-                            'title' => Yii::t('app', 'Add'),
-                            'data-pjax' => '1',
-                        ])
-                    ?>
-                </div>
-                <div class="product-toolbox-inner">
-                    <?php if (!empty($items)) : ?>
-                        <?=
-                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/order/delete?id=' . $items[$id]->id, [
-                                'title' => Yii::t('app', 'Delete'),
-                                'data-pjax' => '1',
-                                'class' => 'delete-prod',
-                                'data' => [
-                                    'method' => 'post',
-                                    'params' => ['id' => $items[$id]->id],
-                                ],
-                            ])
-                        ?>
-                    <?php endif; ?>
-                </div>
-            </div>
-        <?php endif; ?>
-    	<div class="products-list-inner bgcolor">
-        	<?php
-                if (Yii::$app->controller->action->id == 'create')
-                {
-                    echo $this->render('/order/create', [
-                        'id' => $id,
-                        'items' => $items,
-                        'org' => $org
-                    ]);
-                }
-        	?>
+    	<div class="content-products clearfix">
+        	
             <?php if (Yii::$app->controller->action->id == 'index'): ?>
-                <?php foreach ($items as $product): ?>
+                <?php foreach ($organisations as $product): ?>
                     <div class="product-item">
                         <?= Html::a(Html::tag('div', $product->name, ['class' => $product->id == $id ? 'order-item-active' : 'order-item-inner']), ['/order/index?id=' . $product->id]) ?>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>
     	</div>
-    </div>
-    <div class="product-details">
-        <div class="product-details-inner bgcolor">
-            <?php
-                Pjax::begin();
-
-                if (Yii::$app->controller->action->id == 'update')
-                {
-                    echo $this->render('/order/update', [
-                        'id' => $id,
-                        'item' => $items[$id],
-                        'org' => $org
-                    ]);
-                }
-
-                if (Yii::$app->controller->action->id == 'index')
-                {
-                    if (!empty($items))
-                    {
-                        echo $this->render('details', [
-                            'id' => $id,
-                            'item' => $items[$id]
-                        ]);
-                    }
-                }
-
-                Pjax::end();
-            ?>
-        </div>
-    </div>
-</div>
+   
