@@ -10,13 +10,11 @@ use yii\db\ActiveRecord;
  * This is the model class for table "order".
  *
  * @property int $id
- * @property int $zakaz_from
- * @property int $position_id
+  * @property int $position_id
  * @property string $date_from
  * @property string $date_to
  * @property string $state
- * @property string $soob_id
- * @property string $number
+  * @property string $number
  * @property string $column1
  *
  * @property Position $position
@@ -40,7 +38,7 @@ class Order extends ActiveRecord
             [['org_id', 'position_id'], 'required'],
             [['org_id', 'position_id'], 'integer'],
             [['date_from', 'date_to'], 'safe'],
-            [['state', 'soob_id', 'number'], 'string', 'max' => 45],
+            [['state', 'number'], 'string', 'max' => 45],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['position_id' => 'id']],
         ];
     }
@@ -57,7 +55,6 @@ class Order extends ActiveRecord
             'date_from' => Yii::t('app', 'Date From'),
             'date_to' => Yii::t('app', 'Date To'),
             'state' => Yii::t('app', 'State'),
-            'soob_id' => Yii::t('app', 'Soob ID'),
             'number' => Yii::t('app', 'Number'),
         ];
     }
@@ -73,8 +70,24 @@ class Order extends ActiveRecord
     /**
      * @return ActiveQuery
      */
+    public function getPositions()
+    {
+        return $this->hasMany(Position::className(), ['id' => 'position_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
     public function getOrg()
     {
         return $this->hasOne(Organization::className(), ['id' => 'org_id']);
-    }   
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getOrgs()
+    {
+        return $this->hasMany(Organization::className(), ['id' => 'org_id']);
+    }
 }

@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\Helpers\OrganizationHelper;
 use frontend\models\Organization;
+use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
@@ -39,30 +40,18 @@ class OrderController extends Controller
      * @return mixed
      */
     public function actionIndex($id = 0)
-    { 
-        $positions = Position::findAll([
-        'org_id' => OrganizationHelper::getOrg()
-        ]);
-        foreach ($positions as $position)
-        {
-            $order = Order::find()->where(['position_id' => $position])->one();
-            if(isset($order)) $orders[] = $order;
-        }
+    {
+        $org = OrganizationHelper::getOrg()->id;
 
-        foreach ($orders as $order)
-        {
-            $items[] = $order->position;                
-        }        
+        $or = Order::find()
+                        ->joinWith('position')
+                        ->joinWith('org')
+//                        ->viaTable(Organization::className(),  ['id' => 'org_id'])
+                        ->where(['position.org_id' => $org])
+                        ->all();
 
-        if ($id == 0)
-        {
-            $id = key($items);
-        }
-        
         return $this->render('index', [
-            'items' => $items,
-            'id' => $id,
-            'org' => Organization::getOrgListByUserId(Yii::$app->user->id)
+            'items' => $or,
         ]);
     }
 
