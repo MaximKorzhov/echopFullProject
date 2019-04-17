@@ -9,6 +9,10 @@
     .products-create {
         height: 100%;
     }
+    .products-list {
+        height: 100%;
+        padding-top: 0;
+    }
 </style>
 <div class="products-create">
     <?= $this->render('_form', [
