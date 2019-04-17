@@ -23,8 +23,7 @@ use yii\helpers\Html;
     }
     .details {
         width: 100%;
-        /*height: 100%;*/
-        padding-top: 10px;
+        padding-top: 5px;
         height: calc(100% - 45px);
     }
     .inner-details {
@@ -37,7 +36,7 @@ use yii\helpers\Html;
 </style>
 
 <div class="detail-toolbox clearfix">
-    <div class="detail-icon">
+    <div class="detail-icon bgcolor">
         <?=
             Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-pencil"]), '/products/update?id=' . $item->id, [
                 'title' => Yii::t('app', 'Edit'),
@@ -47,8 +46,8 @@ use yii\helpers\Html;
     </div>
 </div>
 
-<div class="details">
-    <div class="inner-details clearfix">
+<div class="details bg">
+    <div class="inner-details bgcolor clearfix">
         <h2><?= $item->name ?></h2>
         <p>Номер Товара в системе: <?= $item->id ?></p>
         <p>Артикул Товара: <?= $item->art ?></p>

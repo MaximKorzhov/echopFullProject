@@ -28,11 +28,13 @@ $this->registerJs('
         height: 100%;
     }
     .inner-products-form {
+        position: relative;
+        box-shadow: 0 20px 35px 30px rgba(0,0,0,0.5);
         height: 100%;
     }
     .products-toolbox {
         width: 100%;
-        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        /*box-shadow: 0 0 5px rgba(0,0,0,0.5);*/
         padding: 10px;
     }
     .products-icon {
@@ -42,12 +44,12 @@ $this->registerJs('
     .products-edit {
         width: 100%;
         height: calc(100% - 45px);
-        padding-top: 10px;
+        padding-top: 3px;
     }
     .inner-products-edit {
+        box-shadow: 10px 20px 20px 20px rgba(0,0,0,0.5);
         overflow-y: auto;
         height: 100%;
-        box-shadow: 0 0 5px rgba(0,0,0,0.5);
         padding: 20px;
     }
     .products-edit-form {
@@ -79,8 +81,8 @@ $this->registerJs('
                     ?>
                 </div>
             </div>
-            <div class="products-edit">
-                <div class="inner-products-edit">
+            <div class="products-edit bg">
+                <div class="inner-products-edit bgcolor">
                     <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
                     <?= $form->field($model, 'art')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'shtrih')->textInput(['maxlength' => true]) ?>
