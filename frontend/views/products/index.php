@@ -132,15 +132,15 @@ $this->registerJs('
                         ?>
                     </div>
                     <div class="product-icon">
-                        <?php if (!empty($items)) : ?>
+                        <?php if (!empty($organisations)) : ?>
                             <?=
-                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/products/delete?id=' . $items[$id]->id, [
+                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/products/delete?id=' . $organisations[$id]->id, [
                                     'title' => Yii::t('app', 'Delete'),
                                     'data-pjax' => '1',
                                     'class' => 'delete-prod',
                                     'data' => [
                                         'method' => 'post',
-                                        'params' => ['id' => $items[$id]->id],
+                                        'params' => ['id' => $organisations[$id]->id],
                                     ],
                                 ])
                             ?>

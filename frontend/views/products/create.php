@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $items frontend\models\Product */
+/* @var $organisations frontend\models\Product */
 /* @var $org frontend\models\Organization[] */
 
 ?>
@@ -16,7 +16,7 @@
 </style>
 <div class="products-create">
     <?= $this->render('_form', [
-        'model' => $items,
+        'model' => $organisations,
         'org' => $org
     ]) ?>
 </div>

@@ -5,12 +5,12 @@ namespace frontend\controllers;
 use Yii;
 use frontend\Helpers\OrganizationHelper;
 use frontend\models\Organization;
-use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use frontend\models\Order;
 use frontend\models\OrderSearchModel;
 use frontend\models\Position;
 use frontend\models\PositionSearchModel;
+use frontend\models\Users;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,21 +38,9 @@ class OrderController extends Controller
     /**
      * Lists all Order models.
      * @return mixed
-     * @throws InvalidConfigException
      */
     public function actionIndex($id = 0)
-    {
-        $searchModel = new PositionSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);       
-//        $org = OrganizationHelper::getOrg()->id;
-
-//        $order = new Order();
-//        $res = $order
-//                ->hasOne(Position::className(), ['id' => 'position_id'])
-//                ->viaTable(Organization::className(), ['id' => 'org_id'])
-//                ->where(['=', Organization::className() . '.id', $org])
-//                ->all()
-//        ;
+    { 
         $positions = Position::findAll([
         'org_id' => OrganizationHelper::getOrg()
         ]);
@@ -62,30 +50,37 @@ class OrderController extends Controller
             $order = Order::find()->where(['position_id' => $position])->one();
             if(isset($order)) $orders[] = $order;
         }
- 
+
         foreach ($orders as $order)
-        {                        
+        {
             $items[] = $order->position;  
             $organisations[] = $order->org;
         }        
-
         
         foreach ($organisations as $organisation)
         {
             $users[] = $organisation->user;
         }
-        
+//        foreach ($positions as $position)
+//        {
+//            $items[] = Order::find()->where(['position_id' => $position])->with([
+//            'position' => function ($query)
+//            {
+//                $query->andWhere(['org_id' => OrganizationHelper::getOrg()]);
+//            },
+//            'org',
+//            ])->one();
+//        }        
+    
         if ($id == 0)
         {
-            $id = key($organisations);
+            $id = key($items);
         }
         
         return $this->render('index', [
             'organisations' => $organisations,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'orders' => $orders,
             'id' => $id,
+            'org' => Organization::getOrgListByUserId(Yii::$app->user->id)
         ]);
     }
 
