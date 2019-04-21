@@ -185,7 +185,7 @@ AppAsset::register($this);
                 $menuItems[] = '<li>'
                     . Html::beginForm(['/site/logout'], 'post')
                     . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ' ' . OrganizationHelper::getOrg()->name . ')',
+                        'Logout (' . Yii::$app->user->identity->username . ' ' . OrganizationHelper::getCurrentOrg()->name . ')',
                         ['class' => 'btn btn-link logout']
                     )
                     . Html::endForm()
@@ -213,7 +213,7 @@ AppAsset::register($this);
                         ]
                     ];
 
-                    if (OrganizationHelper::getOrg()->org_type_id == 1)
+                    if (OrganizationHelper::getCurrentOrg()->org_type_id == 1)
                     {
                         $menuItems[] = [
                             'label' => 'Товары',

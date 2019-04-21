@@ -29,3 +29,11 @@ FROM organizations o
 JOIN org_type ot ON o.org_type_id = ot.id
 JOIN user u ON u.id = o.user_id
 ;
+
+
+SELECT org.name, p.name, o.position_id, o.number, p.price
+FROM `position` p
+JOIN `order` o ON p.id = o.position_id
+JOIN organizations org ON o.org_id = org.id
+WHERE p.org_id = 31
+;
