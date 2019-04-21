@@ -35,7 +35,7 @@ use frontend\components\NumberColumn;
         <div class="list-org-inner">
             <?php foreach ($items as $order) : ?>
                 <div class="product-item">
-                    <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount", ['class' => 'int']), '/order/index?id=' . $order->org_id) ?>
+                    <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), '/order/index?id=' . $order->org_id) ?>
                 </div>
             <?php endforeach; ?>
         </div>

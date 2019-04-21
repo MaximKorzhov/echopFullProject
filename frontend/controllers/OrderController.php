@@ -45,7 +45,7 @@ class OrderController extends Controller
      */
     public function actionIndex($id = 0)
     {
-        $or = Order::find()
+        $customers = Order::find()
                         ->select([Organization::tableName() . '.name', Order::tableName() . '.org_id'])
                         ->joinWith('position')
                         ->joinWith('org')
@@ -53,9 +53,12 @@ class OrderController extends Controller
                         ->distinct()
                         ->all();
 
+//        $r = array_unique(ArrayHelper::getColumn($customers, 'org.name'));
+//        $r2 = ArrayHelper::map($customers, 'position.price', 'number', 'org.name');
+
         if ($id == 0)
         {
-            $id = current(array_column($or, 'org_id'));
+            $id = current(array_column($customers, 'org_id'));
         }
 
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -69,7 +72,7 @@ class OrderController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'items' => $or,
+            'items' => $customers,
         ]);
     }
 
