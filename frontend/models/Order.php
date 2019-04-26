@@ -49,7 +49,8 @@ class Order extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'Order Number'),
+            'id' => Yii::t('app', 'Order Position'),
+//            'ord.id' => Yii::t('app', 'Order Number'),
             'org_id' => Yii::t('app', 'Order From'),
             'position_id' => Yii::t('app', 'Position ID'),
             'date_from' => Yii::t('app', 'Date From'),
@@ -89,6 +90,11 @@ class Order extends ActiveRecord
     public function getOrgs()
     {
         return $this->hasMany(Organization::className(), ['id' => 'org_id']);
+    }
+    
+    public function getOrd()
+    {
+        return $this->hasOne(OrderGroup::className(), ['id' => 'order_group_id']);
     }
 
     public static function getTotal($items)

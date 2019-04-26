@@ -14,6 +14,10 @@ use frontend\models\Order;
 use frontend\models\OrderSearchModel;
 use frontend\models\Position;
 use frontend\models\PositionSearchModel;
+use frontend\models\OrderGroup;
+use frontend\models\Users;
+use frontend\models\UsersSearchModel;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -46,13 +50,16 @@ class OrderController extends Controller
     public function actionIndex($id = 0)
     {
         $customers = Order::find()
-                        ->select([Organization::tableName() . '.name', Order::tableName() . '.org_id'])
-                        ->joinWith('position')
+                        ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
+                        ->joinWith('position') 
+                        ->joinWith('org.user')
+                        ->joinWith('ord')
                         ->joinWith('org')
                         ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
-                        ->all();
-
+                        ->all();               
+        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
+        
 //        $r = array_unique(ArrayHelper::getColumn($customers, 'org.name'));
 //        $r2 = ArrayHelper::map($customers, 'position.price', 'number', 'org.name');
 
@@ -73,6 +80,7 @@ class OrderController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'items' => $customers,
+            'supplier' => $supplier,
         ]);
     }
 
