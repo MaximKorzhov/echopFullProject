@@ -47,7 +47,7 @@ class OrderController extends Controller
      * @param int $id
      * @return mixed
      */
-    public function actionIndex($id = 0)
+    public function actionIndex($id = 0, $group = null)
     {
         $customers = Order::find()
                         ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
@@ -57,30 +57,33 @@ class OrderController extends Controller
                         ->joinWith('org')
                         ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
-                        ->all();               
-        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
-        
+                        ->all();                       
 //        $r = array_unique(ArrayHelper::getColumn($customers, 'org.name'));
 //        $r2 = ArrayHelper::map($customers, 'position.price', 'number', 'org.name');
-
+        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
         if ($id == 0)
         {
-            $id = current(array_column($customers, 'org_id'));
-        }
-
+            $id = current(array_column($customers, 'org_id')); 
+            $group = current(array_column($customers, 'order_group_id'));
+        }  
+       
+        $orderGroup = OrderGroup::findOne($group);                   
+        $score = Organization::findOne($id);        
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $searchModel = new OrderSearchModel();
         $dataProvider = new ActiveDataProvider([
             'query' => Order::find()
-                                ->joinWith('position')
-                                ->where([Order::tableName() . '.org_id' => $id]),
+                            ->joinWith('position')
+                            ->where([Order::tableName() . '.org_id' => $id]),
         ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'items' => $customers,
-            'supplier' => $supplier,
+            'customers' => $customers,
+            'supplier' => $supplier,     
+            'orderGroup' => $orderGroup,
+            'score' => $score,
         ]);
     }
 

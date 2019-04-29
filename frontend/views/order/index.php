@@ -51,41 +51,54 @@ use frontend\components\NumberColumn;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
         padding: 20px;
     }
+    .layer-left {        
+    float: left; /* Обтекание по правому краю */
+    width: 50%; /* Ширина слоя */
+   }
+   .layer-right {        
+    text-align: left;
+   }
+   .clear {
+    clear: left; /* Отмена обтекания */
+   }
     .leftstr, .rightstr {
     float: left; /* Обтекание справа */ 
     width: 50%; /* Ширина текстового блока */ 
    }
    .rightstr {
     text-align: left; /* Выравнивание по правому краю */ 
-   }
+   }      
 </style>
 
 <div class="content-orders clearfix">
     <div class="list-org">
         <div class="list-org-inner">
-            <?php foreach ($items as $order) : ?>
-                <div class="product-item">
-                    <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), '/order/index?id=' . $order->org_id) ?>
+            <?php foreach ($customers as $order) : ?>
+                <div class="product-item">                                
+                    <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), ['/order/index', 'id'=> $order->org_id, 'group' => $order->ord->id]) ?>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
-    <div class="list-orders">                   
-        <div class="details bg">
-            <div class="inner-details bgcolor clearfix">
-                <h2>Заказ № <?= $order->ord->id ?> от <?= $order->ord->data ?></h2>
-                <p class="leftstr">Номер заказа: <?= $order->ord->id ?></p>
-                <p class="rightstr">Дата заказа: <?= $order->date_to ?></p>
-                <p class="leftstr">Дата поставки: <?= $order->date_from ?></p>
-                <p class="rightstr">Время поставки: <?= $order->date_from ?></p>
-                <p class="leftstr">Получатель заказа: <?= $supplier->name ?></p>
-                <p class="rightstr">ФИО заказчика: <?= $supplier->user->username ?></p>
-                <p class="leftstr">Юридическое лицо магазина: <?= $order->org->name ?></p>                    
-                <p class="rightstr">Телефон заказчика: <?= $supplier->user->tel ?></p>                
-                <p class="leftstr">Адрес доставки: <?= $order->org->name ?></p>                    
-                <p class="rightstr">E-mail заказчика: <?= $supplier->user->email ?></p>                
-                <div style="clear: left"></div>
+    <div class="list-orders">                           
+        <div class="inner-details bgcolor clearfix">
+            <div>
+                <?= $score->name?>
             </div>
+            <div><h2>Заказ № <?= $orderGroup->id ?> от <?= $orderGroup->data ?></h2></div>
+            <div class="layer-left">
+                <p>Номер заказа: <?= $orderGroup->id ?></p>                
+                <p>Получатель заказа: <?= $supplier->name ?></p>
+                <p>Юридическое лицо магазина: <?= $score->name ?></p>                    
+                <p>Адрес доставки: <?= $score->name ?></p>                    
+            </div>
+            <div class="layer-right">
+                <p>Дата заказа: <?= $orderGroup->data ?></p>                
+                <p>ФИО заказчика: <?= $score->user->fullname ?></p>
+                <p>Телефон заказчика: <?= $score->user->tel ?></p>                
+                <p>E-mail заказчика: <?= $score->user->email ?></p>                
+            </div>
+            <div style="clear: left"></div>        
         </div>
               
         <div class="list-orders-inner">
