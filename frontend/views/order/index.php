@@ -73,9 +73,9 @@ use frontend\components\NumberColumn;
 <div class="content-orders clearfix">
     <div class="list-org">
         <div class="list-org-inner">
-            <?php foreach ($customers as $order) : ?>
+           <?php foreach ($customers as $key => $order) : ?>
                 <div class="product-item">                                
-                    <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), ['/order/index', 'id'=> $order->org_id, 'group' => $order->ord->id]) ?>
+                    <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), ['/order/index', 'id'=> $order->org_id, 'group' => $key]) ?>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -83,20 +83,20 @@ use frontend\components\NumberColumn;
     <div class="list-orders">                           
         <div class="inner-details bgcolor clearfix">
             <div>
-                <?= $score->name?>
+                <?= $currentOrder->org->name?>
             </div>
-            <div><h2>Заказ № <?= $orderGroup->id ?> от <?= $orderGroup->data ?></h2></div>
+            <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->data ?></h2></div>
             <div class="layer-left">
-                <p>Номер заказа: <?= $orderGroup->id ?></p>                
+                <p>Номер заказа: <?= $currentOrder->ord->id ?></p>                
                 <p>Получатель заказа: <?= $supplier->name ?></p>
-                <p>Юридическое лицо магазина: <?= $score->name ?></p>                    
-                <p>Адрес доставки: <?= $score->name ?></p>                    
+                <p>Юридическое лицо магазина: <?= $currentOrder->org->name ?></p>                    
+                <p>Адрес доставки: <?= "Этого поля в таблице нет"; ?></p>                    
             </div>
             <div class="layer-right">
-                <p>Дата заказа: <?= $orderGroup->data ?></p>                
-                <p>ФИО заказчика: <?= $score->user->fullname ?></p>
-                <p>Телефон заказчика: <?= $score->user->tel ?></p>                
-                <p>E-mail заказчика: <?= $score->user->email ?></p>                
+                <p>Дата заказа: <?= $currentOrder->ord->data ?></p>                
+                <p>ФИО заказчика: <?= $currentOrder->org->user->fullname ?></p>
+                <p>Телефон заказчика: <?= $currentOrder->org->user->tel ?></p>                
+                <p>E-mail заказчика: <?= $currentOrder->org->user->email ?></p>                
             </div>
             <div style="clear: left"></div>        
         </div>

@@ -64,17 +64,16 @@ class OrderController extends Controller
         if ($id == 0)
         {
             $id = current(array_column($customers, 'org_id')); 
-            $group = current(array_column($customers, 'order_group_id'));
+            $group = key($customers);
         }  
-       
-        $orderGroup = OrderGroup::findOne($group);                   
-        $score = Organization::findOne($id);        
+        $currentOrder = $customers[$group];           
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $searchModel = new OrderSearchModel();
         $dataProvider = new ActiveDataProvider([
-            'query' => Order::find()
-                            ->joinWith('position')
-                            ->where([Order::tableName() . '.org_id' => $id]),
+                        'query' => Order::find()                            
+                            ->joinWith('position')                            
+                            ->where([Order::tableName() . '.org_id' => $id])
+                            ->andWhere([Order::tableName() . '.order_group_id' => $currentOrder->id]),
         ]);
 
         return $this->render('index', [
@@ -82,8 +81,7 @@ class OrderController extends Controller
             'dataProvider' => $dataProvider,
             'customers' => $customers,
             'supplier' => $supplier,     
-            'orderGroup' => $orderGroup,
-            'score' => $score,
+            'currentOrder' => $currentOrder,
         ]);
     }
 
