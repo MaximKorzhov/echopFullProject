@@ -21,11 +21,11 @@ use frontend\components\NumberColumn;
         width: 100%;
     }
     .list-org {
-        width: 30%;
+        width: 20%;
         float: left;
     }
     .list-orders {
-        width: 50%;
+        width: 60%;
         float: left;
     }
         .inner-products-edit {
@@ -68,12 +68,14 @@ use frontend\components\NumberColumn;
    .rightstr {
     text-align: left; /* Выравнивание по правому краю */ 
    }      
+   
+   
 </style>
 
 <div class="content-orders clearfix">
     <div class="list-org">
         <div class="list-org-inner">
-           <?php foreach ($customers as $key => $order) : ?>
+           <?php foreach ($customers as $key => $order) : ?>             
                 <div class="product-item">                                
                     <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), ['/order/index', 'id'=> $order->org_id, 'group' => $key]) ?>
                 </div>
@@ -83,8 +85,10 @@ use frontend\components\NumberColumn;
     <div class="list-orders">                           
         <div class="inner-details bgcolor clearfix">
             <div>
-                <?= $currentOrder->org->name?>
+                <button type="submit" class="btn btn-default"><?= $currentOrder->org->name ?></button>                
             </div>
+        </div>
+        <div class="inner-details bgcolor clearfix">
             <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->data ?></h2></div>
             <div class="layer-left">
                 <p>Номер заказа: <?= $currentOrder->ord->id ?></p>                
@@ -105,25 +109,65 @@ use frontend\components\NumberColumn;
             <?=
                 GridView::widget([
                     'dataProvider' => $dataProvider,
+                    'summary' => false,
                     'showFooter' => true,
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'class' => 'yii\grid\SerialColumn',
+                            'header' => '№'. "\n".'пп' ,
+                        ],
 //                        'ord.id',                        
-                        'id',
-                        'position.name',
+//                        'id',
+                        [
+                            'attribute' => 'position.art',
+                            'header' => 'Артикул',
+                        ],
+                        [
+                            'attribute' => 'position.shtrih',
+                            'header' => 'Штрихкод',
+                        ],
+                        [
+                            'attribute' => 'position.name',
+                            'header' => 'Название товара',
+                        ],
+                        [
+                            'attribute' => 'number',
+                            'header' => 'Количество товара',
+                        ],                        
                         [
                             'attribute' => 'position.price',
+                            'header' => 'Цена',
                             'class' => NumberColumn::className(),
-                        ],
-                        'number',
+                        ],                        
                         [
                             'attribute' => 'amount',
+                            'header' => 'Стоимость',
                             'content' => function($data) {
                                 return $data->position->price * $data->number;
                             },
                             'filter' => false,
                             'class' => NumberColumn::className(),
-                        ],
+                        ], 
+                        [
+                            'attribute' => 'position.sales_tax',
+                            'header' => 'Ставка'."\n".'НДС',
+                        ],  
+                        [                            
+                            'label' => 'Сумма'."\n".'НДС',
+                            'content' => function($data) {
+                                return $data->position->sales_tax *0.01* ($data->position->price * $data->number);
+                            },
+                            'filter' => false,
+                            'class' => NumberColumn::className(),
+                        ],             
+                        [                            
+                            'label' => 'Стоимость'."\n".'с НДС',
+                            'content' => function($data) {
+                                return ($data->position->price * $data->number)  + $data->position->sales_tax *0.01* ($data->position->price * $data->number);
+                            },
+                            'filter' => false,
+                            'class' => NumberColumn::className(),
+                        ],             
                                     
 //                        [
 //                            'attribute' => 'amount',
@@ -133,8 +177,8 @@ use frontend\components\NumberColumn;
 //                            'filter' => false,
 //                            'footer' => Order::getTotal($dataProvider->models)
 //                        ],
-                        'date_from',
-                        'date_to',
+//                        'date_from',
+//                        'date_to',
                     ],
                 ]);
             ?>

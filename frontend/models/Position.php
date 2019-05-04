@@ -46,7 +46,8 @@ class Position extends ActiveRecord
             [['date'], 'safe'],
             [['podrobno'], 'string'],
             [['org_id'], 'integer'],
-            [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
+            [['sales_tax'], 'integer'],            
+            [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole', 'sales_tax'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
             [['org_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organization::className(), 'targetAttribute' => ['org_id' => 'id']],
         ];
@@ -70,6 +71,7 @@ class Position extends ActiveRecord
             'podrobno' => Yii::t('app', 'Podrobno'),
             'add_pole' => Yii::t('app', 'Add Pole'),
             'org_id' => Yii::t('app', 'Org ID'),
+            'sales_tax' => Yii::t('app', 'Sales Tax'),
         ];
     }
 

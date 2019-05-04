@@ -66,8 +66,8 @@ class OrderController extends Controller
             $id = current(array_column($customers, 'org_id')); 
             $group = key($customers);
         }  
-        $currentOrder = $customers[$group];           
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $currentOrder = $customers[$group];   
         $searchModel = new OrderSearchModel();
         $dataProvider = new ActiveDataProvider([
                         'query' => Order::find()                            

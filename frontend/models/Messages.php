@@ -49,4 +49,25 @@ class Messages extends ActiveRecord
             'status' => Yii::t('app', 'Status'),
         ];
     }
+    public function getUser()
+    {
+        return $this->hasOne(Users::className(), ['id' => 'user_id']);
+    }   
+     public function getOrd()
+    {
+        return $this->hasOne(OrderGroup::className(), ['id' => 'zakaz_id']);
+    }
+    public function getOrgTo()
+    {
+        return $this->hasOne(Organization::className(), ['id' => 'to_id']);
+    }
+    public function getOrgFrom()
+    {
+        return $this->hasOne(Organization::className(), ['id' => 'from_id']);
+    }
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['order_group_id' => 'zakaz_id']);
+    }
+    
 }

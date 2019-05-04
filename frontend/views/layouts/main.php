@@ -166,7 +166,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Сообщения',
-                            'url' => ['#']
+                            'url' => ['/messages/index']
                         ],
                         [
                             'label' => 'Товары',
@@ -209,7 +209,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Сообщения',
-                            'url' => ['#']
+                            'url' => ['/message/index']
                         ]
                     ];
 
