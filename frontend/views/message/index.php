@@ -179,7 +179,8 @@ $this->registerJs('
                 {                   
                     echo $this->render('details', [
                         'id' => $id,
-                        'messages' => $messages[$id]
+                        'messages' => $messages[$id],
+                        'supplier' => $supplier,
                     ]);
                 }
             }

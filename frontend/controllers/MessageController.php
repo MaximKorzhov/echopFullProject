@@ -8,6 +8,7 @@ use frontend\models\MessagesSearchModel;
 use frontend\models\OrderGroup;
 use frontend\models\Users;
 use frontend\models\Order;
+use frontend\models\Organization;
 use frontend\Helpers\OrganizationHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -49,6 +50,7 @@ class MessageController extends Controller
                         ->orWhere([Messages::tableName() . '.to_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
                         ->all();     
+        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
         if ($id == 0)
         {
             $id = key($messages);             
@@ -61,6 +63,7 @@ class MessageController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'messages' => $messages,
+            'supplier' => $supplier,
             'id' => $id,
         ]);
     }
