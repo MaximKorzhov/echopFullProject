@@ -26,7 +26,7 @@ $this->registerJs('
     }
     .middle-panel {
         padding-left: 5px;
-        width: 40%;
+        width: 20%;
         height: 100%;
         float: left;
     }
@@ -36,7 +36,7 @@ $this->registerJs('
     }
     .right-panel {
         padding-left: 5px;
-        width: 40%;
+        width: 60%;
         height: 100%;
         float: left;
     }
@@ -129,15 +129,15 @@ $this->registerJs('
                         ?>
                     </div>
                     <div class="product-icon">
-                        <?php if (!empty($messages)) : ?>
+                        <?php if (!empty($orders)) : ?>
                             <?=
-                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/messages/delete?id=' . $messages[$id]->id, [
+                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/messages/delete?id=' . $orders[$id]->id, [
                                     'title' => Yii::t('app', 'Delete'),
                                     'data-pjax' => '1',
                                     'class' => 'delete-prod',
                                     'data' => [
                                         'method' => 'post',
-                                        'params' => ['id' => $messages[$id]->id],
+                                        'params' => ['id' => $orders[$id]->id],
                                     ],
                                 ])
                             ?>
@@ -151,17 +151,16 @@ $this->registerJs('
                 {
                     echo $this->render('/messages/create', [
                         'id' => $id,
-                        'messages' => $messages,   
+                        'orders' => $orders,   
                     ]);
                 }
             ?>
             <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
                 <div class="products-list bg">
                     <div class="inner-products-list bgcolor">
-                        <?php foreach ($messages as $key => $message): ?>
-                        
+                        <?php foreach ($orders as $key => $order): ?>                        
                             <div class="product-item">
-                                <?= Html::a(Html::tag('div', $message->order->org->name, ['class' => $messages[$id]->id == $id ? 'product-item-active' : 'inner-product-item']), ['/message/index?id=' . $key]) ?>
+                                <?= Html::a(Html::tag('div', $order->order->org->name, ['class' => $orders[$id]->id == $id ? 'product-item-active' : 'inner-product-item']), ['/message/index?id=' . $key]) ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -175,12 +174,13 @@ $this->registerJs('
 //            Pjax::begin();           
             if (Yii::$app->controller->action->id == 'index')
             {
-                if (!empty($messages))
+                if (!empty($orders))
                 {                   
                     echo $this->render('details', [
                         'id' => $id,
-                        'messages' => $messages[$id],
+                        'messages' => $messages,
                         'supplier' => $supplier,
+                        'orders' => $orders,
                     ]);
                 }
             }

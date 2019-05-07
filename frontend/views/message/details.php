@@ -33,15 +33,26 @@ use yii\helpers\Html;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
         padding: 20px;
     }
+    .inner-message {
+        overflow-y: auto;        
+        width: 100%;
+        box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        padding: 20px;
+        margin-top: 12px;
+    }
 </style>
 
 <div class="details bg">
     <div class="inner-details bgcolor clearfix">        
-        <h2>По заказу <?= $messages->zakaz_id ?> от <?= $messages->ord->data ?></h2>
-        <p>Здравствуйте, <?= $messages->order->org->user->fullname?></p>
-        <p><?= $messages->message_text ?></p>
+        <h2>По заказу <?= $orders[$id]->zakaz_id ?> от <?= $orders[$id]->ord->data ?></h2>
+        <?php foreach ($messages as $message): ?>                        
+            <div class="inner-message bgcolor clearfix">
+                <p><font style="font-weight: bold"><?= $message->orgTo->name?></font></p>
+                <?= $message->message_text?>
+            </div>
+        <?php endforeach; ?>        
         <p>________________________</p>
-        <p>С уважением,</p>
+        <p>Данные поставщика:</p>
         <p><?= $supplier->user->fullname ?></p>
         <p><?= $supplier->name ?></p>
         <p>Контактный телефон: <?= $supplier->user->tel ?></p>

@@ -9,6 +9,7 @@ use frontend\models\OrderGroup;
 use frontend\models\Users;
 use frontend\models\Order;
 use frontend\models\Organization;
+use frontend\models\Position;
 use frontend\Helpers\OrganizationHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,28 +41,24 @@ class MessageController extends Controller
      */
     public function actionIndex($id = 0)
     {
-        $searchModel = new MessagesSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $messages = Messages::find()
-//                        ->select([Messages::tableName() . '.from_id', Messages::tableName() . '.to_id', OrderGroup::tableName() . '.id'])
-//                        ->joinWith('ord')                         
-                        ->where([Messages::tableName() . '.from_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->orWhere([Messages::tableName() . '.to_id' => OrganizationHelper::getCurrentOrg()->id])
+        $orders = Messages::find()
+                        ->select([Messages::tableName() . '.zakaz_id'])                   
+                        ->joinWith('order.position')                         
+                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
                         ->all();     
         $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
+        
         if ($id == 0)
         {
-            $id = key($messages);             
+            $id = key($orders);             
         }  
-        foreach ($messages as $message)
-        {
-            $r = $message->order->org->name;
-        }
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        
+        $messages = Messages::find()                                                    
+                        ->where(['zakaz_id' => $orders[$id]->zakaz_id])                          
+                        ->all();        
+        return $this->render('index', [            
+            'orders' => $orders,
             'messages' => $messages,
             'supplier' => $supplier,
             'id' => $id,

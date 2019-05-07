@@ -96,6 +96,11 @@ class Order extends ActiveRecord
     {
         return $this->hasOne(OrderGroup::className(), ['id' => 'order_group_id']);
     }
+     
+    public function getMessages()
+    {
+        return $this->hasMany(Messages::className(), ['zakaz_id' => 'order_group_id']);
+    }
 
     public static function getTotal($items)
     {
