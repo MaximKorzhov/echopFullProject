@@ -89,7 +89,7 @@ use frontend\components\NumberColumn;
             </div>
         </div>
         <div class="inner-details bgcolor clearfix">
-            <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->data ?></h2></div>
+            <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->date ?></h2></div>
             <div class="layer-left">
                 <p>Номер заказа: <?= $currentOrder->ord->id ?></p>                
                 <p>Получатель заказа: <?= $supplier->name ?></p>
@@ -97,7 +97,7 @@ use frontend\components\NumberColumn;
                 <p>Адрес доставки: <?= "Этого поля в таблице нет"; ?></p>                    
             </div>
             <div class="layer-right">
-                <p>Дата заказа: <?= $currentOrder->ord->data ?></p>                
+                <p>Дата заказа: <?= $currentOrder->ord->date ?></p>
                 <p>ФИО заказчика: <?= $currentOrder->org->user->fullname ?></p>
                 <p>Телефон заказчика: <?= $currentOrder->org->user->tel ?></p>                
                 <p>E-mail заказчика: <?= $currentOrder->org->user->email ?></p>                
