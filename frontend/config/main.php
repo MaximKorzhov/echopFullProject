@@ -13,7 +13,19 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'products/index',
+	'language' => 'ru-RU',
+//   	'sourceLanguage' => 'ru-RU',
     'components' => [
+		'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                    ],
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

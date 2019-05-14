@@ -59,17 +59,17 @@ class Position extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'art' => Yii::t('app', 'Art'),
-            'shtrih' => Yii::t('app', 'Shtrih'),
-            'name' => Yii::t('app', 'Name'),
+            'art' => Yii::t('app', 'Vendor Code'),
+            'shtrih' => Yii::t('app', 'Bar Code'),
+            'name' => Yii::t('app', 'Product Name'),
             'price' => Yii::t('app', 'Price'),
             'date' => Yii::t('app', 'Date'),
             'group' => Yii::t('app', 'Group'),
             'podgroup' => Yii::t('app', 'Podgroup'),
             'size' => Yii::t('app', 'Size'),
-            'podrobno' => Yii::t('app', 'Podrobno'),
+            'podrobno' => Yii::t('app', 'Description'),
             'add_pole' => Yii::t('app', 'Add Pole'),
-            'org_id' => Yii::t('app', 'Org ID'),
+            'sales_tax' => Yii::t('app', 'Sales Tax'),
         ];
     }
 

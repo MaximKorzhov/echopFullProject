@@ -140,7 +140,7 @@ AppAsset::register($this);
                         ],
                         [
                             'label' => 'Заказы',
-                            'url' => ['/orders/index']
+                            'url' => ['/order/index']
                         ],
                         [
                             'label' => 'Сообщения',
@@ -162,7 +162,7 @@ AppAsset::register($this);
                     'items' => [
                         [
                             'label' => 'Заказы',
-                            'url' => ['/orders/index']
+                            'url' => ['/order/index']
                         ],
                         [
                             'label' => 'Сообщения',
@@ -205,7 +205,7 @@ AppAsset::register($this);
                     $menuItems = [
                         [
                             'label' => 'Заказы',
-                            'url' => ['/orders/index']
+                            'url' => ['/order/index']
                         ],
                         [
                             'label' => 'Сообщения',

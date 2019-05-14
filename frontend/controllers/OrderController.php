@@ -2,18 +2,13 @@
 
 namespace frontend\controllers;
 
-use Throwable;
 use Yii;
 use frontend\Helpers\OrganizationHelper;
-use frontend\models\Organization;
-use yii\base\InvalidConfigException;
-use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\db\StaleObjectException;
-use yii\helpers\ArrayHelper;
 use frontend\models\Order;
-use frontend\models\OrderSearchModel;
 use frontend\models\Position;
-use frontend\models\PositionSearchModel;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -45,34 +40,45 @@ class OrderController extends Controller
      */
     public function actionIndex($id = 0)
     {
-        $customers = Order::find()
-                        ->select([Organization::tableName() . '.name', Order::tableName() . '.org_id'])
+        $orders = Order::find()
                         ->joinWith('position')
+                        ->joinWith('org.user')
                         ->joinWith('org')
+                        ->joinWith('orderGroup')
                         ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->distinct()
+//                        ->indexBy('org_id')
                         ->all();
 
-//        $r = array_unique(ArrayHelper::getColumn($customers, 'org.name'));
-//        $r2 = ArrayHelper::map($customers, 'position.price', 'number', 'org.name');
+        $ordersIndexed = ArrayHelper::index($orders, 'org_id');
+        $customersGroup = ArrayHelper::map($orders, 'org_id', 'orderGroup.date', 'org.name');
+
+//        $r = array_unique(ArrayHelper::getColumn($orders, 'org.name'));
 
         if ($id == 0)
         {
-            $id = current(array_column($customers, 'org_id'));
+            $id = current(array_column($orders, 'org_id'));
         }
 
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $searchModel = new OrderSearchModel();
-        $dataProvider = new ActiveDataProvider([
-            'query' => Order::find()
-                                ->joinWith('position')
-                                ->where([Order::tableName() . '.org_id' => $id]),
+        $ordersFiltered = array_filter($orders, function($item) use ($id) {
+            if ($item->org_id == $id) {
+                return true;
+            }
+            return false;
+        });
+
+        $dataProvider = new ArrayDataProvider([
+            'key' => 'id',
+            'allModels' => $ordersFiltered,
+            'sort' => [
+                'attributes' => ['position.name'],
+            ],
         ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'items' => $customers,
+            'orders' => $ordersIndexed,
+            'customersGroup' => $customersGroup,
+            'id' => $id,
         ]);
     }
 
@@ -133,8 +139,8 @@ class OrderController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
-     * @throws Throwable
      * @throws StaleObjectException
+     * @throws \Throwable
      */
     public function actionDelete($id)
     {

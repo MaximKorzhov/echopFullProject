@@ -50,10 +50,6 @@ class Order extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'Order Number'),
-            'org_id' => Yii::t('app', 'Order From'),
-            'position_id' => Yii::t('app', 'Position ID'),
-            'date_from' => Yii::t('app', 'Date From'),
-            'date_to' => Yii::t('app', 'Date To'),
             'state' => Yii::t('app', 'State'),
             'number' => Yii::t('app', 'Number'),
         ];
@@ -73,6 +69,14 @@ class Order extends ActiveRecord
     public function getPositions()
     {
         return $this->hasMany(Position::className(), ['id' => 'position_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getOrderGroup()
+    {
+        return $this->hasOne(OrderGroup::className(), ['id' => 'order_group_id']);
     }
 
     /**
