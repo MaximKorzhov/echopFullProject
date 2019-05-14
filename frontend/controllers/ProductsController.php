@@ -19,7 +19,7 @@ class ProductsController extends AppController
      */
     public function actionIndex($id = 0)
     {
-        $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getOrg()->id]), 'id');
+        $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getCurrentOrg()->id]), 'id');
 
         if ($id == 0)
         {
@@ -82,7 +82,7 @@ class ProductsController extends AppController
     public function actionUpdate($id = 0)
     {
         /* @var Product[] $items */
-        $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getOrg()->id]), 'id');
+        $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getCurrentOrg()->id]), 'id');
 
         if ($items[$id]->load(Yii::$app->request->post()) && $items[$id]->save())
         {

@@ -10,7 +10,7 @@ class OrganizationHelper
     /**
      * @return Organization
      */
-    public static function getOrg() : Organization
+    public static function getCurrentOrg() : Organization
     {
         if (!Yii::$app->session->get('org'))
         {

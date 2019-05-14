@@ -49,7 +49,7 @@ class Order extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'Order Number'),
             'org_id' => Yii::t('app', 'Order From'),
             'position_id' => Yii::t('app', 'Position ID'),
             'date_from' => Yii::t('app', 'Date From'),
@@ -89,5 +89,19 @@ class Order extends ActiveRecord
     public function getOrgs()
     {
         return $this->hasMany(Organization::className(), ['id' => 'org_id']);
+    }
+
+    public static function getTotal($items)
+    {
+        $total = 0;
+
+        foreach ($items as $item)
+        {
+            $total += $item->position->price * $item->number;
+        }
+
+        $total = number_format( $total, 2 );
+
+        return $total;
     }
 }
