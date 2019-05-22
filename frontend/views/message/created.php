@@ -8,24 +8,26 @@
 </style>
 <div class="middle-panel">
     
+ <div class="form-group">
 <?php
 
 use yii\helpers\Html;
 
+
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Messages */
 
-//$this->title = Yii::t('app', 'Create Messages');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Messages'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
-       
+//$this->title = Yii::t('app', 'Create Messages');           
+ ?>
+     
 <div class="messages-create">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('_formUser', [
         'model' => $model,
+        'dropdownOrders' => $dropdownOrders,
+        'modelUbdate' => $modelUbdate,
+        'id' => $id,
     ]) ?>
 
 </div>    
-</div>

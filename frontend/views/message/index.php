@@ -122,7 +122,7 @@ $this->registerJs('
                 <div class="inner-product-toolbox clearfix">
                     <div class="product-icon">
                         <?=
-                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-plus"]), '/message/create', [
+                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-plus"]), '/message/created', [
                                 'title' => Yii::t('app', 'Add'),
                                 'data-pjax' => '1',
                             ])
@@ -151,7 +151,7 @@ $this->registerJs('
                 {
                     echo $this->render('/messages/create', [
                         'id' => $id,
-                        'orders' => $orders,   
+                        'orders' => $orders,                          
                     ]);
                 }
             ?>

@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "messages".
@@ -14,8 +13,9 @@ use yii\db\ActiveRecord;
  * @property string $zakaz_id
  * @property string $type
  * @property string $status
+ * @property string $message_text
  */
-class Messages extends ActiveRecord
+class Messages extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,9 @@ class Messages extends ActiveRecord
     public function rules()
     {
         return [
+            [['message_text'], 'required'],
             [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'string', 'max' => 45],
+            [['message_text'], 'string', 'max' => 255],
         ];
     }
 
@@ -47,8 +49,10 @@ class Messages extends ActiveRecord
             'zakaz_id' => Yii::t('app', 'Zakaz ID'),
             'type' => Yii::t('app', 'Type'),
             'status' => Yii::t('app', 'Status'),
+            'message_text' => Yii::t('app', 'Message Text'),
         ];
     }
+    
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['id' => 'user_id']);
@@ -69,5 +73,4 @@ class Messages extends ActiveRecord
     {
         return $this->hasOne(Order::className(), ['order_group_id' => 'zakaz_id']);
     }
-    
 }

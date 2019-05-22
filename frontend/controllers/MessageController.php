@@ -11,6 +11,7 @@ use frontend\models\Order;
 use frontend\models\Organization;
 use frontend\models\Position;
 use frontend\Helpers\OrganizationHelper;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,11 +57,12 @@ class MessageController extends Controller
         
         $messages = Messages::find()                                                    
                         ->where(['zakaz_id' => $orders[$id]->zakaz_id])                          
-                        ->all();        
+                        ->all(); 
+
         return $this->render('index', [            
             'orders' => $orders,
             'messages' => $messages,
-            'supplier' => $supplier,
+            'supplier' => $supplier,            
             'id' => $id,
         ]);
     }
@@ -83,16 +85,38 @@ class MessageController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreated($id = 0)
+    {   
+        $modelUbdate = ArrayHelper::index (Order::find()
+                        ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
+                        ->joinWith('position') 
+                        ->joinWith('org.user')
+                        ->joinWith('ord')
+                        ->joinWith('org')
+                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                        ->distinct()
+                        ->all(), 'order_group_id');    
+        
+        if ($id == 0)
+        {
+            $id = key($modelUbdate);             
+        }  
+        
         $model = new Messages();
+        $dropdownOrders = Messages::find()
+                        ->select(['zakaz_id', 'id'])
+                        ->indexBy('zakaz_id')                
+                        ->column();        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->render('created', [
             'model' => $model,
+            'dropdownOrders' => $dropdownOrders,
+            'modelUbdate' => $modelUbdate[$id]->org,
+            'id' => $id,
         ]);
     }
 
@@ -103,7 +127,7 @@ class MessageController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id = 0)
     {
         $model = $this->findModel($id);
 

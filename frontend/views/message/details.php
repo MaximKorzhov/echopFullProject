@@ -56,7 +56,6 @@ use yii\helpers\Html;
         <p><?= $supplier->user->fullname ?></p>
         <p><?= $supplier->name ?></p>
         <p>Контактный телефон: <?= $supplier->user->tel ?></p>
-        <p>Электронный адрес: <?= $supplier->user->email ?></p>
-        
+        <p>Электронный адрес: <?= $supplier->user->email ?></p>        
     </div>
 </div>
