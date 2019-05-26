@@ -112,10 +112,13 @@ class MessageController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $model->zakaz_id = $modelUbdate[$id]->id;
+        $model->from_id = OrganizationHelper::getCurrentOrg()->id;
+        $model->to_id = $modelUbdate[$id]->org_id;
         return $this->render('created', [
             'model' => $model,
             'dropdownOrders' => $dropdownOrders,
-            'modelUbdate' => $modelUbdate[$id]->org,
+            'modelUbdate' => $modelUbdate[$id],
             'id' => $id,
         ]);
     }

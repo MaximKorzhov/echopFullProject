@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
     <?php $form = ActiveForm::begin(); ?>        
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-info']) ?>
             <?= Html::submitButton(Yii::t('app', 'Сохранить'), ['class' => 'btn btn-primary']) ?>
             <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Заказ <span class="caret"></span></button>
@@ -24,10 +24,10 @@ use yii\widgets\ActiveForm;
                 $dropdownOrders, ['prompt'=>'Выбор заказа']
             );?>-->
         </div>    
-        <?= $form->field($modelUbdate, 'name') ?>
+        <?= $form->field($modelUbdate->org, 'name') ?>
         <?= $form->field($model,'message_text')->textarea(['class' => 'my_post' ,]); ?>
         <!--<?= $form->field($model, 'from_id')->textInput(['maxlength' => true])?>-->
-        <!--<?= $form->field($model, 'zakaz_id') ?>-->
+        <?= $form->field($model, 'zakaz_id') ?>
         <!--<?= $form->field($model, 'type') ?>-->
         <!--<?= $form->field($model, 'status') ?>-->
     
