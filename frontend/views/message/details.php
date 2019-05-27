@@ -22,13 +22,12 @@ use yii\helpers\Html;
         padding-left: 25px;
     }
     .details {
-        width: 100%;
-        padding-top: 5px;
+        width: 100%;       
         height: calc(100% - 45px);
     }
     .inner-details {
         overflow-y: auto;
-        height: 100%;
+        height: 110%;
         width: 100%;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
         padding: 20px;
