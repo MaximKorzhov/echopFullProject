@@ -36,13 +36,19 @@ $this->registerJs('
     }
     .right-panel {
         padding-left: 5px;
-        width: 60%;
+        width: 40%;
         height: 100%;
         float: left;
     }
     .inner-right-panel {
         height: 100%;
         width: 100%;
+    }
+    .orders-panel {
+        padding-left: 5px;
+        width: 20%;
+        height: 100%;
+        float: left;
     }
     .products-list {
         width: 100%;
@@ -166,6 +172,11 @@ $this->registerJs('
                     </div>
                 </div>
             <?php endif; ?>
+    </div>
+</div>
+<div class="orders-panel">
+    <div class="inner-right-panel bgcolor">
+        
     </div>
 </div>
 <div class="right-panel">

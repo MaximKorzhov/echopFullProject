@@ -19,17 +19,15 @@ use yii\widgets\ActiveForm;
                         
                     <?php endforeach; ?>
                   </ul>
-            </div>
-           <!-- <?= $form->field($model, 'zakaz_id')->dropdownList(
-                $dropdownOrders, ['prompt'=>'Выбор заказа']
-            );?>-->
+            </div>           
         </div>    
         <?= $form->field($modelUbdate->org, 'name') ?>
         <?= $form->field($model,'message_text')->textarea(['class' => 'my_post' ,]); ?>
-        <!--<?= $form->field($model, 'from_id')->textInput(['maxlength' => true])?>-->
-        <?= $form->field($model, 'zakaz_id') ?>
-        <!--<?= $form->field($model, 'type') ?>-->
-        <!--<?= $form->field($model, 'status') ?>-->
+        <?= $form->field($model, 'to_id')->hiddenInput()->label(false)->hint(false); ?>
+        <?= $form->field($model, 'from_id')->hiddenInput()->label(false)->hint(false); ?>
+        <?= $form->field($model, 'zakaz_id')->hiddenInput()->label(false)->hint(false);?>
+        <?= $form->field($model, 'type')->hiddenInput()->label(false)->hint(false);?>
+        <?= $form->field($model, 'status')->hiddenInput()->label(false)->hint(false); ?>
     
     <?php ActiveForm::end(); ?>
 

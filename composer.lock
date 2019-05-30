@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4591de31a1edd61647dd7b086e37860d",
+    "content-hash": "ee1329dd857bafc78443391ec209f0cc",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -101,6 +101,55 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "bubasuma/yii2-simplechat",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bubasuma/yii2-simplechat.git",
+                "reference": "1d3c2c30df72d29ff1a0bf62832275f14893a1de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bubasuma/yii2-simplechat/zipball/1d3c2c30df72d29ff1a0bf62832275f14893a1de",
+                "reference": "1d3c2c30df72d29ff1a0bf62832275f14893a1de",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "bower-asset/twig.js": "0.8.4@stable",
+                "yiisoft/yii2-bootstrap": "~2.0.0",
+                "yiisoft/yii2-faker": "*",
+                "yiisoft/yii2-twig": "dev-master"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "bubasuma\\simplechat\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Buba Suma",
+                    "email": "bubasuma@gmail.com"
+                }
+            ],
+            "description": "A simple chat for your yii2 application",
+            "keywords": [
+                "chat",
+                "conversation",
+                "extension",
+                "message",
+                "yii2"
+            ],
+            "time": "2016-06-19T07:00:25+00:00"
         },
         {
             "name": "cebe/markdown",
@@ -3008,7 +3057,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -3380,7 +3429,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": "7.1.26"
     },
     "platform-dev": []
 }

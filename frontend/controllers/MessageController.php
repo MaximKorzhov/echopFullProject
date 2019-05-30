@@ -115,6 +115,7 @@ class MessageController extends Controller
         $model->zakaz_id = $modelUbdate[$id]->id;
         $model->from_id = OrganizationHelper::getCurrentOrg()->id;
         $model->to_id = $modelUbdate[$id]->org_id;
+        
         return $this->render('created', [
             'model' => $model,
             'dropdownOrders' => $dropdownOrders,

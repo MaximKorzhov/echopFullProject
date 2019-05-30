@@ -46,7 +46,7 @@ use yii\helpers\Html;
         <h2>По заказу <?= $orders[$id]->zakaz_id ?> от <?= $orders[$id]->ord->data ?></h2>
         <?php foreach ($messages as $message): ?>                        
             <div class="inner-message bgcolor clearfix">
-                <p><font style="font-weight: bold"><?= $message->orgTo->name?></font></p>
+                <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font></p>
                 <?= $message->message_text?>
             </div>
         <?php endforeach; ?>        
