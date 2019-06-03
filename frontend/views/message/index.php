@@ -44,7 +44,7 @@ $this->registerJs('
         height: 100%;
         width: 100%;
     }
-    .orders-panel {
+    .central-panel {
         padding-left: 5px;
         width: 20%;
         height: 100%;
@@ -135,15 +135,15 @@ $this->registerJs('
                         ?>
                     </div>
                     <div class="product-icon">
-                        <?php if (!empty($orders)) : ?>
+                        <?php if (!empty($allOrders)) : ?>
                             <?=
-                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/messages/delete?id=' . $orders[$id]->id, [
+                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/messages/delete?id=' . $shops[$id]->id, [
                                     'title' => Yii::t('app', 'Delete'),
                                     'data-pjax' => '1',
                                     'class' => 'delete-prod',
                                     'data' => [
                                         'method' => 'post',
-                                        'params' => ['id' => $orders[$id]->id],
+                                        'params' => ['id' => $shops[$id]->id],
                                     ],
                                 ])
                             ?>
@@ -157,16 +157,16 @@ $this->registerJs('
                 {
                     echo $this->render('/messages/create', [
                         'id' => $id,
-                        'orders' => $orders,                          
+                        'orders' => $allOrders,   
                     ]);
                 }
             ?>
             <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
                 <div class="products-list bg">
                     <div class="inner-products-list bgcolor">
-                        <?php foreach ($orders as $key => $order): ?>                        
+                        <?php foreach ($shops as $key => $shop): ?>                        
                             <div class="product-item">
-                                <?= Html::a(Html::tag('div', $order->order->org->name, ['class' => $orders[$id]->id == $id ? 'product-item-active' : 'inner-product-item']), ['/message/index?id=' . $key]) ?>
+                                <?= Html::a(Html::tag('div', $shop->org->name, ['inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -174,9 +174,13 @@ $this->registerJs('
             <?php endif; ?>
     </div>
 </div>
-<div class="orders-panel">
+<div class="central-panel">
     <div class="inner-right-panel bgcolor">
-        
+        <?php foreach ($orders as $keyOrder => $order): ?>                        
+            <div class="product-item">
+                <?= Html::a(Html::tag('div', $order->id, ['inner-product-item']), ['/message/index', 'id' => $id, 'orderId' =>$keyOrder]) ?>
+            </div>
+        <?php endforeach; ?>
     </div>
 </div>
 <div class="right-panel">
@@ -185,12 +189,14 @@ $this->registerJs('
 //            Pjax::begin();           
             if (Yii::$app->controller->action->id == 'index')
             {
-                if (!empty($orders))
+                if (!empty($allOrders))
                 {                   
                     echo $this->render('details', [
+                        'orderId' => $orderId,
                         'id' => $id,
                         'messages' => $messages,
                         'supplier' => $supplier,
+                        'allOrders' => $allOrders,
                         'orders' => $orders,
                     ]);
                 }

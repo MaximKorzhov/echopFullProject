@@ -26,7 +26,7 @@ use yii\helpers\Html;
     <?= $this->render('_formUser', [
         'model' => $model,
         'dropdownOrders' => $dropdownOrders,
-        'modelUbdate' => $modelUbdate,
+        'allOrders' => $allOrders,
         'id' => $id,
     ]) ?>
 

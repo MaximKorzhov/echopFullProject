@@ -43,7 +43,7 @@ use yii\helpers\Html;
 
 <div class="details bg">
     <div class="inner-details bgcolor clearfix">        
-        <h2>По заказу <?= $orders[$id]->zakaz_id ?> от <?= $orders[$id]->ord->data ?></h2>
+        <h2>По заказу <?= $orders[$orderId]->id ?> от <?= $orders[$orderId]->data ?></h2>
         <?php foreach ($messages as $message): ?>                        
             <div class="inner-message bgcolor clearfix">
                 <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font></p>

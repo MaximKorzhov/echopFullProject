@@ -40,29 +40,51 @@ class MessageController extends Controller
      * Lists all Messages models.
      * @return mixed
      */
-    public function actionIndex($id = 0)
+    public function actionIndex($id = 0, $orderId = 0)
     {
-        $orders = Messages::find()
-                        ->select([Messages::tableName() . '.zakaz_id'])                   
-                        ->joinWith('order.position')                         
+        $allOrders = ArrayHelper::index (Order::find()
+                        ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
+                        ->joinWith('position') 
+                        ->joinWith('org.user')
+                        ->joinWith('ord')
+                        ->joinWith('org')
                         ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
-                        ->all();     
+                        ->all(), 'order_group_id');   
+        $shops = ArrayHelper::index (Order::find()
+                        ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
+                        ->joinWith('position')                                    
+                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                        ->distinct()
+                        ->all(), 'org_id');   
+
         $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
         
         if ($id == 0)
         {
-            $id = key($orders);             
-        }  
+            $id = key($shops);             
+        }
         
+        $orders = ArrayHelper::index (OrderGroup::find()
+                        ->joinWith('orders')
+                        ->where(['.org_id' => $shops[$id]->org_id])                          
+                        ->all(), 'id'); 
+        
+        if ($orderId == 0)
+        {
+            $orderId = key($orders);
+        }
         $messages = Messages::find()                                                    
-                        ->where(['zakaz_id' => $orders[$id]->zakaz_id])                          
+                        ->where(['zakaz_id' => $orders[$orderId]->id])                          
                         ->all(); 
 
         return $this->render('index', [            
             'orders' => $orders,
             'messages' => $messages,
-            'supplier' => $supplier,            
+            'supplier' => $supplier,
+            'allOrders'=>$allOrders,
+            'shops' => $shops,
+            'orderId' => $orderId,
             'id' => $id,
         ]);
     }
@@ -87,7 +109,7 @@ class MessageController extends Controller
      */
     public function actionCreated($id = 0)
     {   
-        $modelUbdate = ArrayHelper::index (Order::find()
+        $allOrders = ArrayHelper::index (Order::find()
                         ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
                         ->joinWith('position') 
                         ->joinWith('org.user')
@@ -99,7 +121,7 @@ class MessageController extends Controller
         
         if ($id == 0)
         {
-            $id = key($modelUbdate);             
+            $id = key($allOrders);             
         }  
         
         $model = new Messages();
@@ -112,14 +134,14 @@ class MessageController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $model->zakaz_id = $modelUbdate[$id]->id;
+        $model->zakaz_id = $allOrders[$id]->id;
         $model->from_id = OrganizationHelper::getCurrentOrg()->id;
-        $model->to_id = $modelUbdate[$id]->org_id;
+        $model->to_id = $allOrders[$id]->org_id;
         
         return $this->render('created', [
             'model' => $model,
             'dropdownOrders' => $dropdownOrders,
-            'modelUbdate' => $modelUbdate[$id],
+            'allOrders' => $allOrders,
             'id' => $id,
         ]);
     }
