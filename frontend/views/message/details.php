@@ -1,7 +1,7 @@
 <?php
 /* @var $id */
 /* @var Product $item  */
-use frontend\models\Messages;
+use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 ?>
 
@@ -49,7 +49,21 @@ use yii\helpers\Html;
                 <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font></p>
                 <?= $message->message_text?>
             </div>
-        <?php endforeach; ?>        
+        <?php endforeach; ?>  
+        <?php $form = ActiveForm::begin(); ?>                   
+            <div class="inner-message bgcolor clearfix">
+                <?= $form->field($model,'message_text')->textarea(['placeholder'=>'Введите текст нового сообщения','rows' => '6']); ?>
+                <?= $form->field($model, 'to_id')->hiddenInput()->label(false)->hint(false); ?>
+                <?= $form->field($model, 'from_id')->hiddenInput()->label(false)->hint(false); ?>
+                <?= $form->field($model, 'zakaz_id')->hiddenInput()->label(false)->hint(false);?>
+                <?= $form->field($model, 'type')->hiddenInput()->label(false)->hint(false);?>
+                <?= $form->field($model, 'status')->hiddenInput()->label(false)->hint(false); ?>
+                <div class="form-group">
+                    <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-info']) ?>                                 
+                </div>    
+            </div>
+
+        <?php ActiveForm::end(); ?>
         <p>________________________</p>
         <p>Данные поставщика:</p>
         <p><?= $supplier->user->fullname ?></p>

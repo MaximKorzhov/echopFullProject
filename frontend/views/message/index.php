@@ -122,56 +122,18 @@ $this->registerJs('
     }
 </style>
 <div class="middle-panel">
-    <div class="inner-middle-panel bgcolor">
+    <div class="inner-middle-panel bgcolor">                    
         <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
-            <div class="product-toolbox">
-                <div class="inner-product-toolbox clearfix">
-                    <div class="product-icon">
-                        <?=
-                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-plus"]), '/message/created', [
-                                'title' => Yii::t('app', 'Add'),
-                                'data-pjax' => '1',
-                            ])
-                        ?>
-                    </div>
-                    <div class="product-icon">
-                        <?php if (!empty($allOrders)) : ?>
-                            <?=
-                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-remove"]), '/messages/delete?id=' . $shops[$id]->id, [
-                                    'title' => Yii::t('app', 'Delete'),
-                                    'data-pjax' => '1',
-                                    'class' => 'delete-prod',
-                                    'data' => [
-                                        'method' => 'post',
-                                        'params' => ['id' => $shops[$id]->id],
-                                    ],
-                                ])
-                            ?>
-                        <?php endif; ?>
-                    </div>
+            <div class="products-list bg">
+                <div class="inner-products-list bgcolor">
+                    <?php foreach ($shops as $key => $shop): ?>                        
+                        <div class="product-item">
+                            <?= Html::a(Html::tag('div', $shop->org->name, ['inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         <?php endif; ?>
-            <?php
-                if (Yii::$app->controller->action->id == 'create')
-                {
-                    echo $this->render('/messages/create', [
-                        'id' => $id,
-                        'orders' => $allOrders,   
-                    ]);
-                }
-            ?>
-            <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
-                <div class="products-list bg">
-                    <div class="inner-products-list bgcolor">
-                        <?php foreach ($shops as $key => $shop): ?>                        
-                            <div class="product-item">
-                                <?= Html::a(Html::tag('div', $shop->org->name, ['inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            <?php endif; ?>
     </div>
 </div>
 <div class="central-panel">
@@ -189,14 +151,14 @@ $this->registerJs('
 //            Pjax::begin();           
             if (Yii::$app->controller->action->id == 'index')
             {
-                if (!empty($allOrders))
+                if (!empty($orders))
                 {                   
                     echo $this->render('details', [
+                        'model' => $model,
                         'orderId' => $orderId,
                         'id' => $id,
                         'messages' => $messages,
-                        'supplier' => $supplier,
-                        'allOrders' => $allOrders,
+                        'supplier' => $supplier,                        
                         'orders' => $orders,
                     ]);
                 }
@@ -204,6 +166,7 @@ $this->registerJs('
 
 //            Pjax::end();
         ?>
+        
     </div>
 </div>
 

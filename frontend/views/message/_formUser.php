@@ -29,5 +29,3 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'status')->hiddenInput()->label(false)->hint(false); ?>
     
     <?php ActiveForm::end(); ?>
-
-</div>

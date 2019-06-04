@@ -49,7 +49,7 @@ class Messages extends \yii\db\ActiveRecord
             'zakaz_id' => Yii::t('app', 'Zakaz ID'),
             'type' => Yii::t('app', 'Type'),
             'status' => Yii::t('app', 'Status'),
-            'message_text' => Yii::t('app', 'Message Text'),
+            'message_text' => Yii::t('app', ''),
         ];
     }
     

@@ -41,16 +41,7 @@ class MessageController extends Controller
      * @return mixed
      */
     public function actionIndex($id = 0, $orderId = 0)
-    {
-        $allOrders = ArrayHelper::index (Order::find()
-                        ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
-                        ->joinWith('position') 
-                        ->joinWith('org.user')
-                        ->joinWith('ord')
-                        ->joinWith('org')
-                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->distinct()
-                        ->all(), 'order_group_id');   
+    {        
         $shops = ArrayHelper::index (Order::find()
                         ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
                         ->joinWith('position')                                    
@@ -77,12 +68,18 @@ class MessageController extends Controller
         $messages = Messages::find()                                                    
                         ->where(['zakaz_id' => $orders[$orderId]->id])                          
                         ->all(); 
-
-        return $this->render('index', [            
+                
+        $model = $this->actionCreated($id, $orderId);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index', 'id' => $id, 'orderId' =>$orderId]);
+        }
+        
+        return $this->render('index', [  
+            'model' => $model,
             'orders' => $orders,
             'messages' => $messages,
-            'supplier' => $supplier,
-            'allOrders'=>$allOrders,
+            'supplier' => $supplier,            
             'shops' => $shops,
             'orderId' => $orderId,
             'id' => $id,
@@ -107,43 +104,29 @@ class MessageController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreated($id = 0)
-    {   
-        $allOrders = ArrayHelper::index (Order::find()
-                        ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
-                        ->joinWith('position') 
-                        ->joinWith('org.user')
-                        ->joinWith('ord')
-                        ->joinWith('org')
-                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->distinct()
-                        ->all(), 'order_group_id');    
-        
-        if ($id == 0)
-        {
-            $id = key($allOrders);             
-        }  
-        
+    public function actionCreated($shopsId, $orderId)
+    {                   
         $model = new Messages();
         $dropdownOrders = Messages::find()
                         ->select(['zakaz_id', 'id'])
                         ->indexBy('zakaz_id')                
                         ->column();        
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        $model->zakaz_id = $allOrders[$id]->id;
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
+        $model->zakaz_id = $orderId;
         $model->from_id = OrganizationHelper::getCurrentOrg()->id;
-        $model->to_id = $allOrders[$id]->org_id;
+        $model->to_id = $shopsId;
         
-        return $this->render('created', [
-            'model' => $model,
-            'dropdownOrders' => $dropdownOrders,
-            'allOrders' => $allOrders,
-            'id' => $id,
-        ]);
+        return $model;
+        
+//        return $this->render('created', [
+//            'model' => $model,
+//            'dropdownOrders' => $dropdownOrders,
+//            'allOrders' => $allOrders,
+//            'id' => $id,
+//        ]);
     }
 
     /**
