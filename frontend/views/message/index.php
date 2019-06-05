@@ -128,7 +128,7 @@ $this->registerJs('
                 <div class="inner-products-list bgcolor">
                     <?php foreach ($shops as $key => $shop): ?>                        
                         <div class="product-item">
-                            <?= Html::a(Html::tag('div', $shop->org->name, ['inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
+                            <?= Html::a(Html::tag('div', $shop->org->name, ['class' => $shop->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -140,7 +140,7 @@ $this->registerJs('
     <div class="inner-right-panel bgcolor">
         <?php foreach ($orders as $keyOrder => $order): ?>                        
             <div class="product-item">
-                <?= Html::a(Html::tag('div', $order->id, ['inner-product-item']), ['/message/index', 'id' => $id, 'orderId' =>$keyOrder]) ?>
+                <?= Html::a(Html::tag('div', $order->id, ['class' => $order->id == $orderId ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $id, 'orderId' =>$keyOrder]) ?>
             </div>
         <?php endforeach; ?>
     </div>
