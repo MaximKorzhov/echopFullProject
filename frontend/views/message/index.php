@@ -123,16 +123,14 @@ $this->registerJs('
 </style>
 <div class="middle-panel">
     <div class="inner-middle-panel bgcolor">                    
-        <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
-            <div class="products-list bg">
-                <div class="inner-products-list bgcolor">
-                    <?php foreach ($shops as $key => $shop): ?>                        
-                        <div class="product-item">
-                            <?= Html::a(Html::tag('div', $shop->org->name, ['class' => $shop->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+        <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>            
+            <div class="inner-products-list bgcolor">
+                <?php foreach ($shops as $key => $shop): ?>                        
+                    <div class="product-item">
+                        <?= Html::a(Html::tag('div', $shop->org->name, ['class' => $shop->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>            
         <?php endif; ?>
     </div>
 </div>

@@ -16,7 +16,7 @@
 </style>
 <div class="products-create">
     <?= $this->render('_form', [
-        'model' => $organisations,
+        'model' => $items,
         'org' => $org
     ]) ?>
 </div>
