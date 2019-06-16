@@ -158,6 +158,7 @@ $this->registerJs('
                         'messages' => $messages,
                         'supplier' => $supplier,                        
                         'orders' => $orders,
+                        'downloads' => $downloads,
                     ]);
                 }
             }

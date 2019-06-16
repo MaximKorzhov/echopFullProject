@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "messages".
@@ -24,7 +25,7 @@ class Messages extends \yii\db\ActiveRecord
     {
         return 'messages';
     }
-
+    public $downloads;
     /**
      * {@inheritdoc}
      */
@@ -32,8 +33,12 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             [['message_text'], 'required'],
-            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'string', 'max' => 45],
+            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'integer', 'max' => 45],
             [['message_text'], 'string', 'max' => 255],
+            [['downloads'], 'string', 'max' => 255],
+//            [['downloads'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, txt', 'maxFiles' => 10],
+//            ['downloads', 'required', 'message' => 'Please choose a username.'],
+//            [['downloads'], 'file', 'extensions' => ['jpg','png'],'checkExtensionByMimeType'=>false],
         ];
     }
 
@@ -50,7 +55,20 @@ class Messages extends \yii\db\ActiveRecord
             'type' => Yii::t('app', 'Type'),
             'status' => Yii::t('app', 'Status'),
             'message_text' => Yii::t('app', ''),
+            'downloads' => Yii::t('app', ''),
         ];
+    }
+    
+    public function upload()
+    {
+        if ($this->validate()) { 
+            foreach ($this->downloads as $file) {
+                $file->saveAs('D:/Develop/eshop/frontend/uploads/' . $file->baseName . '.' . $file->extension);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function getUser()

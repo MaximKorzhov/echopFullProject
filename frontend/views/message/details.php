@@ -50,7 +50,7 @@ use yii\helpers\Html;
                 <?= $message->message_text?>
             </div>
         <?php endforeach; ?>  
-        <?php $form = ActiveForm::begin(); ?>                   
+        <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>                   
             <div class="inner-message bgcolor clearfix">
                 <?= $form->field($model,'message_text')->textarea(['placeholder'=>'Введите текст нового сообщения','rows' => '6']); ?>
                 <?= $form->field($model, 'to_id')->hiddenInput()->label(false)->hint(false); ?>
@@ -58,8 +58,9 @@ use yii\helpers\Html;
                 <?= $form->field($model, 'zakaz_id')->hiddenInput()->label(false)->hint(false);?>
                 <?= $form->field($model, 'type')->hiddenInput()->label(false)->hint(false);?>
                 <?= $form->field($model, 'status')->hiddenInput()->label(false)->hint(false); ?>
+                <?= $form->field($downloads, 'downloads[]')->fileInput(['multiple' => true, 'accept' => "application/pdf/docx"]) ?>
                 <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-info']) ?>                                 
+                    <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-info']) ?>   
                 </div>    
             </div>
 

@@ -15,15 +15,14 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use frontend\models\Downloads;
 
 /**
  * MessageController implements the CRUD actions for Messages model.
  */
 class MessageController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -35,19 +34,15 @@ class MessageController extends Controller
             ],
         ];
     }
-
-    /**
-     * Lists all Messages models.
-     * @return mixed
-     */
+    
     public function actionIndex($id = 0, $orderId = 0)
     {        
         $shops = ArrayHelper::index (Order::find()
-                        ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
-                        ->joinWith('position')                                    
-                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->distinct()
-                        ->all(), 'org_id');   
+                    ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
+                    ->joinWith('position')                                    
+                    ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                    ->distinct()
+                    ->all(), 'org_id');   
 
         $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
         
@@ -67,16 +62,32 @@ class MessageController extends Controller
         }
         $messages = Messages::find()                                                    
                         ->where(['zakaz_id' => $orders[$orderId]->id])                          
-                        ->all(); 
-                
-        $model = $this->actionCreated($id, $orderId);
+                        ->all();
+        
+        $model = new Messages();
+        $downloads = new Downloads();
+        
+        if (Yii::$app->request->isPost) 
+        {
+            $fileNames = $this->uploadFile($downloads);
+            if(isset($fileNames))
+            {
+               $fileNames = implode(",", $fileNames);
+               $model->setAttribute("downloads","$fileNames");
+            }
+        }
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $id, 'orderId' =>$orderId]);
         }
+                
+        $model->zakaz_id = $orderId;
+        $model->from_id = OrganizationHelper::getCurrentOrg()->id;
+        $model->to_id = $id;
         
         return $this->render('index', [  
             'model' => $model,
+            'downloads' => $downloads,
             'orders' => $orders,
             'messages' => $messages,
             'supplier' => $supplier,            
@@ -86,12 +97,17 @@ class MessageController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Messages model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function uploadFile($downloads)
+    {       
+        if (Yii::$app->request->isPost) 
+        {
+            $downloads->downloads = UploadedFile::getInstances($downloads, 'downloads');
+            $fileNames = $downloads->upload();
+            return $fileNames; 
+        }
+        
+    }
+    
     public function actionView($id)
     {
         return $this->render('view', [
