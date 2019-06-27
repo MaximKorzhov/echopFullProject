@@ -127,7 +127,7 @@ $this->registerJs('
             <div class="inner-products-list bgcolor">
                 <?php foreach ($shops as $key => $shop): ?>                        
                     <div class="product-item">
-                        <?= Html::a(Html::tag('div', $shop->org->name, ['class' => $shop->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key, 'orderId' =>0]) ?>
+                        <?= Html::a(Html::tag('div', $shop->org->name, ['class' => $shop->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key]) ?>
                     </div>
                 <?php endforeach; ?>
             </div>            

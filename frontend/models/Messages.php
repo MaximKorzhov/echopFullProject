@@ -24,8 +24,7 @@ class Messages extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'messages';
-    }
-    public $downloads;
+    }   
     /**
      * {@inheritdoc}
      */
@@ -70,12 +69,8 @@ class Messages extends \yii\db\ActiveRecord
             return false;
         }
     }
-    
-    public function getUser()
-    {
-        return $this->hasOne(Users::className(), ['id' => 'user_id']);
-    }   
-     public function getOrd()
+       
+    public function getOrd()
     {
         return $this->hasOne(OrderGroup::className(), ['id' => 'zakaz_id']);
     }

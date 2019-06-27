@@ -103,9 +103,16 @@ class MessageController extends Controller
         {
             $downloads->downloads = UploadedFile::getInstances($downloads, 'downloads');
             $fileNames = $downloads->upload();
-            return $fileNames; 
+            return $fileNames;
         }
         
+    }
+    
+    public function actionDownload($fileName)
+    {
+//        $model = $this->findModel($id);
+        $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+        return Yii::$app->response->sendFile($file);
     }
     
     public function actionView($id)
@@ -115,6 +122,23 @@ class MessageController extends Controller
         ]);
     }
 
+    public function actionDeleteFile($fileName, $id)
+    {
+        $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+        unlink($file);
+        
+        $messageData = $this->findModel($id);
+        $downloads = explode(",", $messageData->downloads);
+        if(($key = array_search($fileName,$downloads)) !== FALSE)
+        {
+            unset($downloads[$key]);
+            
+            $fileNames = implode(",", $downloads);
+            $messageData->setAttribute("downloads","$fileNames");
+            $messageData->save();
+        }        
+        return $this->redirect(['index','id' => $messageData->order->org_id, 'orderId' =>$messageData->zakaz_id]);        
+    }
     /**
      * Creates a new Messages model.
      * If creation is successful, the browser will be redirected to the 'view' page.

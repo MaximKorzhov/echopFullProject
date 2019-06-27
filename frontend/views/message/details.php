@@ -2,7 +2,9 @@
 /* @var $id */
 /* @var Product $item  */
 use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 use yii\helpers\Html;
+
 ?>
 
 <style>
@@ -39,6 +41,23 @@ use yii\helpers\Html;
         padding: 20px;
         margin-top: 12px;
     }
+    .inner-product-item {
+        padding: 5px 1px;
+        width: 100%;
+    }
+    .file-contaner {
+    padding: 6px 30px 7px 0;
+    position: relative;
+    margin: 0 7px;
+    cursor: pointer;
+}
+.inner-item {
+        padding: 10px 5px;
+        width: 100%;
+        color:red;
+        font-size: 40px;
+    }
+
 </style>
 
 <div class="details bg">
@@ -47,7 +66,21 @@ use yii\helpers\Html;
         <?php foreach ($messages as $message): ?>                        
             <div class="inner-message bgcolor clearfix">
                 <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font></p>
-                <?= $message->message_text?>
+                <?= $message->message_text?> 
+                <?php if(!empty ($message->downloads)): ?>
+                    <?php $files = explode(",", $message->downloads); ?>                                                
+                    <div class = "file-contaner">
+                        <?php foreach ($files as $file): ?>  
+                        <?= Html::a(Html::tag('span', $file, ['class' => 'inner-product-item']), ['/message/download?fileName=' . $file]) ?>
+                        <span class = "inner-product-item">
+                            <?=
+                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash", 'style'=>"color:red; font-size: 70%"]), ['/message/delete-file', 'fileName'=>$file, 'id'=>$message->id])
+                            ?>
+                        </span>                         
+                        <br/>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>  
             </div>
         <?php endforeach; ?>  
         <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>                   
