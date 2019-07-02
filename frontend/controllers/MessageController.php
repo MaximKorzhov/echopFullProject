@@ -66,21 +66,27 @@ class MessageController extends Controller
         
         $model = new Messages();
         $downloads = new Downloads();
-        
-        if (Yii::$app->request->isPost) 
+        if($model->load(Yii::$app->request->post()))        
         {
-            $fileNames = $this->uploadFile($downloads);
-            if(isset($fileNames))
-            {
-               $fileNames = implode(",", $fileNames);
-               $model->setAttribute("downloads","$fileNames");
+            if($model->from_id == OrganizationHelper::getCurrentOrg()->id)
+            {                       
+                if (Yii::$app->request->isPost) 
+                {
+                    $fileNames = $this->uploadFile($downloads);
+                    if(isset($fileNames))
+                    {
+                       $fileNames = implode(",", $fileNames);
+                       $model->setAttribute("downloads","$fileNames");
+                    }
+                }
+
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['index', 'id' => $id, 'orderId' =>$orderId]);
+                }
             }
+            else throw new NotFoundHttpException(Yii::t('app', 'You do not have the right to perform this action'));
         }
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $id, 'orderId' =>$orderId]);
-        }
-                
         $model->zakaz_id = $orderId;
         $model->from_id = OrganizationHelper::getCurrentOrg()->id;
         $model->to_id = $id;
@@ -124,26 +130,26 @@ class MessageController extends Controller
 
     public function actionDeleteFile($fileName, $id)
     {
-        $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
-        unlink($file);
-        
         $messageData = $this->findModel($id);
-        $downloads = explode(",", $messageData->downloads);
-        if(($key = array_search($fileName,$downloads)) !== FALSE)
-        {
-            unset($downloads[$key]);
-            
-            $fileNames = implode(",", $downloads);
-            $messageData->setAttribute("downloads","$fileNames");
-            $messageData->save();
-        }        
-        return $this->redirect(['index','id' => $messageData->order->org_id, 'orderId' =>$messageData->zakaz_id]);        
+        if(OrganizationHelper::getCurrentOrg()->id == $messageData->from_id)
+        {            
+            $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+            unlink($file);
+
+            $downloads = explode(",", $messageData->downloads);
+            if(($key = array_search($fileName,$downloads)) !== FALSE)
+            {
+                unset($downloads[$key]);
+
+                $fileNames = implode(",", $downloads);
+                $messageData->setAttribute("downloads","$fileNames");
+                $messageData->save();
+            }        
+            return $this->redirect(['index','id' => $messageData->order->org_id, 'orderId' =>$messageData->zakaz_id]);        
+        }
+        else throw new NotFoundHttpException(Yii::t('app', 'You do not have the right to perform this action'));
     }
-    /**
-     * Creates a new Messages model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+ 
     public function actionCreated($shopsId, $orderId)
     {                   
         $model = new Messages();
@@ -196,11 +202,18 @@ class MessageController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionRemove($id)
     {
-        $this->findModel($id)->delete();
+        $messageData = $this->findModel($id);
+        if(OrganizationHelper::getCurrentOrg()->id == $messageData->from_id)
+        {
+            $orgId = $messageData->order->org_id;
+            $orderId  = $messageData->zakaz_id;
+            $messageData = $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index','id' => $orgId, 'orderId' => $orderId]); 
+        }
+        throw new NotFoundHttpException(Yii::t('app', 'You do not have the right to perform this action'));
     }
 
     /**

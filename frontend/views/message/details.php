@@ -7,13 +7,7 @@ use yii\helpers\Html;
 
 ?>
 
-<style>
-    span.glyphicon-pencil {
-        color: #d58512;
-    }
-    span.glyphicon-pencil:hover {
-        color: #f5a532;
-    }
+<style>  
     .detail-toolbox {
         width: 100%;
         box-shadow: 0 0 5px rgba(0,0,0,0.5);
@@ -51,13 +45,12 @@ use yii\helpers\Html;
     margin: 0 7px;
     cursor: pointer;
 }
-.inner-item {
-        padding: 10px 5px;
-        width: 100%;
-        color:red;
-        font-size: 40px;
-    }
 
+ .selected-icon:hover {
+      webkit-transform: scale(1.6);
+      ms-transform: scale(1.6);
+      transform: scale(1.6);
+    }
 </style>
 
 <div class="details bg">
@@ -65,18 +58,32 @@ use yii\helpers\Html;
         <h2>По заказу <?= $orders[$orderId]->id ?> от <?= $orders[$orderId]->data ?></h2>
         <?php foreach ($messages as $message): ?>                        
             <div class="inner-message bgcolor clearfix">
+                <?php if($message->orgFrom->id == $model->from_id):?>
+                <?=
+                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash selected-icon", 'style'=>"float: right; color:red; font-size: 70%", 'title' => 'Удалить сообщение']), ['/message/remove?id=' . $message->id])
+                ?>                                
+                <?php endif; ?>
                 <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font></p>
                 <?= $message->message_text?> 
                 <?php if(!empty ($message->downloads)): ?>
                     <?php $files = explode(",", $message->downloads); ?>                                                
                     <div class = "file-contaner">
-                        <?php foreach ($files as $file): ?>  
-                        <?= Html::a(Html::tag('span', $file, ['class' => 'inner-product-item']), ['/message/download?fileName=' . $file]) ?>
-                        <span class = "inner-product-item">
-                            <?=
-                                Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash", 'style'=>"color:red; font-size: 70%"]), ['/message/delete-file', 'fileName'=>$file, 'id'=>$message->id])
-                            ?>
-                        </span>                         
+                        <br/>
+                        <?php foreach ($files as $file): ?> 
+                        <div class = "file-contaner">
+                            <span class = "inner-product-item">
+                                <?=
+                                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-download", 'style'=>"color:blue;", 'title' => 'Загрузить файл']), ['/message/download?fileName=' . $file])
+                                ?>
+                            </span> 
+
+                            <?= Html::a(Html::tag('span', $file, ['class' => 'inner-product-item', 'title' => 'Загрузить файл']), ['/message/download?fileName=' . $file]) ?>
+                            <span class = "inner-product-item">
+                                <?=
+                                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash", 'style'=>"color:red; font-size: 70%", 'title' => 'Удалить файл']), ['/message/delete-file', 'fileName'=>$file, 'id'=>$message->id])
+                                ?>
+                            </span> 
+                        </div>
                         <br/>
                         <?php endforeach; ?>
                     </div>
