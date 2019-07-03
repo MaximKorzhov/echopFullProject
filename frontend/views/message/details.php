@@ -70,21 +70,22 @@ use yii\helpers\Html;
                     <div class = "file-contaner">
                         <br/>
                         <?php foreach ($files as $file): ?> 
-                        <div class = "file-contaner">
-                            <span class = "inner-product-item">
-                                <?=
-                                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-download", 'style'=>"color:blue;", 'title' => 'Загрузить файл']), ['/message/download?fileName=' . $file])
-                                ?>
-                            </span> 
-
-                            <?= Html::a(Html::tag('span', $file, ['class' => 'inner-product-item', 'title' => 'Загрузить файл']), ['/message/download?fileName=' . $file]) ?>
-                            <span class = "inner-product-item">
-                                <?=
-                                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash", 'style'=>"color:red; font-size: 70%", 'title' => 'Удалить файл']), ['/message/delete-file', 'fileName'=>$file, 'id'=>$message->id])
-                                ?>
-                            </span> 
-                        </div>
-                        <br/>
+                            <?php if(file_exists('D:/Develop/eshop/frontend/uploads/'."$file")): ?>
+                                <div class = "file-contaner">
+                                    <span class = "inner-product-item">
+                                        <?=
+                                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-download", 'style'=>"color:blue;", 'title' => 'Загрузить файл']), ['/message/download?fileName=' . $file])
+                                        ?>
+                                    </span> 
+                                    <?= Html::a(Html::tag('span', $file, ['class' => 'inner-product-item', 'title' => 'Загрузить файл']), ['/message/download?fileName=' . $file]) ?>
+                                    <span class = "inner-product-item">
+                                        <?=
+                                            Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash", 'style'=>"color:red; font-size: 70%", 'title' => 'Удалить файл']), ['/message/delete-file', 'fileName'=>$file, 'id'=>$message->id])
+                                        ?>
+                                    </span> 
+                                </div>
+                                <br/>
+                            <?php endif; ?>        
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>  

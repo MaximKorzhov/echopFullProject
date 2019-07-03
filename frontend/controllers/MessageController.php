@@ -131,20 +131,30 @@ class MessageController extends Controller
     public function actionDeleteFile($fileName, $id)
     {
         $messageData = $this->findModel($id);
+        $fileNames = explode(",", $messageData->downloads);
         if(OrganizationHelper::getCurrentOrg()->id == $messageData->from_id)
         {            
-            $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
-            unlink($file);
-
-            $downloads = explode(",", $messageData->downloads);
-            if(($key = array_search($fileName,$downloads)) !== FALSE)
+            if($fileName !== NULL)
             {
-                unset($downloads[$key]);
-
-                $fileNames = implode(",", $downloads);
-                $messageData->setAttribute("downloads","$fileNames");
-                $messageData->save();
-            }        
+                $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+                unlink($file);
+                if(($key = array_search($fileName,$fileNames)) !== FALSE)
+                {
+                    unset($fileNames[$key]);
+                    $fileNames = implode(",", $downloads);
+                    $messageData->setAttribute("downloads","$fileNames");
+                    $messageData->save();
+                }        
+            }
+            else
+            {
+                foreach ($fileNames as $fileName)
+                {
+                    $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+                    unlink($file);
+                }
+                return;
+            }
             return $this->redirect(['index','id' => $messageData->order->org_id, 'orderId' =>$messageData->zakaz_id]);        
         }
         else throw new NotFoundHttpException(Yii::t('app', 'You do not have the right to perform this action'));
@@ -203,8 +213,12 @@ class MessageController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionRemove($id)
-    {
+    {        
         $messageData = $this->findModel($id);
+        if(!empty($messageData->downloads) && $messageData->downloads !== NULL)
+        {
+            $this->actionDeleteFile(NULL, $id);
+        }
         if(OrganizationHelper::getCurrentOrg()->id == $messageData->from_id)
         {
             $orgId = $messageData->order->org_id;
