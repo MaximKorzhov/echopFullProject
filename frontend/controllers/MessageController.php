@@ -115,13 +115,11 @@ class MessageController extends Controller
                 return $fileNames;
             }
             return NULL;
-        }
-        
+        }        
     }
     
     public function actionDownload($fileName)
     {
-//        $model = $this->findModel($id);
         $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
         return Yii::$app->response->sendFile($file);
     }
@@ -139,14 +137,14 @@ class MessageController extends Controller
         $fileNames = explode(",", $messageData->downloads);
         if(OrganizationHelper::getCurrentOrg()->id == $messageData->from_id)
         {            
-            if($fileName !== NULL)
+            if(is_file('D:/Develop/eshop/frontend/uploads/'.$fileName))
             {
-                $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+                $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'.$fileName);
                 unlink($file);
                 if(($key = array_search($fileName,$fileNames)) !== FALSE)
                 {
                     unset($fileNames[$key]);
-                    $fileNames = implode(",", $downloads);
+                    $fileNames = implode(",", $fileNames);
                     $messageData->setAttribute("downloads","$fileNames");
                     $messageData->save();
                 }        
