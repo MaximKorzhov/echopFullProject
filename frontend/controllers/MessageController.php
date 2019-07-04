@@ -150,8 +150,11 @@ class MessageController extends Controller
             {
                 foreach ($fileNames as $fileName)
                 {
-                    $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
-                    unlink($file);
+                    if(file_exists('D:/Develop/eshop/frontend/uploads/'."$fileName"))
+                    {
+                        $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+                        unlink($file);
+                    }
                 }
                 return;
             }

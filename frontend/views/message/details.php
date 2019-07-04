@@ -56,7 +56,7 @@ use yii\helpers\Html;
 <div class="details bg">
     <div class="inner-details bgcolor clearfix">        
         <h2>По заказу <?= $orders[$orderId]->id ?> от <?= $orders[$orderId]->data ?></h2>
-        <?php foreach ($messages as $message): ?>                        
+        <?php foreach ($messages as $message): ?>                    
             <div class="inner-message bgcolor clearfix">
                 <?php if($message->orgFrom->id == $model->from_id):?>
                 <?=
