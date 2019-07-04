@@ -12,7 +12,7 @@ class Downloads extends \yii\db\ActiveRecord
     public function rules()
     {
         return [            
-            [['downloads'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, txt', 'maxFiles' => 10],
+            [['downloads'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, txt', 'maxFiles' => 10],
         ];
     }
     

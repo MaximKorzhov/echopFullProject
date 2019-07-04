@@ -60,6 +60,7 @@ class MessageController extends Controller
         {
             $orderId = key($orders);
         }
+        
         $messages = Messages::find()                                                    
                         ->where(['zakaz_id' => $orders[$orderId]->id])                          
                         ->all();
@@ -76,8 +77,8 @@ class MessageController extends Controller
                     if(isset($fileNames))
                     {
                        $fileNames = implode(",", $fileNames);
-                       $model->setAttribute("downloads","$fileNames");
                     }
+                    $model->setAttribute("downloads","$fileNames");
                 }
 
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -89,7 +90,7 @@ class MessageController extends Controller
         
         $model->zakaz_id = $orderId;
         $model->from_id = OrganizationHelper::getCurrentOrg()->id;
-        $model->to_id = $id;
+        $model->to_id = $id;      
         
         return $this->render('index', [  
             'model' => $model,
@@ -108,8 +109,12 @@ class MessageController extends Controller
         if (Yii::$app->request->isPost) 
         {
             $downloads->downloads = UploadedFile::getInstances($downloads, 'downloads');
-            $fileNames = $downloads->upload();
-            return $fileNames;
+            if(!empty($downloads->downloads))
+            {
+                $fileNames = $downloads->upload();
+                return $fileNames;
+            }
+            return NULL;
         }
         
     }

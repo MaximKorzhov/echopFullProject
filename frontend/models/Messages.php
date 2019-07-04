@@ -31,10 +31,10 @@ class Messages extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message_text'], 'required'],
+            [['message_text'], 'required'],            
             [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'integer', 'max' => 45],
             [['message_text'], 'string', 'max' => 255],
-            [['downloads'], 'string', 'max' => 255],
+            [['downloads'], 'string', 'max' => 255],         
 //            [['downloads'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, txt', 'maxFiles' => 10],
 //            ['downloads', 'required', 'message' => 'Please choose a username.'],
 //            [['downloads'], 'file', 'extensions' => ['jpg','png'],'checkExtensionByMimeType'=>false],
