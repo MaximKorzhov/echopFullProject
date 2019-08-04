@@ -63,7 +63,8 @@ use yii\helpers\Html;
                     Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-trash selected-icon", 'style'=>"float: right; color:red; font-size: 70%", 'title' => 'Удалить сообщение']), ['/message/remove?id=' . $message->id])
                 ?>                                
                 <?php endif; ?>
-                <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font></p>
+                <p><font style="font-weight: bold"><?= $message->orgFrom->name?></font>
+                <?= date("d-m-Y h:i:s") ?></p>                    
                 <?= $message->message_text?> 
                 <?php if(!empty ($message->downloads)): ?>
                     <?php $files = explode(",", $message->downloads); ?>                                                

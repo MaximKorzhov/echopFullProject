@@ -18,6 +18,13 @@ use frontend\models\OrderGroup;
 use frontend\models\Users;
 use frontend\models\UsersSearchModel;
 
+use frontend\models\ProductNames;
+use frontend\models\ProductNamesModel;
+use frontend\models\ProductTypes;
+use frontend\models\ProductTypesSearchModel;
+use frontend\models\Categories;
+use frontend\models\CategoriesSearchModel;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -57,17 +64,39 @@ class OrderController extends Controller
                         ->joinWith('org')
                         ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
-                        ->all();                       
-//        $r = array_unique(ArrayHelper::getColumn($customers, 'org.name'));
-//        $r2 = ArrayHelper::map($customers, 'position.price', 'number', 'org.name');
-        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
-        if ($id == 0)
+                        ->all();   
+        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
         {
-            $id = current(array_column($customers, 'org_id')); 
-            $group = key($customers);
-        }  
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $currentOrder = $customers[$group];   
+            $suppliers = Order::find()                        
+                            ->select([Order::tableName() . '.position_id', Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
+                            ->joinWith('position') 
+                            ->joinWith('org.user')
+                            ->joinWith('ord')
+                            ->joinWith('org')
+                            ->where([Order::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                            ->distinct()
+                            ->all();   
+            
+            if ($id == 0)
+            {
+                $id = current(array_column($suppliers, 'org_id')); 
+                $group = key($suppliers);
+            }  
+            
+            $currentOrder = $suppliers[$group];   
+        }
+        else
+        {
+            if ($id == 0)
+            {
+                $id = current(array_column($customers, 'org_id')); 
+                $group = key($customers);
+            }  
+            
+            $currentOrder = $customers[$group];   
+        }
+
+        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
         $searchModel = new OrderSearchModel();
         $dataProvider = new ActiveDataProvider([
                         'query' => Order::find()                            
@@ -80,7 +109,8 @@ class OrderController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'customers' => $customers,
-            'supplier' => $supplier,     
+            'supplier' => $supplier,   
+            'suppliers' => $suppliers,
             'currentOrder' => $currentOrder,
         ]);
     }
@@ -103,16 +133,38 @@ class OrderController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id = 0)
     {
         $model = new Order();
-
+        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
+        {
+            $catalog = Categories::find()                        
+                            ->joinWith('productTypes') 
+                            ->joinWith('productTypes.name')                        
+                            ->all();   
+        }  
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+$r = $catalog[0]->name_of_category;
+//        return $this->render('create', [
+//            'model' => $model,
+//        ]);
 
-        return $this->render('create', [
+foreach ($catalog[$id]->productTypes as $key => $product_type)
+{
+    $e = $product_type->product_type;
+    $A = $product_type->name;
+    foreach ($product_type->name as $key => $product_name)
+    {
+        $W = $product_name->product_names;
+    }
+}
+
+          return $this->render('created', [
             'model' => $model,
+            'catalog' => $catalog,
+            'id' => $id,
         ]);
     }
 

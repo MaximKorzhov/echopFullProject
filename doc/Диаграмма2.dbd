@@ -52,15 +52,15 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>-390 px</X>
-              <Y>-120 px</Y>
+              <X>-380 px</X>
+              <Y>-130 px</Y>
             </Location>
             <Size>
-              <Width>209 px</Width>
-              <Height>229 px</Height>
+              <Width>204 px</Width>
+              <Height>127 px</Height>
             </Size>
             <DbOid>
-              <Path>fp_base.`order`</Path>
+              <Path>fp_base.product_names</Path>
               <TypeName>Table</TypeName>
             </DbOid>
             <Compartments>
@@ -75,15 +75,15 @@
               <Parent>0</Parent>
             </CustomProperties>
             <Location>
-              <X>-40 px</X>
-              <Y>-90 px</Y>
+              <X>40 px</X>
+              <Y>-70 px</Y>
             </Location>
             <Size>
-              <Width>137 px</Width>
-              <Height>107 px</Height>
+              <Width>191 px</Width>
+              <Height>127 px</Height>
             </Size>
             <DbOid>
-              <Path>fp_base.order_group</Path>
+              <Path>fp_base.product_types</Path>
               <TypeName>Table</TypeName>
             </DbOid>
             <Compartments>
@@ -105,20 +105,20 @@
             <PortAnchors>
               <Port>
                 <Location>
-                  <X>204 px</X>
-                  <Y>173 px</Y>
+                  <X>0 px</X>
+                  <Y>93.5 px</Y>
                 </Location>
-                <Anchors>None</Anchors>
+                <Anchors>Top Bottom</Anchors>
                 <Align>Right</Align>
                 <CustomProperties>
                   <OID>5</OID>
-                  <PortType>FixedAnchor</PortType>
+                  <PortType>FloatAnchor</PortType>
                 </CustomProperties>
               </Port>
               <Port>
                 <Location>
                   <X>0 px</X>
-                  <Y>53.5 px</Y>
+                  <Y>33.5 px</Y>
                 </Location>
                 <Anchors>Top Bottom</Anchors>
                 <Align>Left</Align>
@@ -128,19 +128,9 @@
                 </CustomProperties>
               </Port>
             </PortAnchors>
-            <BendPoints>
-              <PointD>
-                <X>-161 px</X>
-                <Y>53 px</Y>
-              </PointD>
-              <PointD>
-                <X>-161 px</X>
-                <Y>-36.5 px</Y>
-              </PointD>
-            </BendPoints>
             <IsManuallyRouted>false</IsManuallyRouted>
             <DbOid>
-              <Path>fp_base.`order`.FK_order_order_group_id</Path>
+              <Path>fp_base.product_names.FK_product_names_product_types_id</Path>
               <TypeName>ForeignKey</TypeName>
             </DbOid>
           </Model>
@@ -154,8 +144,8 @@
             <PortAnchors>
               <Port xsi:type="LinkPort">
                 <Location>
-                  <X>-80.5 px</X>
-                  <Y>89.5 px</Y>
+                  <X>-108 px</X>
+                  <Y>0 px</Y>
                 </Location>
                 <Anchors>None</Anchors>
                 <Align>Right</Align>
@@ -176,7 +166,7 @@
           <ScaleMode>Free</ScaleMode>
           <Scale>1</Scale>
           <Location>
-            <X>-575 px</X>
+            <X>-550 px</X>
             <Y>-250 px</Y>
           </Location>
         </ViewPort>

@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         		'content' => function($data) {
                     if ($data->status)
                     {
-        			    return '<span style="color: green;">' . User::getStatus($data->status) . '</span>';
+                        return '<span style="color: green;">' . User::getStatus($data->status) . '</span>';
                     }
                     return '<span style="color: red;">' . User::getStatus($data->status) . '</span>';
     			}
