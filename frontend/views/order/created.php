@@ -51,6 +51,12 @@ use yii\widgets\Pjax;
         height: 100%;
         float: left;
     }
+    .main-panel {
+        padding-left: 5px;
+        width: 70%;
+        height: 100%;
+        float: left;
+    }
     .products-list {
         width: 100%;
         height: calc(100% - 45px);
@@ -127,13 +133,31 @@ use yii\widgets\Pjax;
     width: 50%; /* Ширина слоя */
 </style>
 
+<?php if($catalog[$id]->parent_id !== "NULL") : ?>
+    <div class="main-panel">
+        <div class="inner-right-panel bgcolor">  
+        <div class="inner-products-list bgcolor">
+            <div><h2><?= $catalog[$id]->name ?></h2></div>
+            <?php foreach ($products as $keyProduct_type => $product_type) : ?>                
+                <div class="layer-left">
+                    <div class="product-item">
+                        <h3><?= Html::a(Html::tag('div', $product_type->name, ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/order/create', 'id'=> $keyProduct_type]) ?></h3>
+                    </div>                    
+                </div>                
+            <?php endforeach; ?>
+        </div>
+        </div>
+    </div>
+<?php else : ?>
 <div class="middle-panel">
     <div class="inner-middle-panel bgcolor">                            
         <div class="inner-products-list bgcolor">
-            <?php foreach ($catalog as $key => $category) : ?>             
-                <div class="product-item">
-                    <?= Html::a(Html::tag('div', $category->name_of_category, ['class' => $key == $id ? 'product-item-active' :'inner-product-item']), ['/order/create', 'id'=> $key]) ?>
-                </div>
+            <?php foreach ($catalog as $keyСategory => $category) : ?>               
+                <?php if($category->parent_id == "NULL") : ?>
+                    <div class="product-item">
+                        <?= Html::a(Html::tag('div', $category->name, ['class' => $keyСategory == $id ? 'product-item-active' :'inner-product-item']), ['/order/create', 'id'=> $keyСategory]) ?>
+                    </div>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div> 
     </div>
@@ -141,17 +165,22 @@ use yii\widgets\Pjax;
 <div class="central-panel">
     <div class="inner-right-panel bgcolor">  
         <div class="inner-products-list bgcolor">
-            <div><h2><?= $catalog[$id]->name_of_category ?></h2></div>
-            <?php foreach ($catalog[$id]->productTypes as $key => $product_type) : ?>
-                <div class="layer-left">
-                    <div class="product-item">
-                        <?= Html::a(Html::tag('div', $product_type->product_type, ['class' => $product_type->id == $key ? 'product-item-active' :'inner-product-item']), ['/order/created', 'id'=> $key]) ?>
-                        <?php foreach ($product_type->name as $key => $product_name) : ?>
-                            <?= Html::a(Html::tag('div', $product_name->product_names, ['class' => $product_name->id == $key ? 'product-item-active' :'inner-product-item']), ['/order/created', 'id'=> $key]) ?>
-                        <?php endforeach; ?>
-                    </div>                    
-                </div>
+            <div><h2><?= $catalog[$id]->name ?></h2></div>
+            <?php foreach ($catalog as $keyProduct_type => $product_type) : ?>
+                <?php if($product_type->parent_id == $catalog[$id]->id) : ?>
+                    <div class="layer-left">
+                        <div class="product-item">
+                            <h3><?= Html::a(Html::tag('div', $product_type->name, ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/order/create', 'id'=> $keyProduct_type]) ?></h3>
+                            <?php foreach ($catalog as $keyProduct_name => $product_name) : ?>
+                                <?php if($product_name->parent_id == $product_type->id) : ?>
+                                    </h4><?= Html::a(Html::tag('div', $product_name->name, ['class' => $product_name->id == $keyProduct_name ? 'product-item-active' :'inner-product-item']), ['/order/create', 'id'=> $keyProduct_name]) ?></h4>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>                    
+                    </div>
+                <?php endif; ?>    
             <?php endforeach; ?>
         </div>        
     </div>
 </div>
+<?php endif; ?>

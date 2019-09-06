@@ -25,6 +25,9 @@ use frontend\models\ProductTypesSearchModel;
 use frontend\models\Categories;
 use frontend\models\CategoriesSearchModel;
 
+use frontend\models\Catalog;
+use frontend\models\CatalogSearchModel;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -135,10 +138,23 @@ class OrderController extends Controller
      */
     public function actionCreate($id = 0)
     {
-        $model = new Order();
+        $model = new Catalog();
+        $modelProducts = new Position();
+        $products = 0;
+        
+        $catalog = Catalog::find()->all();
+        
+        if($id !== 0)
+        {
+            $products = Position::find()              
+                ->where([Position::tableName() . '.podgroup' => $catalog[$id]->id])
+                ->distinct()
+                ->all();           
+        }
+        
         if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
         {
-            $catalog = Categories::find()                        
+            $catalogFirst = Categories::find()                        
                             ->joinWith('productTypes') 
                             ->joinWith('productTypes.name')                        
                             ->all();   
@@ -146,24 +162,25 @@ class OrderController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-$r = $catalog[0]->name_of_category;
+//$r = $catalog[0]->name_of_category;
 //        return $this->render('create', [
 //            'model' => $model,
 //        ]);
 
-foreach ($catalog[$id]->productTypes as $key => $product_type)
-{
-    $e = $product_type->product_type;
-    $A = $product_type->name;
-    foreach ($product_type->name as $key => $product_name)
-    {
-        $W = $product_name->product_names;
-    }
-}
+//foreach ($catalog[$id]->productTypes as $key => $product_type)
+//{
+//    $e = $product_type->product_type;
+//    $A = $product_type->name;
+//    foreach ($product_type->name as $key => $product_name)
+//    {
+//        $W = $product_name->product_names;
+//    }
+//}
 
           return $this->render('created', [
             'model' => $model,
             'catalog' => $catalog,
+            'products' => $products,
             'id' => $id,
         ]);
     }
