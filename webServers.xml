@@ -4,6 +4,9 @@
       <webServer id="7067b259-fc10-47a0-abd3-ab8762d89bf9" name="eshop" url="http://eshop">
         <fileTransfer port="0" mountedRoot="C:\Program Files\JetBrains" accessType="MOUNT" />
       </webServer>
+      <webServer id="c8874194-3fd5-439b-b813-f37f63ce2279" name="eshop" url="http://eshop">
+        <fileTransfer port="0" accessType="LOCAL" />
+      </webServer>
     </option>
   </component>
 </application>
