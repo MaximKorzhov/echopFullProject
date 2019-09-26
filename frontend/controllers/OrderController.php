@@ -59,6 +59,7 @@ class OrderController extends Controller
      */
     public function actionIndex($id = 0, $group = null)
     {
+        $suppliers = 0;
         $customers = Order::find()
                         ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
                         ->joinWith('position') 
@@ -141,11 +142,12 @@ class OrderController extends Controller
         $model = new Catalog();
         $modelProducts = new Position();
         $products = 0;
+        //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         
         $catalog = Catalog::find()->all();
         
         if($id !== 0)
-        {
+        {            
             $products = Position::find()              
                 ->where([Position::tableName() . '.podgroup' => $catalog[$id]->id])
                 ->distinct()

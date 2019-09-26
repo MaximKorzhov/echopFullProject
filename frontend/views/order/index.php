@@ -1,3 +1,4 @@
+
 <?php
 
 use frontend\Helpers\OrganizationHelper;
@@ -171,10 +172,7 @@ use yii\widgets\Pjax;
     	.right-panel {
         	width: 50%;
     	}
-    
-    
-    
-   
+              
 </style>
 
 <div class="content-orders clearfix">

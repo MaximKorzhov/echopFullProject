@@ -11,6 +11,11 @@ use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
+use frontend\models\Catalog;
+use frontend\models\CatalogSearchModel;
+use frontend\models\Position;
+use frontend\models\PositionSearchModel;
+
 class ProductsController extends AppController
 {
     /**
@@ -61,16 +66,15 @@ class ProductsController extends AppController
      */
     public function actionCreate()
     {
-        $model = new Product();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save())
+        $product = new Product();
+        if ($product->load(Yii::$app->request->post()) && $product->save())
         {
-            return $this->redirect(['index', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success');
+            return $this->redirect(['index', 'id' => $product->id]);
         }
 
         return $this->render('index', [
-            'items' => $model,
-            'id' => $model->id,
+            'items' => $product,            
             'org' => Organization::getOrgListByUserId(Yii::$app->user->id)
         ]);
     }
@@ -79,7 +83,7 @@ class ProductsController extends AppController
      * @param int $id
      * @return string|Response
      */
-    public function actionUpdate($id = 0)
+    public function actionUpdate($id)
     {
         /* @var Product[] $items */
         $items = ArrayHelper::index(Product::findAll(['org_id' => OrganizationHelper::getCurrentOrg()->id]), 'id');

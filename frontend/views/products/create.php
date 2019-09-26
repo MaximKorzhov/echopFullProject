@@ -15,7 +15,7 @@
     }
 </style>
 <div class="products-create">
-    <?= $this->render('_form', [
+    <?= $this->render('_forms', [       
         'model' => $items,
         'org' => $org
     ]) ?>

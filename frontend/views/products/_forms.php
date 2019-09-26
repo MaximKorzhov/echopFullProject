@@ -6,6 +6,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+
+use frontend\models\Catalog;
+use frontend\models\CatalogSearchModel;
 
 $this->registerJs('
 ', $this::POS_HEAD);
@@ -87,9 +92,38 @@ $this->registerJs('
                     <?= $form->field($model, 'art')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'shtrih')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'date')->textInput() ?>
-                    <?= $form->field($model, 'group')->textInput(['maxlength' => true]) ?>
-                    <?= $form->field($model, 'podgroup')->textInput(['maxlength' => true]) ?>
+                                      
+                    <?php $y = Catalog::getParentGroup() ?>
+                    <?= $form->field($model, 'group')->dropDownList(Catalog::getParentGroup(),
+                         [
+                             'prompt' => 'Выбрать группу...',
+                             'onchange' => '
+                                $.post(
+                                 "'.Url::toRoute('/ajax/ajax-catalog').'",
+                                 {id : $(this).val()},
+                                 function(data){
+                                     $("select#podgroup").html(data).attr("disabled", false)})'
+                         ]) ?>
+                    <?php $w = $model->isNewRecord ?>
+                    <?php $r = Catalog::getSubGroup(Yii::$app->request->post('id')) ?>
+                    <?= $form->field($model, 'podgroup')->dropDownList($model->isNewRecord ? [] : Catalog::getSubGroup($model->parent_id),
+                     [
+                         'prompt' => 'Выбрать подгруппу...',
+                         'id' => 'podgroup',
+                         'disabled' => $model->isNewRecord ? "disabled" : false,
+                         'onchange' => '
+                            $.post(
+                             "'.Url::toRoute('/ajax/ajax-catalog').'",
+                             {id : $(this).val()},
+                             function(data){
+                                 $("select#catalog_id").html(data).attr("disabled", false)})'
+                     ]) ?>
+                    <?= $form->field($model, 'catalog_id')->dropDownList($model->isNewRecord ? [] : Catalog::getSubGroup($model->parent_id),
+                         [
+                             'prompt' => 'Выбрать товар...',
+                             'id' => 'catalog_id',
+                             'disabled' => $model->isNewRecord ? 'disabled' : false
+                    ]) ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'size')->textInput(['maxlength' => true]) ?>
                     <?= $form->field($model, 'podrobno')->textInput() ?>

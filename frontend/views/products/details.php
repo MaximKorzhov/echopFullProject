@@ -54,7 +54,7 @@ use yii\helpers\Html;
         <p>Штрих-код Товара: <?= $item->shtrih ?></p>
         <p>Единица измерения: <?= $item->size ?></p>
         <p>Цена: <?= $item->price ?></p>
-        <p>Дата поступления: <?= $item->date ?></p>
+        <p>Дата поступления: <?= \Yii::$app->formatter->asDatetime($item->created_at) ?></p>
         <p>Поставщик: <?= $item->org->name ?></p>
     </div>
 </div>

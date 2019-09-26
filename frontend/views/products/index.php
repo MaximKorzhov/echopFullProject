@@ -120,6 +120,13 @@ $this->registerJs('
 </style>
 <div class="middle-panel">
     <div class="inner-middle-panel bgcolor">
+        <?php if (Yii::$app->session->hasFlash('success')): ?>
+
+        <div class="alert alert-success">
+            Thank you for contacting us. We will respond to you as soon as possible.
+        </div>
+
+        <?php endif; ?>
         <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>
             <div class="product-toolbox">
                 <div class="inner-product-toolbox clearfix">
@@ -152,8 +159,7 @@ $this->registerJs('
             <?php
                 if (Yii::$app->controller->action->id == 'create')
                 {
-                    echo $this->render('/products/create', [
-                        'id' => $id,
+                    echo $this->render('/products/create', [                        
                         'items' => $items,
                         'org' => $org
                     ]);

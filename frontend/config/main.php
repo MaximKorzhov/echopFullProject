@@ -14,6 +14,13 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'products/index',
     'components' => [
+          'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php: d F Y',
+            'defaultTimeZone' => 'Europe/Kiev',
+            'datetimeFormat' => 'php: d F Y H﻿﻿',
+            'locale' => 'ru'
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use yii\helpers\ArrayHelper;
+
 use Yii;
 
 /**
@@ -42,5 +44,13 @@ class Catalog extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'parent_id' => Yii::t('app', 'Parent ID'),
         ];
+    }
+    public static function getParentGroup()
+    {
+    	return ArrayHelper::map(self::find()->where(['parent_id' => "NULL"])->all(), 'id', 'name');
+    }
+    public static function getSubGroup($id = 0)
+    {
+        return ArrayHelper::map(self::find()->where(['parent_id' => $id])->all(), 'id', 'name');
     }
 }

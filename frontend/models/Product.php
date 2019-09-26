@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "fp_position".
  *
@@ -38,12 +38,19 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'org_id'], 'number'],
+            [['price', 'org_id', 'catalog_id'], 'number'],
             [['date'], 'safe'],
             [['podrobno'], 'string'],
             [['art', 'shtrih', 'group', 'podgroup', 'size', 'add_pole'], 'string', 'max' => 45],
             [['name'], 'string', 'max' => 90],
-            [['org_id', 'price', 'name'], 'required'],
+            [['org_id', 'price', 'name', 'catalog_id'], 'required'],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class
         ];
     }
 
@@ -56,15 +63,17 @@ class Product extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'art' => Yii::t('app', 'Art'),
             'shtrih' => Yii::t('app', 'Shtrih'),
-            'name' => Yii::t('app', 'Name'),
             'price' => Yii::t('app', 'Price'),
             'date' => Yii::t('app', 'Date'),
             'group' => Yii::t('app', 'Group'),
             'podgroup' => Yii::t('app', 'Podgroup'),
+            'name' => Yii::t('app', 'Name'),
             'size' => Yii::t('app', 'Size'),
             'podrobno' => Yii::t('app', 'Podrobno'),
             'add_pole' => Yii::t('app', 'Add Pole'),
             'from_id' => Yii::t('app', 'From ID'),
+            'catalog_id' => Yii::t('app', 'Catalog ID'),
+            
         ];
     }
 
