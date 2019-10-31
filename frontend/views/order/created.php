@@ -147,7 +147,7 @@ img {
 .product {
  background: #fff none repeat scroll 0 0;
  border: 1px solid #c0c0c0;
- height: 390px;
+ height: 590px;
  overflow: hidden;
  padding: 25px 15px;
  position: relative;
@@ -179,7 +179,13 @@ img {
  font-size: 18px;
  font-weight: 500;
 }
-    
+
+.center{
+width: 150px;
+  margin: 40px auto;
+  
+}
+
 </style>
 
 <?php if($catalog[$id]->parent_id !== "NULL") : ?>            
@@ -200,8 +206,8 @@ img {
  
         
         <?php foreach ($products as $keyProduct_type => $product_type) : ?>                
-            <div class="col-md-12 product">
-                <div class="row">
+            
+                
                     <div class="col-sm-4">
                         <div class="product">
                             <div class="product-img">                                    
@@ -216,10 +222,18 @@ img {
                                 </p>
                                 <p class="product-desc">Signature NYX cosmetics</p>
                                 <p class="product-price">Price: <?= $product_type->price ?></p>
+                             
+                                
+                            
+<h3><?= Html::a(Html::tag('div', "Exem", ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/exem/exem']) ?></h3>                                        
+                                    
+                                    
+</div>
+                                
                             </div>
                         </div>
-                    </div>
-                </div>
+                
+            
         <?php endforeach; ?>
       </div>
     </div>            

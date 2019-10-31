@@ -143,7 +143,7 @@ class OrderController extends Controller
         $modelProducts = new Position();
         $products = 0;
         //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        
+        $md5 = md5(Yii::$app->request->post('string'));
         $catalog = Catalog::find()->all();
         
         if($id !== 0)
@@ -164,26 +164,13 @@ class OrderController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-//$r = $catalog[0]->name_of_category;
-//        return $this->render('create', [
-//            'model' => $model,
-//        ]);
-
-//foreach ($catalog[$id]->productTypes as $key => $product_type)
-//{
-//    $e = $product_type->product_type;
-//    $A = $product_type->name;
-//    foreach ($product_type->name as $key => $product_name)
-//    {
-//        $W = $product_name->product_names;
-//    }
-//}
 
           return $this->render('created', [
             'model' => $model,
             'catalog' => $catalog,
             'products' => $products,
             'id' => $id,
+              'md5' => $md5,
         ]);
     }
 
@@ -194,6 +181,17 @@ class OrderController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+    public function actionPjaxExample5()
+    {
+        return $this->render('created', [
+            'model' => $model,
+            'catalog' => $catalog,
+            'products' => $products,
+            'id' => $id,
+            'md5' => md5(Yii::$app->request->post('string'))
+        ]);
+    }
+    
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
