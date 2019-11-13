@@ -143,7 +143,7 @@ class OrderController extends Controller
         $modelProducts = new Position();
         $products = 0;
         //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $md5 = md5(Yii::$app->request->post('string'));
+       
         $catalog = Catalog::find()->all();
         
         if($id !== 0)
@@ -169,8 +169,7 @@ class OrderController extends Controller
             'model' => $model,
             'catalog' => $catalog,
             'products' => $products,
-            'id' => $id,
-              'md5' => $md5,
+            'id' => $id,       
         ]);
     }
 

@@ -210,6 +210,10 @@ AppAsset::register($this);
                         [
                             'label' => 'Сообщения',
                             'url' => ['/message/index']
+                        ],
+                        [
+                            'label' => 'Каталог',
+                            'url' => ['/catalog/index']
                         ]
                     ];
 

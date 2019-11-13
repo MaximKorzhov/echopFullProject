@@ -6,6 +6,8 @@ use yii\helpers\ArrayHelper;
 
 use Yii;
 
+use \frontend\Helpers\CartHelper;
+
 /**
  * This is the model class for table "catalog".
  *
@@ -52,5 +54,23 @@ class Catalog extends \yii\db\ActiveRecord
     public static function getSubGroup($id = 0)
     {
         return ArrayHelper::map(self::find()->where(['parent_id' => $id])->all(), 'id', 'name');
+    }
+    
+    public function getCart($id) 
+    {
+        $cartSession = Yii::$app->session;
+        
+        if (!isset($cartSession['cart']))
+        {     
+            $cartSession->open();
+            $cartSession['cart'] = new CartHelper();            
+            $cartSession['cart']->products[] = $id;             
+           
+            return;            
+        }
+                
+        $cartSession['cart']->products[] = $id;             
+        
+        return;
     }
 }

@@ -9,9 +9,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use frontend\models\Position;
-use frontend\models\PositionSearchModel;
-
 /**
  * CatalogController implements the CRUD actions for Catalog model.
  */
@@ -36,26 +33,14 @@ class CatalogController extends Controller
      * Lists all Catalog models.
      * @return mixed
      */
-    public function actionIndex($id = 0)
+    public function actionIndex()
     {
-        $model = new Catalog();
-        $products = 0;
-        $catalog = Catalog::find()->all();
-        $t = $model->getCart($catalog[$id]->id);
-        
-        if($id !== 0)
-        {            
-            $products = Position::find()              
-                ->where([Position::tableName() . '.podgroup' => $catalog[$id]->id])
-                ->distinct()
-                ->all();           
-        }
+        $searchModel = new CatalogSearchModel();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'model' => $model,
-            'catalog' => $catalog,
-            'products' => $products,
-            'id' => $id,       
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
