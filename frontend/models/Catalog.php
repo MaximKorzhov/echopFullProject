@@ -64,13 +64,13 @@ class Catalog extends \yii\db\ActiveRecord
         {     
             $cartSession->open();
             $cartSession['cart'] = new CartHelper();            
-            $cartSession['cart']->products[] = $id;             
+            $cartSession['cart']->products[] = [$id, Yii::$app->request->post()['quant']];             
            
-            return;            
+            return 'in the basket';            
         }
                 
         $cartSession['cart']->products[] = $id;             
         
-        return;
+        return 'in the basket';
     }
 }

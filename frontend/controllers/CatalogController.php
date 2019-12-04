@@ -38,10 +38,27 @@ class CatalogController extends Controller
      */
     public function actionIndex($id = 0)
     {
+        $h= Yii::$app->request->post();
+        $we = 0;
+        
         $model = new Catalog();
         $products = 0;
         $catalog = Catalog::find()->all();
+        
+        if(Yii::$app->request->post())
+        {
+            $id = Yii::$app->request->post()['key']; 
+            
+            $product = Position::findOne($id);    
+            
+            return $this->render('details', [
+            
+            'product' => $product,            
+        ]);
+        }
+        
         $t = $model->getCart($catalog[$id]->id);
+        
         
         if($id !== 0)
         {            
@@ -50,21 +67,15 @@ class CatalogController extends Controller
                 ->distinct()
                 ->all();           
         }
-
+         
         return $this->render('index', [
             'model' => $model,
             'catalog' => $catalog,
             'products' => $products,
-            'id' => $id,       
+            'id' => $id,            
         ]);
     }
-
-    /**
-     * Displays a single Catalog model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+        
     public function actionView($id)
     {
         return $this->render('view', [
@@ -77,6 +88,15 @@ class CatalogController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+    
+    public function actionDetails()
+    {
+        $model = new Catalog();
+        
+        return $this->render('details', [
+            'model' => $model,
+        ]);
+    }
     public function actionCreate()
     {
         $model = new Catalog();
@@ -138,5 +158,21 @@ class CatalogController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    
+    public function actionBuyLater($id)
+    {
+        $model = new Catalog();
+        
+        $inTheBasket = $model->getCart($catalog[$id]->id);                
+            
+        $product = Position::findOne($id);    
+
+        return $this->render('details', [
+
+        'product' => $product, 
+        'inTheBasket' => $inTheBasket,
+            
+        ]);
     }
 }

@@ -1,15 +1,8 @@
 <?php
 
-use frontend\Helpers\OrganizationHelper;
 use yii\data\ActiveDataProvider as ActiveDataProviderAlias;
 use yii\helpers\Html;
-use frontend\models\Order;
-use \yii\grid\GridView;
-use frontend\components\NumberColumn;
 use yii\widgets\Pjax;
-
-/* @var Order[] $items  */
-/** @var ActiveDataProviderAlias $dataProvider */
 
 ?>
 
@@ -226,8 +219,18 @@ width: 150px;
                              
                                 
                             
-                            <h3><?= Html::a(Html::tag('div', "Exem", ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/catalog/index', 'id'=> $keyProduct_type]) ?></h3>                                        
-                                    
+                            <h3><?= Html::a(Html::tag('div', "Exem", ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/catalog/details', 'id'=> $keyProduct_type]) ?></h3>                                        
+                            <?= Html::a(Html::tag('div', 'Exem', ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item', ]), '', [
+                                        'title' => Yii::t('app','Index'),
+                                        'data' => [
+                                            'method' => 'post',
+                                            'params' => [
+                                                'action' => 'index',
+                                                'key' => $product_type->id,                                                
+                                            ]
+                                        ],
+                                    ]);
+                            ?>       
                                     
                             </div>
                         </div>

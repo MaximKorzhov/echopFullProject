@@ -13,23 +13,28 @@ class ExampleController extends Controller
 {
     public function actionExam()
     {
-       
-        $string = 1;
-        $r = Yii::$app->request->post('action');
-        $w = $r = Yii::$app->request->post('minus');        
-	
-        if(Yii::$app->request->post('action') == 'minus') 
-         {
-             $string = Yii::$app->request->post('number') -1;
-         }
+        if(Yii::$app->request->post())
+        {
+            if (Yii::$app->request->post()['params'] === 'minus') 
+            {
 
-          if(Yii::$app->request->post('action') == 'plus') 
-          {
-            $string = Yii::$app->request->post('number') +1;
-          }
+                $we = --Yii::$app->request->post()['value'];
+
+            }
+            if (Yii::$app->request->post()['params'] === 'plus') 
+            {
+
+                $we = ++Yii::$app->request->post()['value'];
+
+            }
+        }
+        else
+        {
+            $we = 1;
+        }
         
-        return $this->render('ajax', [
-            'stringHash' => $string,
+        return $this->render('pjax', [               
+            'data' => $we,
            
         ]);
     }     
