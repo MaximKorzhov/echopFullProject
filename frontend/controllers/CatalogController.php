@@ -57,7 +57,7 @@ class CatalogController extends Controller
         ]);
         }
         
-        $t = $model->getCart($catalog[$id]->id);
+//        $t = $model->getCart($catalog[$id]->id);
         
         
         if($id !== 0)
@@ -164,7 +164,7 @@ class CatalogController extends Controller
     {
         $model = new Catalog();
         
-        $inTheBasket = $model->getCart($catalog[$id]->id);                
+        $inTheBasket = $model->getCart($id);                
             
         $product = Position::findOne($id);    
 
@@ -173,6 +173,22 @@ class CatalogController extends Controller
         'product' => $product, 
         'inTheBasket' => $inTheBasket,
             
+        ]);
+    }
+    
+     public function actionGetCart()
+    {               
+        $cartSession = Yii::$app->session;
+        $products = $cartSession['cart']->products; 
+        
+        foreach ($products as $product)
+        {
+            $cart = Position::findOne($product[0]);
+        }
+
+        return $this->render('details', [
+
+        'cart' => $cart,                   
         ]);
     }
 }

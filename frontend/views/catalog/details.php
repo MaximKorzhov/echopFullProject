@@ -25,17 +25,30 @@ use yii\helpers\Html;
         <h3><?= $product->name ?></h3>
         <p><?= $product->podrobno ?></p>
         <p><?= $product->price ?> руб./шт</p>
-        <?php if(!isset($inTheBasket)) : ?>                                                                                 
-         
-
-            <div class='container text-center'> 
-                <div class="simpl-btn">                   
-                    <?= Html::submitButton('В корзине', ['class' => 'btn btn-success']) ?>                       
+        
+        <?php if(isset($inTheBasket)) : ?>                                                                                          
+            <div class='col-lg-5 col-md-5 col-sm-12'> 
+                <div class="simpl-btn">      
+                    <?= Html::a(Html::tag('button', 'В корзине', ['class' => 'btn btn-success', ]), ['/catalog/get-cart'], [
+                                        'title' => Yii::t('app','Index'),
+                                        'data' => [
+                                            'method' => 'post',
+                                            'params' => [
+                                                'action' => 'index',
+                                                'params' => 'minus',
+                                                                                        
+                                            ]
+                                        ],
+                                    ]
+                                    
+                                );
+                    ?>
+                   
                 </div>
-            </div>
-                                
+            </div>                                
         <?php else : ?>
-        <?= Html::beginForm(['catalog/index', 'id' => $product->id], 'post', ['enctype' => 'multipart/form-data']) ?>
+        
+        <?= Html::beginForm(['catalog/buy-later', 'id' => $product->id], 'post', ['enctype' => 'multipart/form-data']) ?>
             <div class="col-lg-5 col-md-5 col-sm-12">
                 <div class="input-group">
                       <span class="input-group-btn">
