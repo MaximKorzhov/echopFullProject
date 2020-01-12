@@ -186,16 +186,16 @@ width: 150px;
 <h2><?= $catalog[$id]->name ?></h2>
 <div class="container content">
  <div class="row">
- <div class="col-md-2">
- <div class="list-group">
- <a href="#" class="list-group-item">Футболки</a>
- <a href="#" class="list-group-item">Джинсы</a>
- <a href="#" class="list-group-item">Брюки</a>
- <a href="#" class="list-group-item">Платья</a>
- <a href="#" class="list-group-item">Куртки</a>
- </div>
- </div>
- <div class="col-md-8">
+     <div class="col-md-2">
+         <div class="list-group">
+         <a href="#" class="list-group-item">Футболки</a>
+         <a href="#" class="list-group-item">Джинсы</a>
+         <a href="#" class="list-group-item">Брюки</a>
+         <a href="#" class="list-group-item">Платья</a>
+         <a href="#" class="list-group-item">Куртки</a>
+         </div>
+     </div>
+    <div class="col-md-8">
  
         
         <?php foreach ($products as $keyProduct_type => $product_type) : ?>                

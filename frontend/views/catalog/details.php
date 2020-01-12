@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 
 ?>
 
@@ -29,7 +30,7 @@ use yii\helpers\Html;
         <?php if(isset($inTheBasket)) : ?>                                                                                          
             <div class='col-lg-5 col-md-5 col-sm-12'> 
                 <div class="simpl-btn">      
-                    <?= Html::a(Html::tag('button', 'В корзине', ['class' => 'btn btn-success', ]), ['/catalog/get-cart'], [
+                    <?= Html::a(Html::tag('button', 'В корзине', ['class' => 'btn btn-success', ]), ['/cart/index'], [
                                         'title' => Yii::t('app','Index'),
                                         'data' => [
                                             'method' => 'post',
@@ -77,6 +78,10 @@ use yii\helpers\Html;
 $('.btn-number').click(function(e){
     e.preventDefault();
     
+    let form = document.createElement('form');
+    form.action = 'catalog/buy-later';
+    form.method = 'POST';
+    
     fieldName = $(this).attr('data-field');
     type      = $(this).attr('data-type');
     var input = $("input[name='"+fieldName+"']");
@@ -86,6 +91,10 @@ $('.btn-number').click(function(e){
             
             if(currentVal > input.attr('min')) {
                 input.val(currentVal - 1).change();
+                
+                
+                document.body.append(form);
+                input.submit();
             } 
             if(parseInt(input.val()) === input.attr('min')) {
                 $(this).attr('disabled', true);

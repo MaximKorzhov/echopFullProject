@@ -162,31 +162,43 @@ class CatalogController extends Controller
     
     public function actionBuyLater($id)
     {
-        $model = new Catalog();
+        //$model = new Catalog();
+        //
+        $cartSession = Yii::$app->session;
         
-        $inTheBasket = $model->getCart($id);                
+        if (!isset($cartSession['cart']))
+        {     
+            //$cartSession->open();// УБРАТЬ 
+            $cartSession['cart'] = new Catalog();            
+            $cartSession['cart']->products[$id] = [Position::findOne($id), Yii::$app->request->post()['quantity']];                                   
+        }
+        else 
+        {
+            $cartSession['cart']->products[$id] = [Position::findOne($id), Yii::$app->request->post()['quantity']];                         
+        }
+//         $cartSession -> destroy();   
+        
+//        $inTheBasket = $model->getCart($id);                
             
-        $product = Position::findOne($id);    
+//        $product = Position::findOne($id);    
 
         return $this->render('details', [
-
-        'product' => $product, 
-        'inTheBasket' => $inTheBasket,
-            
+            'product' => $cartSession['cart']->products[$id][0], 
+            'inTheBasket' => 'inTheBasket',            
         ]);
     }
     
      public function actionGetCart()
     {               
         $cartSession = Yii::$app->session;
-        $products = $cartSession['cart']->products; 
+        $products = $cartSession['cart']; 
         
-        foreach ($products as $product)
+        foreach ($products as $key => $product)
         {
-            $cart = Position::findOne($product[0]);
+            $cart = Position::findOne($product[$key]);
         }
 
-        return $this->render('details', [
+        return $this->render('cart', [
 
         'cart' => $cart,                   
         ]);

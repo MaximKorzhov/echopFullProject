@@ -17,6 +17,7 @@ use \frontend\Helpers\CartHelper;
  */
 class Catalog extends \yii\db\ActiveRecord
 {
+    public $products = [];    
     /**
      * {@inheritdoc}
      */
@@ -62,14 +63,15 @@ class Catalog extends \yii\db\ActiveRecord
         
         if (!isset($cartSession['cart']))
         {     
-            $cartSession->open();
-            $cartSession['cart'] = new CartHelper();            
-            $cartSession['cart']->products[] = [$id, Yii::$app->request->post()['quantity']];             
+            $cartSession->open();// УБРАТЬ 
+            $cartSession['cart'] = new Catalog();            
+            $cartSession['cart']->products["$id"] = [Yii::$app->request->post()['quantity']];             
            
             return 'in the basket';            
         }
-//         $cartSession -> destroy();       
-        $cartSession['cart']->products[] = [$id, Yii::$app->request->post()['quantity']];             
+//         $cartSession -> destroy();   
+        
+        $cartSession['cart']->products["$id"] = [Yii::$app->request->post()['quantity']];             
         
         return 'in the basket';
     }

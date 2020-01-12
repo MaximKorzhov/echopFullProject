@@ -7,6 +7,9 @@ use frontend\models\Cart;
 use frontend\models\CartSearchModel;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\CatalogController;
+use frontend\models\Position;
+use frontend\models\PositionSearchModel;
 use yii\filters\VerbFilter;
 
 /**
@@ -35,12 +38,12 @@ class CartController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CartSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $cartSession = Yii::$app->session;
+        $products = $cartSession['cart']->products; 
+                
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+
+        'cart' => $products,                   
         ]);
     }
 
@@ -82,19 +85,38 @@ class CartController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id = 0)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $value = 0;
+        $data = Yii::$app->request->post();
+        
+        $cartSession = Yii::$app->session;
+            
+        if($id === 0)
+        {
+            $id = $data['productId'];
         }
+        if(!array_key_exists('action', $data))
+        {
+            $value = $data['value'];                        
+        }
+        elseif($data['action'] === "minus")
+        {
+            $value = --$data['value']; 
+        }
+        elseif($data['action'] === "plus")
+        {
+            $value = ++$data['value'];                    
+        }
+        $cartSession['cart']->products[$id][1] = $value;
+        
+        $products = $cartSession['cart']->products; 
+        
+        return $this->render('index', [
 
-        return $this->render('update', [
-            'model' => $model,
+        'cart' => $products,                   
         ]);
     }
-
     /**
      * Deletes an existing Cart model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
