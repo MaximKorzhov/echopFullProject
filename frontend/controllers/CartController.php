@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\CatalogController;
 use frontend\models\Position;
 use frontend\models\PositionSearchModel;
+use frontend\controllers\OrderController;
+use frontend\models\Order;
+use frontend\models\OrderSearchModel;
 use yii\filters\VerbFilter;
 
 /**
@@ -66,7 +69,7 @@ class CartController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
+    {                        
         $model = new Cart();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -125,10 +128,16 @@ class CartController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    {        
+        $cartSession = Yii::$app->session;
+        
+        unset($cartSession['cart']->products[$id]);
+        $products = $cartSession['cart']->products; 
+        
+        return $this->render('index', [
 
-        return $this->redirect(['index']);
+        'cart' => $products,                   
+        ]);
     }
 
     /**

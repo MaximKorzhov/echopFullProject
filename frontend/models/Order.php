@@ -38,6 +38,7 @@ class Order extends ActiveRecord
             [['org_id', 'position_id'], 'required'],
             [['org_id', 'position_id'], 'integer'],
             [['date_from', 'date_to'], 'safe'],
+//             [['date_from', 'date_to'], 'date', 'format' => 'd.m.Y H:i:s'],
             [['state', 'number'], 'string', 'max' => 45],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => Position::className(), 'targetAttribute' => ['position_id' => 'id']],
         ];

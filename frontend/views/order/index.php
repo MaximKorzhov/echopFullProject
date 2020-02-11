@@ -181,7 +181,7 @@ use yii\widgets\Pjax;
             <?php if (OrganizationHelper::getCurrentOrg()->org_type_id == 1) :?>                    
                <?php foreach ($customers as $key => $order) : ?>             
                     <div class="product-item">                                
-                        <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=" /*. Order::getTotal($dataProvider->models)*/, ['class' => 'int']), ['/order/index', 'id'=> $order->org_id, 'group' => $key]) ?>
+                        <?= Html::a(Html::tag('p', $order->org->name . '<br/>' . "order's amount=", ['class' => 'int']), ['/order/index', 'id'=> $order->org_id, 'group' => $key]) ?>
                     </div>
                 <?php endforeach; ?>                            
             <?php else :?>
@@ -216,7 +216,7 @@ use yii\widgets\Pjax;
             </div>
         </div>
         <div class="inner-details bgcolor clearfix">
-            <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->data ?></h2></div>
+            <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->date ?></h2></div>
             <div class="layer-left">
                 <p>Номер заказа: <?= $currentOrder->ord->id ?></p>                
                 <p>Получатель заказа: <?= $supplier->name ?></p>
@@ -224,7 +224,7 @@ use yii\widgets\Pjax;
                 <p>Адрес доставки: <?= "Этого поля в таблице нет"; ?></p>                    
             </div>
             <div class="layer-right">
-                <p>Дата заказа: <?= $currentOrder->ord->data ?></p>                
+                <p>Дата заказа: <?= $currentOrder->ord->date ?></p>                
                 <p>ФИО заказчика: <?= $currentOrder->org->user->fullname ?></p>
                 <p>Телефон заказчика: <?= $currentOrder->org->user->tel ?></p>                
                 <p>E-mail заказчика: <?= $currentOrder->org->user->email ?></p>                

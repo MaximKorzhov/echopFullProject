@@ -139,8 +139,40 @@ class OrderController extends Controller
      */
     public function actionCreate($id = 0)
     {
-        $model = new Catalog();
-        $modelProducts = new Position();
+        $cartSession = Yii::$app->session;
+        $orders = $cartSession['cart']->products;
+        $orderGroup = new OrderGroup();
+        $orderGroup->date = date("Y-m-d");
+        $orderGroup->save();
+        
+        foreach ($orders as $key => $order)
+        {            
+            $orders = OrderGroup::find()->all();
+            if (!function_exists("array_key_last"))
+            {                                         
+                $orderGroupId = array_keys($orders)[count($orders)-1];                   
+            }
+            else
+            {
+                $orderGroupId = array_key_last($orders);                   
+            }
+            $model = new Order();
+            $model->org_id = OrganizationHelper::getCurrentOrg()->id;
+            $model->position_id = $key;
+            $model->date_from = date("Y-m-d H:i:s");
+            $model->date_to = date("Y-m-d H:i:s");
+            $model->state = 'open';
+//                $model->soob_id = $orderId;
+            $model->number = $order[1];
+            $model->order_group_id = $orders[$orderGroupId]->id;
+            if($model->save())
+            {
+                $cartSession->destroy();
+                $this->actionIndex();
+            }            
+        }
+        
+//        $modelProducts = new Position();
         $products = 0;
         //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
        
@@ -154,13 +186,13 @@ class OrderController extends Controller
                 ->all();           
         }
         
-        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
-        {
-            $catalogFirst = Categories::find()                        
-                            ->joinWith('productTypes') 
-                            ->joinWith('productTypes.name')                        
-                            ->all();   
-        }  
+//        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
+//        {
+//            $catalogFirst = Categories::find()                        
+//                            ->joinWith('productTypes') 
+//                            ->joinWith('productTypes.name')                        
+//                            ->all();   
+//        }  
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
