@@ -190,7 +190,7 @@ use yii\widgets\Pjax;
                         <div class="inner-product-toolbox clearfix">
                             <div class="product-icon">
                                 <?=
-                                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-plus"]), '/order/create', [
+                                    Html::a(Html::tag('span', '', ['class' => "glyphicon glyphicon-plus"]), '/catalog/index', [
                                         'title' => Yii::t('app', 'Add'),
                                         'data-pjax' => '1',
                                     ])

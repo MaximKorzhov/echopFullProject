@@ -41,73 +41,75 @@ use yii\widgets\Pjax;
                 <?php endif; ?>                                                                    
             </div>
             
-                <div class="col-lg-3 col-md-3 col-sm-12 desc">
+            <div class="col-lg-3 col-md-3 col-sm-12 desc">
 
-                    <h4><?= $product[0]->name ?></h4>
-                    <p><?= $product[0]->podrobno ?></p>
-                                    
+                <h4><?= $product[0]->name ?></h4>
+                <p><?= $product[0]->podrobno ?></p>
+
+            </div>
+        <?php Pjax::begin(); ?>
+        <?= Html::beginForm(['/cart/update', 'id' => $product[0]->id], 'post', ['enctype' => 'multipart/form-data']) ?>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="input-group">
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quantity">
+                            <?= Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus', ]), '/cart/update', [
+
+                                        'data' => [
+                                            'method' => 'post',
+                                            'params' => [                                                
+                                                'action' => 'minus',
+                                                'productId' => $product[0]->id,
+                                                'value' => $product[1],
+                                            ]
+                                        ],
+                                    ]);
+                            ?>
+                          </button>
+                      </span>
+                       <?= Html::input('text', 'value', $product[1], ['class' => 'form-control', 'data' => ['method' => 'post']]) ?>
+                      <span class="input-group-btn">
+                          <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quantity">
+                            <?= Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-plus', ]), '/cart/update', [
+
+                                    'data' => [
+                                        'method' => 'post',
+                                        'params' => [                                            
+                                            'action' => 'plus',
+                                            'productId' => $product[0]->id, 
+                                            'value' => $product[1],
+                                        ]
+                                    ],
+                                ]);
+                            ?>    
+                          </button>
+                      </span>
                 </div>
-                <?php Pjax::begin(); ?>
-                <?= Html::beginForm(['/cart/update', 'id' => $product[0]->id], 'post', ['enctype' => 'multipart/form-data']) ?>
-                    <div class="col-lg-3 col-md-3 col-sm-6">
-                        <div class="input-group">
-                              <span class="input-group-btn">
-                                  <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quantity">
-                                    <?= Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-minus', ]), '/cart/update', [
-                                                
-                                                'data' => [
-                                                    'method' => 'post',
-                                                    'params' => [                                                
-                                                        'action' => 'minus',
-                                                        'productId' => $product[0]->id,                                              
-                                                    ]
-                                                ],
-                                            ]);
-                                    ?>
-                                  </button>
-                              </span>
-                               <?= Html::input('text', 'value', $product[1], ['class' => 'form-control', 'data' => ['method' => 'post']]) ?>
-                              <span class="input-group-btn">
-                                  <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quantity">
-                                    <?= Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-plus', ]), '/cart/update', [
-                                            
-                                            'data' => [
-                                                'method' => 'post',
-                                                'params' => [                                            
-                                                    'action' => 'plus',
-                                                    'productId' => $product[0]->id, 
-                                                ]
-                                            ],
-                                        ]);
-                                    ?>    
-                                  </button>
-                              </span>
-                        </div>
-                    </div
-                <?= Html::endForm() ?>
-                <?php Pjax::end(); ?>        
-                <div class="col-lg-3 col-md-3 col-sm-6">                                              
-                    <p><?= $product[0]->price ?> руб./шт</p>
-                    <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quantity">
-                     <?= Html::a(Html::tag('span', 'Удалить', ['class' => 'btn btn-outline-danger']), '/cart/delete?id=' . $product[0]->id, [
-                         'data' => [
-                            'method' => 'post',
-                            'params' => [                                            
-                                'action' => 'delete',
-                                'productId' => $product[0]->id, 
-                                ]
-                            ],
-                        ]); 
-                    ?>                                              
-                    </button>
-                 </div>            
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">                                              
+                <p><?= $product[0]->price ?> руб./шт</p>
+                <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quantity">
+                 <?= Html::a(Html::tag('span', 'Удалить', ['class' => 'btn btn-outline-danger']), '/cart/delete?id=' . $product[0]->id, [
+                     'data' => [
+                        'method' => 'post',
+                        'params' => [                                            
+                            'action' => 'delete',
+                            'productId' => $product[0]->id, 
+                            ]
+                        ],
+                    ]); 
+                ?>                                              
+                </button>
+             </div>            
+        <?= Html::endForm() ?>
         </div>
+    <?php Pjax::end(); ?>        
     <?php endforeach; ?>
         <div class="bs-example">
             <div class="col-lg-3 col-md-3 col-sm-6">                                              
               <h4>В корзине <?= count($cart) ?> товаров </h4>
                     <button type="button" class="btn btn-danger btn-number">
-                     <?= Html::a(Html::tag('span', 'Продолжить оформление', ['class' => 'btn btn-outline-danger']), '/order/create', [
+                     <?= Html::a(Html::tag('span', 'Продолжить оформление', ['class' => 'btn btn-outline-danger']), '/order/index', [
                          'data' => [
                             'method' => 'post',
                             'params' => [                                            

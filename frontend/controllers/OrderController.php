@@ -59,6 +59,11 @@ class OrderController extends Controller
      */
     public function actionIndex($id = 0, $group = null)
     {
+        if(Yii::$app->request->post() && Yii::$app->request->post()['action'] === "create")
+        {
+            $this->actionCreate();    
+        }
+        
         $suppliers = 0;
         $customers = Order::find()
                         ->select([Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
@@ -71,7 +76,7 @@ class OrderController extends Controller
                         ->all();   
         if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
         {
-            $suppliers = Order::find()                        
+            $suppliers = array_reverse(Order::find()                        
                             ->select([Order::tableName() . '.position_id', Organization::tableName() . '.name', Order::tableName() . '.order_group_id', Order::tableName() . '.date_to', Order::tableName() . '.date_from', Order::tableName() . '.org_id', OrderGroup::tableName() . '.id', Users::tableName() . '.username'])
                             ->joinWith('position') 
                             ->joinWith('org.user')
@@ -79,7 +84,7 @@ class OrderController extends Controller
                             ->joinWith('org')
                             ->where([Order::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                             ->distinct()
-                            ->all();   
+                            ->all(), true);   
             
             if ($id == 0)
             {
@@ -162,56 +167,16 @@ class OrderController extends Controller
             $model->date_from = date("Y-m-d H:i:s");
             $model->date_to = date("Y-m-d H:i:s");
             $model->state = 'open';
-//                $model->soob_id = $orderId;
+//          $model->soob_id = $orderId;
             $model->number = $order[1];
             $model->order_group_id = $orders[$orderGroupId]->id;
-            if($model->save())
-            {
-                $cartSession->destroy();
-                $this->actionIndex();
-            }            
+            $model->save();
         }
         
-//        $modelProducts = new Position();
-        $products = 0;
-        //Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-       
-        $catalog = Catalog::find()->all();
+        $cartSession->destroy();
         
-        if($id !== 0)
-        {            
-            $products = Position::find()              
-                ->where([Position::tableName() . '.podgroup' => $catalog[$id]->id])
-                ->distinct()
-                ->all();           
-        }
-        
-//        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
-//        {
-//            $catalogFirst = Categories::find()                        
-//                            ->joinWith('productTypes') 
-//                            ->joinWith('productTypes.name')                        
-//                            ->all();   
-//        }  
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-          return $this->render('created', [
-            'model' => $model,
-            'catalog' => $catalog,
-            'products' => $products,
-            'id' => $id,       
-        ]);
+        return;
     }
-
-    /**
-     * Updates an existing Order model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionPjaxExample5()
     {
         return $this->render('created', [
