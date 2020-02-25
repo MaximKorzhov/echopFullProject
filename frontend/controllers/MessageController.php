@@ -36,25 +36,46 @@ class MessageController extends Controller
     }
     
     public function actionIndex($id = 0, $orderId = 0)
-    {        
-        $shops = ArrayHelper::index (Order::find()
-                    ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
-                    ->joinWith('position')                                    
-                    ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                    ->distinct()
-                    ->all(), 'org_id');   
-
-        $supplier = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
+    {   
+        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
+        {
+            $contacts = ArrayHelper::index (Position::find()
+                        ->select([ Position::tableName() . '.org_id'])    
+                        ->joinWith('orders')                      
+                        ->where([Order::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                        ->distinct()
+                        ->all(), 'org_id');   
+        }
+        else 
+        {
+            $contacts = ArrayHelper::index (Order::find()
+                        ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
+                        ->joinWith('position')                                    
+                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                        ->distinct()
+                        ->all(), 'org_id');   
+        }
+        $user = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
         
         if ($id == 0)
         {
-            $id = key($shops);             
+            $id = key($contacts);             
         }
         
-        $orders = ArrayHelper::index (OrderGroup::find()
+        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
+        {
+            $orders = ArrayHelper::index (OrderGroup::find()
+                            ->joinWith('orders')
+                            ->where(['.org_id' => OrganizationHelper::getCurrentOrg()->id])                          
+                            ->all(), 'id'); 
+        }
+        else
+        {
+            $orders = ArrayHelper::index (OrderGroup::find()
                         ->joinWith('orders')
-                        ->where(['.org_id' => $shops[$id]->org_id])                          
+                        ->where(['.org_id' => $contacts[$id]->org_id])                          
                         ->all(), 'id'); 
+        }
         
         if ($orderId == 0)
         {
@@ -95,10 +116,10 @@ class MessageController extends Controller
         return $this->render('index', [  
             'model' => $model,
             'downloads' => $downloads,
-            'orders' => $orders,
+            'orders' => array_reverse($orders, true),
             'messages' => $messages,
-            'supplier' => $supplier,            
-            'shops' => $shops,
+            'user' => $user,            
+            'contacts' => $contacts,
             'orderId' => $orderId,
             'id' => $id,
         ]);

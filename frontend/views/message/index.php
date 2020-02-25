@@ -125,9 +125,9 @@ $this->registerJs('
     <div class="inner-middle-panel bgcolor">                    
         <?php if (Yii::$app->controller->action->id == 'index' || Yii::$app->controller->action->id == 'update') : ?>            
             <div class="inner-products-list bgcolor">
-                <?php foreach ($shops as $key => $shop): ?>                        
+                <?php foreach ($contacts as $key => $contact): ?>                        
                     <div class="product-item">
-                        <?= Html::a(Html::tag('div', $shop->org->name, ['class' => $shop->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key]) ?>
+                        <?= Html::a(Html::tag('div', $contact->org->name, ['class' => $contact->org_id == $id ? 'product-item-active' :'inner-product-item']), ['/message/index', 'id' => $key]) ?>
                     </div>
                 <?php endforeach; ?>
             </div>            
@@ -156,7 +156,7 @@ $this->registerJs('
                         'orderId' => $orderId,
                         'id' => $id,
                         'messages' => $messages,
-                        'supplier' => $supplier,                        
+                        'user' => $user,                        
                         'orders' => $orders,
                         'downloads' => $downloads,
                     ]);

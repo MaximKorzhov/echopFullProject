@@ -219,7 +219,7 @@ use yii\widgets\Pjax;
             <div><h2>Заказ № <?= $currentOrder->ord->id ?> от <?= $currentOrder->ord->date ?></h2></div>
             <div class="layer-left">
                 <p>Номер заказа: <?= $currentOrder->ord->id ?></p>                
-                <p>Получатель заказа: <?= $supplier->name ?></p>
+                <p>Получатель заказа: <?= $user->name ?></p>
                 <p>Юридическое лицо магазина: <?= $currentOrder->org->name ?></p>                    
                 <p>Адрес доставки: <?= "Этого поля в таблице нет"; ?></p>                    
             </div>

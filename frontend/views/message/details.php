@@ -55,7 +55,7 @@ use yii\helpers\Html;
 
 <div class="details bg">
     <div class="inner-details bgcolor clearfix">        
-        <h2>По заказу <?= $orders[$orderId]->id ?> от <?= $orders[$orderId]->data ?></h2>
+        <h2>По заказу <?= $orders[$orderId]->id ?> от <?= $orders[$orderId]->date ?></h2>
         <?php foreach ($messages as $message): ?>                    
             <div class="inner-message bgcolor clearfix">
                 <?php if($message->orgFrom->id == $model->from_id):?>
@@ -109,9 +109,9 @@ use yii\helpers\Html;
         <?php ActiveForm::end(); ?>
         <p>________________________</p>
         <p>Данные поставщика:</p>
-        <p><?= $supplier->user->fullname ?></p>
-        <p><?= $supplier->name ?></p>
-        <p>Контактный телефон: <?= $supplier->user->tel ?></p>
-        <p>Электронный адрес: <?= $supplier->user->email ?></p>        
+        <p><?= $model->orgTo->user->fullname ?></p>
+        <p><?= $model->orgTo->name ?></p>
+        <p>Контактный телефон: <?= $model->orgTo->user->tel ?></p>
+        <p>Электронный адрес: <?= $model->orgTo->user->email ?></p>        
     </div>
 </div>
