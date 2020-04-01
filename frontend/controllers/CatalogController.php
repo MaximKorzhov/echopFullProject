@@ -68,6 +68,30 @@ class CatalogController extends Controller
                 ->all();           
         }
          
+                $primeNumbers = [2];
+	
+	for($number = 2; $number <= 10; ++$number)
+	{
+            $q = 0;
+            foreach($primeNumbers as $primeNumber)
+            {
+                $qs = $number/$primeNumber;
+                if(is_int($qs))
+                {
+                    break;
+                }
+
+            }
+            if(is_double($qs))
+            {
+                $q = $number;
+            }
+            if($q !== 0 )
+            {
+                array_push($primeNumbers, $q);
+            }
+	}
+
         return $this->render('index', [
             'model' => $model,
             'catalog' => $catalog,
