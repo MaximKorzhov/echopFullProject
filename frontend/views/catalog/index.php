@@ -213,13 +213,8 @@ width: 150px;
                                 <p class="product-title">
                                     <h3><?= Html::a(Html::tag('div', $product_type->name, ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/catalog/index', 'id'=> $keyProduct_type]) ?></h3>                                        
                                 </p>
-                                <h3><?= Html::a(Html::tag('div', "Price", ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/catalog/index', 'id'=> $keyProduct_type]) ?></h3>                                                                       
-                                <p class="product-desc">Signature NYX cosmetics</p>
-                                <p class="product-price">Price: <?= $product_type->price ?></p>
-                             
-                                
-                            
-                            <h3><?= Html::a(Html::tag('div', "Exem", ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item']), ['/catalog/details', 'id'=> $keyProduct_type]) ?></h3>                                        
+                                <p class="product-desc">Краткое описание товара</p>
+
                             <?= Html::a(Html::tag('div', 'Exem', ['class' => $product_type->id == $keyProduct_type ? 'product-item-active' :'inner-product-item', ]), '', [
                                         'title' => Yii::t('app','Index'),
                                         'data' => [

@@ -32,7 +32,7 @@ class Messages extends \yii\db\ActiveRecord
     {
         return [
             [['message_text'], 'required'],            
-            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'integer', 'max' => 45],
+            [['from_id', 'to_id', 'zakaz_id', 'type', 'status'], 'integer'],
             [['message_text'], 'string', 'max' => 255],
             [['downloads'], 'string', 'max' => 255],         
 //            [['downloads'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, txt', 'maxFiles' => 10],
