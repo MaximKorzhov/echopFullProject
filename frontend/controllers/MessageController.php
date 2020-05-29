@@ -40,7 +40,7 @@ class MessageController extends Controller
         if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
         {
             $contacts = ArrayHelper::index (Position::find()
-                        ->select([ Position::tableName() . '.org_id'])    
+                        ->select([Position::tableName() . '.org_id', Position::tableName() . '.id'])
                         ->joinWith('orders')                      
                         ->where([Order::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
                         ->distinct()
@@ -66,7 +66,8 @@ class MessageController extends Controller
         {
             $orders = ArrayHelper::index (OrderGroup::find()
                             ->joinWith('orders')
-                            ->where(['.org_id' => OrganizationHelper::getCurrentOrg()->id])                          
+                            ->where(['.org_id' => OrganizationHelper::getCurrentOrg()->id])
+                            ->andWhere(['.position_id' => $contacts[$id]->id])
                             ->all(), 'id'); 
         }
         else
