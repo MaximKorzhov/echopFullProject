@@ -71,7 +71,7 @@ use yii\helpers\Html;
                     <div class = "file-contaner">
                         <br/>
                         <?php foreach ($files as $file): ?> 
-                            <?php if(file_exists('D:/Develop/eshop/frontend/uploads/'."$file")): ?>
+                            <?php if(file_exists($_SERVER['DOCUMENT_ROOT'].'/uploads/'."$file")): ?>
                                 <div class = "file-contaner">
                                     <span class = "inner-product-item">
                                         <?=

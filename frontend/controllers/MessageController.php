@@ -82,8 +82,8 @@ class MessageController extends Controller
         
         $model->zakaz_id = $orderId;
         $model->from_id = OrganizationHelper::getCurrentOrg()->id;
-        $model->to_id = $id;      
-        
+        $model->to_id = $id;
+
         return $this->render('index', [  
             'model' => $model,
             'downloads' => $downloads,
@@ -112,7 +112,7 @@ class MessageController extends Controller
     
     public function actionDownload($fileName)
     {
-        $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+        $file = Yii::getAlias($_SERVER['DOCUMENT_ROOT'].'/uploads/'."$fileName");
         return Yii::$app->response->sendFile($file);
     }
     
@@ -129,9 +129,9 @@ class MessageController extends Controller
         $fileNames = explode(",", $messageData->downloads);
         if(OrganizationHelper::getCurrentOrg()->id == $messageData->from_id)
         {            
-            if(is_file('D:/Develop/eshop/frontend/uploads/'.$fileName))
+            if(is_file($_SERVER['DOCUMENT_ROOT'].'/uploads/'.$fileName))
             {
-                $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'.$fileName);
+                $file = Yii::getAlias($_SERVER['DOCUMENT_ROOT'].'/uploads/'.$fileName);
                 unlink($file);
                 if(($key = array_search($fileName,$fileNames)) !== FALSE)
                 {
@@ -145,9 +145,9 @@ class MessageController extends Controller
             {
                 foreach ($fileNames as $fileName)
                 {
-                    if(file_exists('D:/Develop/eshop/frontend/uploads/'."$fileName"))
+                    if(file_exists($_SERVER['DOCUMENT_ROOT'].'/uploads/'."$fileName"))
                     {
-                        $file = Yii::getAlias('D:/Develop/eshop/frontend/uploads/'."$fileName");
+                        $file = Yii::getAlias($_SERVER['DOCUMENT_ROOT'].'/uploads/'."$fileName");
                         unlink($file);
                     }
                 }

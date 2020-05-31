@@ -29,7 +29,7 @@ class Downloads extends \yii\db\ActiveRecord
             foreach ($this->downloads as $file)
             {
                 $fileName[] = $file->name;
-                $file->saveAs('D:/Develop/eshop/frontend/uploads/' . $file->baseName . '.' . $file->extension);                
+                $file->saveAs($_SERVER['DOCUMENT_ROOT'].'/uploads/'. $file->baseName . '.' . $file->extension);
             }
             return $fileName;
         } 
