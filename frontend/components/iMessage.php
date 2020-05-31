@@ -5,5 +5,5 @@ namespace frontend\components;
     interface iMessage
     {
         public function getContacts();
-        public function getOrders($id = 0);
+        public function getOrders($contact = 0);
     }

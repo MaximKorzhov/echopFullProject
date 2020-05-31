@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use frontend\models\Downloads;
+use frontend\components\MessageDataFactory;
 
 /**
  * MessageController implements the CRUD actions for Messages model.
@@ -36,48 +37,17 @@ class MessageController extends Controller
     }
     
     public function actionIndex($id = 0, $orderId = 0)
-    {   
-        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
-        {
-            $contacts = ArrayHelper::index (Position::find()
-                        ->select([Position::tableName() . '.org_id', Position::tableName() . '.id'])
-                        ->joinWith('orders')                      
-                        ->where([Order::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->distinct()
-                        ->all(), 'org_id');   
-        }
-        else 
-        {
-            $contacts = ArrayHelper::index (Order::find()
-                        ->select([ Order::tableName() . '.org_id', Order::tableName() . '.order_group_id'])
-                        ->joinWith('position')                                    
-                        ->where([Position::tableName() . '.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                        ->distinct()
-                        ->all(), 'org_id');   
-        }
-        $user = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
-        
+    {
+        $objectOfStrategy = MessageDataFactory :: getMessageData(OrganizationHelper::getCurrentOrg()->org_type_id);
+        $contacts = $objectOfStrategy->getContacts();
         if ($id == 0)
         {
-            $id = key($contacts);             
+            $id = key($contacts);
         }
-        
-        if (OrganizationHelper::getCurrentOrg()->org_type_id == 0)
-        {
-            $orders = ArrayHelper::index (OrderGroup::find()
-                            ->joinWith('orders')
-                            ->where(['.org_id' => OrganizationHelper::getCurrentOrg()->id])
-                            ->andWhere(['.position_id' => $contacts[$id]->id])
-                            ->all(), 'id'); 
-        }
-        else
-        {
-            $orders = ArrayHelper::index (OrderGroup::find()
-                        ->joinWith('orders')
-                        ->where(['.org_id' => $contacts[$id]->org_id])                          
-                        ->all(), 'id'); 
-        }
-        
+        $orders = $objectOfStrategy->getOrders($contacts[$id]);
+
+        $user = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
+
         if ($orderId == 0)
         {
             $orderId = key($orders);
