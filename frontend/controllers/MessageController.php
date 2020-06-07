@@ -40,19 +40,11 @@ class MessageController extends Controller
     {
         $objectOfStrategy = MessageDataFactory :: getMessageData(OrganizationHelper::getCurrentOrg()->org_type_id);
         $contacts = $objectOfStrategy->getContacts();
-        if ($id == 0)
-        {
-            $id = key($contacts);
-        }
+        $id = $id ?: key($contacts);
         $orders = $objectOfStrategy->getOrders($contacts[$id]);
-
         $user = Organization::findOne(OrganizationHelper::getCurrentOrg()->id);
+        $orderId = $orderId ?: key($orders);
 
-        if ($orderId == 0)
-        {
-            $orderId = key($orders);
-        }
-        
         $messages = Messages::find()                                                    
                         ->where(['zakaz_id' => $orders[$orderId]->id])                          
                         ->all();
